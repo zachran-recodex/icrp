@@ -1,12 +1,12 @@
 <div
-    class="sticky top-0 z-40 flex items-center h-16 px-4 bg-white border-b border-shark-200 shadow-sm shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
-    <button type="button" class="-m-2.5 p-2.5 text-shark-950 lg:hidden" @click="sidebarOpen = true">
+    class="sticky top-0 z-40 flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
+    <button type="button" class="-m-2.5 p-2.5 text-gray-950 lg:hidden" @click="sidebarOpen = true">
         <span class="sr-only">Open sidebar</span>
         <i class="fa-solid fa-bars w-6 h-6"></i>
     </button>
 
     <!-- Separator -->
-    <div class="w-px h-6 bg-shark-950 lg:hidden" aria-hidden="true"></div>
+    <div class="w-px h-6 bg-gray-950 lg:hidden" aria-hidden="true"></div>
 
     <div class="flex items-center gap-x-4 lg:gap-x-6">
 
@@ -16,7 +16,7 @@
         <div class="flex items-center gap-x-4 lg:gap-x-6">
 
             <!-- Separator -->
-            <div class="w-px h-6 bg-shark-950"></div>
+            <div class="w-px h-6 bg-gray-950"></div>
 
             <!-- Profile dropdown -->
             <div x-data="{ open: false }" class="relative">
@@ -28,7 +28,7 @@
                         </h3>
                     </div>
                     <div class="hidden lg:flex lg:items-center">
-                        <h3 class="ml-4 text-sm font-semibold leading-6 text-shark-900"
+                        <h3 class="ml-4 text-sm font-semibold leading-6 text-gray-900"
                             aria-hidden="true">{{ Auth::user()->name }}
                         </h3>
                     </div>
@@ -38,16 +38,16 @@
                      class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                      role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                      tabindex="-1">
-                    <a href="{{ route('profile') }}" class="flex px-4 py-2 text-sm text-shark-700 hover:bg-shark-100" role="menuitem" tabindex="-1">
+                    <a href="{{ route('profile') }}" class="flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">
                         <i class="fa-solid fa-user text-lg mr-2"></i>
                         My Profile
                     </a>
-                    <a href="" class="flex px-4 py-2 text-sm text-shark-700 hover:bg-shark-100" role="menuitem" tabindex="-1">
+                    <a href="" class="flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">
                         <i class="fa-solid fa-gear text-lg mr-2"></i>
                         Settings
                     </a>
                     <button wire:click="logout" class="border-t">
-                        <div class="flex w-full px-4 py-2 text-left text-sm text-shark-700 hover:bg-shark-100" role="menuitem" tabindex="-1">
+                        <div class="flex w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">
                             <i class="fa-solid fa-sign-out-alt text-lg mr-2"></i>
                             Sign Out
                         </div>

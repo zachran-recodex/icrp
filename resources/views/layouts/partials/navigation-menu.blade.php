@@ -4,7 +4,7 @@
             <ul role="list" class="-mx-2 space-y-1">
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="flex items-center p-2 rounded-md gap-x-3">
                     <i
-                        class="fa-solid fa-house {{ request()->routeIs('dashboard') ? 'text-primary-500' : 'text-shark-950' }}"></i>
+                        class="fa-solid fa-house {{ request()->routeIs('dashboard') ? 'text-primary-500' : 'text-gray-950' }}"></i>
                     Dashboard
                 </x-nav-link>
             </ul>

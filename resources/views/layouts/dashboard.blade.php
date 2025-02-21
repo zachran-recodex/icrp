@@ -35,7 +35,7 @@
             <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300"
                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                  x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0" class="fixed inset-0 bg-shark-950/80"></div>
+                 x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-950/80"></div>
 
             <div class="fixed inset-0 flex">
                 <div x-show="sidebarOpen" x-transition:enter="transition ease-in-out duration-300 transform"
@@ -46,14 +46,14 @@
                     <div class="absolute top-0 flex justify-center w-16 pt-5 left-full">
                         <button type="button" class="-m-2.5 p-2.5" @click="sidebarOpen = false">
                             <span class="sr-only">Close sidebar</span>
-                            <i class="fa-regular fa-circle-xmark w-6 h-6 text-shark-50"></i>
+                            <i class="fa-regular fa-circle-xmark w-6 h-6 text-gray-50"></i>
                         </button>
                     </div>
 
                     <!-- Sidebar component for mobile -->
                     <div
-                        class="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-shark-200 grow gap-y-5">
-                        <div class="flex items-center h-16 shrink-0 border-b border-shark-200">
+                        class="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-gray-200 grow gap-y-5">
+                        <div class="flex items-center h-16 shrink-0 border-b border-gray-200">
                             <h3 class="text-2xl font-bold tracking-tight text-primary-500">
                                 ICRP
                             </h3>
@@ -66,8 +66,8 @@
 
         <!-- Static sidebar for desktop -->
         <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
-            <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-shark-200 grow gap-y-5">
-                <div class="flex items-center h-16 shrink-0 border-b border-shark-200">
+            <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-gray-200 grow gap-y-5">
+                <div class="flex items-center h-16 shrink-0 border-b border-gray-200">
                     <a href="" class="text-2xl font-bold tracking-tight text-primary-500">
                         ICRP
                     </a>
