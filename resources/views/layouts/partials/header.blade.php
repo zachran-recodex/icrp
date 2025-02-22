@@ -28,30 +28,40 @@
                         </h3>
                     </div>
                     <div class="hidden lg:flex lg:items-center">
-                        <h3 class="ml-4 text-sm font-semibold leading-6 text-gray-900"
-                            aria-hidden="true">{{ Auth::user()->name }}
+                        <h3 class="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">
+                            {{ Auth::user()->name }}
                         </h3>
                     </div>
                 </button>
 
                 <div x-show="open" @click.away="open = false"
-                     class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                     role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
-                     tabindex="-1">
-                    <a href="{{ route('profile') }}" class="flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">
+                    class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+
+                    <a href="{{ route('profile') }}"
+                        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                        tabindex="-1">
                         <i class="fa-solid fa-user text-lg mr-2"></i>
                         My Profile
                     </a>
-                    <a href="" class="flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">
+
+                    <a href="" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        role="menuitem" tabindex="-1">
                         <i class="fa-solid fa-gear text-lg mr-2"></i>
                         Settings
                     </a>
-                    <button wire:click="logout" class="border-t">
-                        <div class="flex w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">
+
+                    <form method="POST" action="{{ route('logout') }}" class="border-t">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
+                            role="menuitem" tabindex="-1"
+                            onclick="event.preventDefault(); this.closest('form').submit();">
                             <i class="fa-solid fa-sign-out-alt text-lg mr-2"></i>
                             Sign Out
-                        </div>
-                    </button>
+                        </button>
+                    </form>
+
                 </div>
             </div>
         </div>
