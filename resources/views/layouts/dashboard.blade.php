@@ -90,6 +90,8 @@
         </div>
     </div>
 
+    <livewire:notification />
+
     @livewireScripts
 </body>
 
