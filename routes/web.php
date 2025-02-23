@@ -26,7 +26,9 @@ Route::middleware('auth')->group(function () {
 
     Route::view('/dashboard', 'dashboard.index')->name('dashboard');
 
-    Route::prefix('admin')->name('dashboard.')->group(function (){
+    Route::prefix('dashboard')->name('dashboard.')->group(function (){
+
+        Route::view('/article', 'dashboard.article')->name('articles');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
