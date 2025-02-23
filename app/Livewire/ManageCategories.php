@@ -5,10 +5,11 @@ namespace App\Livewire;
 use App\WithNotification;
 use Livewire\Component;
 use App\Models\Category;
+use Livewire\WithPagination;
 
 class ManageCategories extends Component
 {
-    use WithNotification;
+    use WithNotification, WithPagination;
 
     public $title;
     public $category_id;
@@ -21,7 +22,7 @@ class ManageCategories extends Component
                 $query->where('title', 'like', '%' . $this->search . '%');
             })
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('livewire.manage-categories', [
             'categories' => $categories,

@@ -9,10 +9,11 @@ use App\WithNotification;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Livewire\WithPagination;
 
 class ManageArticles extends Component
 {
-    use WithFileUploads, WithNotification;
+    use WithFileUploads, WithNotification, WithPagination;
 
     public $title;
     public $content;
@@ -39,7 +40,7 @@ class ManageArticles extends Component
                 $query->where('title', 'like', '%' . $this->search . '%');
             })
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('livewire.manage-articles', [
             'articles' => $articles,
