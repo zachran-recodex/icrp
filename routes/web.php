@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\DjohanEffendiController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
@@ -21,12 +22,18 @@ Route::domain('djohan-effendi.' . env('APP_URL'))->group(function () {
     Route::get('/', [DjohanEffendiController::class, 'index'])->name('djohan-effendi');
 });
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware('auth')->group(function () {
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+    Route::view('/dashboard', 'dashboard.index')->name('dashboard');
+
+    Route::prefix('admin')->name('dashboard.')->group(function (){
+
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+});
+
+
 
 require __DIR__.'/auth.php';
