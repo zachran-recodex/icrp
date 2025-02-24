@@ -180,7 +180,7 @@
                                             modules: {
                                                 toolbar: [
                                                     ['bold', 'italic', 'underline', 'strike'],
-                                                    ['blockquote', 'code-block'],
+                                                    ['blockquote'],
                                                     [{ 'header': 1 }, { 'header': 2 }],
                                                     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                                                     [{ 'script': 'sub' }, { 'script': 'super' }],
@@ -189,6 +189,7 @@
                                                     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
                                                     [{ 'color': [] }, { 'background': [] }],
                                                     [{ 'font': [] }],
+                                                    ['link', 'image', 'video'],
                                                     [{ 'align': [] }],
                                                     ['clean']
                                                 ]
