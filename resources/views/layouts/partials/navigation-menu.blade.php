@@ -24,6 +24,12 @@
                         class="fa-solid fa-calendar {{ request()->routeIs('dashboard.events') ? 'text-primary-500' : 'text-gray-950' }}"></i>
                     Acara
                 </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.founders')" :active="request()->routeIs('dashboard.founders')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-user-tie {{ request()->routeIs('dashboard.founders') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Pendiri
+                </x-nav-link>
             </ul>
         </li>
     </ul>

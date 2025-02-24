@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
 
         Route::view('/event', 'dashboard.event')->name('events');
 
+        Route::view('/founder', 'dashboard.founder')->name('founders');
+
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
