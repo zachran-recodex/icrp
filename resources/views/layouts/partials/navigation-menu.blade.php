@@ -30,6 +30,12 @@
                         class="fa-solid fa-user-tie {{ request()->routeIs('dashboard.founders') ? 'text-primary-500' : 'text-gray-950' }}"></i>
                     Pendiri
                 </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.managements')" :active="request()->routeIs('dashboard.managements')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-users-line {{ request()->routeIs('dashboard.managements') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Pengurus
+                </x-nav-link>
             </ul>
         </li>
     </ul>
