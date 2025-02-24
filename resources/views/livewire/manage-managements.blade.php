@@ -5,7 +5,7 @@
             <!-- Search Input -->
             <div class="flex-1 min-w-0 max-w-lg">
                 <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-managements-none">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
                     </div>
                     <input type="text" wire:model.live.debounce.300ms="search"
@@ -18,7 +18,7 @@
             <button wire:click="create()"
                 class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                 <i class="fa-solid fa-plus mr-2"></i>
-                Buat Pengurus
+                Buat
             </button>
         </div>
     </div>
@@ -110,7 +110,7 @@
                                         <button wire:click="create"
                                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600">
                                             <i class="fa-solid fa-plus mr-2"></i>
-                                            Buat Pengurus
+                                            Buat
                                         </button>
                                     </div>
                                 @endif
@@ -142,7 +142,7 @@
                         <!-- Modal content -->
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div class="mb-4">
-                                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+                                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Gambar</label>
                                 <input type="file" wire:model="temp_image" id="image"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 @error('temp_image')
@@ -157,19 +157,18 @@
                                 @endif
                             </div>
                             <div class="mb-4">
-                                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama</label>
                                 <input type="text" wire:model="name" id="name"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             </div>
                             <div class="mb-4">
-                                <label for="position"
-                                    class="block text-gray-700 text-sm font-bold mb-2">Position:</label>
+                                <label for="position" class="block text-gray-700 text-sm font-bold mb-2">Posisi</label>
                                 <input type="text" wire:model="position" id="position"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             </div>
                             <div class="mb-4">
                                 <label for="description"
-                                    class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                                    class="block text-gray-700 text-sm font-bold mb-2">Deskripsi</label>
                                 <div x-data="{
                                     description: @entangle('description'),
                                     quill: null,
@@ -212,8 +211,7 @@
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <label for="dewan"
-                                    class="block text-gray-700 text-sm font-bold mb-2">Dewan:</label>
+                                <label for="dewan" class="block text-gray-700 text-sm font-bold mb-2">Dewan</label>
                                 <select wire:model="dewan" id="dewan"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                     <option value="Pengurus">Pengurus</option>

@@ -18,7 +18,7 @@
             <button wire:click="create()"
                 class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                 <i class="fa-solid fa-plus mr-2"></i>
-                Buat Acara
+                Buat
             </button>
         </div>
     </div>
@@ -109,7 +109,7 @@
                                         <button wire:click="create"
                                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600">
                                             <i class="fa-solid fa-plus mr-2"></i>
-                                            Buat Acara
+                                            Buat
                                         </button>
                                     </div>
                                 @endif
@@ -141,7 +141,7 @@
                         <!-- Modal content -->
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div class="mb-4">
-                                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
+                                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Nama</label>
                                 <input type="text" wire:model="title"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 @error('title')
@@ -150,7 +150,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="description"
-                                    class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                                    class="block text-gray-700 text-sm font-bold mb-2">Deskripsi</label>
                                 <div x-data="{
                                     description: @entangle('description'),
                                     quill: null,
@@ -191,17 +191,11 @@
                                 }" wire:ignore>
                                     <div x-ref="quillEditor" style="min-height: 200px;"></div>
                                 </div>
-                                @error('description')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
                             </div>
                             <div class="mb-4">
-                                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+                                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Gambar</label>
                                 <input type="file" wire:model="temp_image"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('temp_image')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
                                 @if ($temp_image)
                                     <img src="{{ $temp_image->temporaryUrl() }}" class="mt-2"
                                         style="max-width: 200px;">
@@ -211,29 +205,20 @@
                                 @endif
                             </div>
                             <div class="mb-4">
-                                <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date:</label>
+                                <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Tanggal</label>
                                 <input type="date" wire:model="date"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('date')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
                             </div>
                             <div class="mb-4">
-                                <label for="time" class="block text-gray-700 text-sm font-bold mb-2">Time:</label>
+                                <label for="time" class="block text-gray-700 text-sm font-bold mb-2">Jam</label>
                                 <input type="time" wire:model="time"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('time')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
                             </div>
                             <div class="mb-4">
                                 <label for="location"
-                                    class="block text-gray-700 text-sm font-bold mb-2">Location:</label>
+                                    class="block text-gray-700 text-sm font-bold mb-2">Lokasi</label>
                                 <input type="text" wire:model="location"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('location')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
                         <!-- Modal footer -->

@@ -18,7 +18,7 @@
             <button wire:click="create()"
                 class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                 <i class="fa-solid fa-plus mr-2"></i>
-                Buat Berita & Artikel
+                Buat
             </button>
         </div>
     </div>
@@ -109,7 +109,7 @@
                                         <button wire:click="create"
                                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600">
                                             <i class="fa-solid fa-plus mr-2"></i>
-                                            Buat Berita & Artikel
+                                            Buat
                                         </button>
                                     </div>
                                 @endif
@@ -141,7 +141,9 @@
                         <!-- Modal content -->
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div class="mb-4">
-                                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
+                                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">
+                                    Judul Berita atau Artikel
+                                </label>
                                 <input type="text" wire:model="title"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 @error('title')
@@ -150,21 +152,18 @@
                             </div>
                             <div class="mb-4">
                                 <label for="category"
-                                    class="block text-gray-700 text-sm font-bold mb-2">Category:</label>
+                                    class="block text-gray-700 text-sm font-bold mb-2">Kategori</label>
                                 <select wire:model="category_id"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    <option value="">Select Category</option>
+                                    <option value="">Pilih Kategori</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->title }}</option>
                                     @endforeach
                                 </select>
-                                @error('category_id')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
                             </div>
                             <div class="mb-4">
-                                <label for="content"
-                                    class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
+                                <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Isi
+                                    Konten</label>
                                 <div x-data="{
                                     content: @entangle('content'),
                                     quill: null,
@@ -205,17 +204,11 @@
                                 }" wire:ignore>
                                     <div x-ref="quillEditor" style="min-height: 200px;"></div>
                                 </div>
-                                @error('content')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
                             </div>
                             <div class="mb-4">
-                                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+                                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Gambar:</label>
                                 <input type="file" wire:model="temp_image"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('temp_image')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
                                 @if ($temp_image)
                                     <img src="{{ $temp_image->temporaryUrl() }}" class="mt-2"
                                         style="max-width: 200px;">
