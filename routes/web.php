@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
         Route::view('/article', 'dashboard.article')->name('articles');
 
+        Route::view('/event', 'dashboard.event')->name('events');
+
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

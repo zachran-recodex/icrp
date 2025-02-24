@@ -18,6 +18,12 @@
                         class="fa-solid fa-newspaper {{ request()->routeIs('dashboard.articles') ? 'text-primary-500' : 'text-gray-950' }}"></i>
                     Berita & Artikel
                 </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.events')" :active="request()->routeIs('dashboard.events')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-calendar {{ request()->routeIs('dashboard.events') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Acara
+                </x-nav-link>
             </ul>
         </li>
     </ul>
