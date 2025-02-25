@@ -36,6 +36,12 @@
                         class="fa-solid fa-users-line {{ request()->routeIs('dashboard.managements') ? 'text-primary-500' : 'text-gray-950' }}"></i>
                     Pengurus
                 </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.libraries')" :active="request()->routeIs('dashboard.libraries')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-book {{ request()->routeIs('dashboard.libraries') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Pustaka
+                </x-nav-link>
             </ul>
         </li>
     </ul>
