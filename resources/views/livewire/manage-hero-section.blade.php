@@ -16,8 +16,7 @@
             <label for="subtitle" class="block text-sm font-medium text-gray-700 mb-1">
                 Subtitle
             </label>
-            <input type="text" wire:model="subtitle" id="subtitle"
-                class="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md">
+            <textarea wire:model="subtitle" id="subtitle" rows="3"  class="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
             @error('subtitle')
                 <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
             @enderror

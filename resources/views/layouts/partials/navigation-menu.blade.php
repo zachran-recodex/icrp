@@ -17,7 +17,7 @@
                 <x-nav-link :href="route('dashboard.hero-section')" :active="request()->routeIs('dashboard.hero-section')" class="flex items-center p-2 rounded-md gap-x-3">
                     <i
                         class="fa-solid fa-desktop {{ request()->routeIs('dashboard.hero-section') ? 'text-primary-500' : 'text-gray-950' }}"></i>
-                    Banner
+                    Hero Section
                 </x-nav-link>
 
                 <x-nav-link :href="route('dashboard.articles')" :active="request()->routeIs('dashboard.articles')" class="flex items-center p-2 rounded-md gap-x-3">
