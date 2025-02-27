@@ -127,7 +127,7 @@
                             <i class="fa-solid fa-newspaper w-6 h-6"></i>
                             <span x-show="isExpanded" x-transition:enter="transition-opacity duration-300"
                                   x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                  class="text-sm">Berita</span>
+                                  class="text-sm">Berita & Artikel</span>
                         </a>
 
                         <!-- Pustaka -->
