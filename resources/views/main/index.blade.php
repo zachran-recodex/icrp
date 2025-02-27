@@ -30,7 +30,8 @@
     <section class="relative min-h-screen flex items-center justify-center">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            <img src="{{ asset('images/hero.jpeg') }}" alt="Hero Background" class="w-full h-full object-cover">
+            <img src="{{ Storage::url('hero/' . $heroSection->image) }}" alt="{{ $heroSection->title }}"
+                class="w-full h-full object-cover">
             <!-- Dark Overlay -->
             <div class="absolute inset-0 bg-black/50"></div>
         </div>
@@ -39,15 +40,13 @@
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                    House of Peace
+                    {{ $heroSection->title }}
                 </h1>
                 <p class="text-lg text-white/90 mb-8">
-                    Dialog Antar Agama, Kemanusiaan dan Persaudaraan Lintas Iman, Rumah Perdamaian, Agama untuk
-                    Perdamaian, Demokrasi
+                    {{ $heroSection->subtitle }}
                 </p>
-                <a href="#contact"
-                    class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg
-                  text-lg font-semibold transition transform hover:scale-105">
+                <a href="{{ route('tentang') }}"
+                    class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
                     Selengkapnya
                 </a>
             </div>
@@ -58,6 +57,76 @@
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
 
+            <!-- Featured Article -->
+            <div class="flex justify-center mb-8"> <!-- Flexbox untuk posisi tengah -->
+                <div class="relative w-[1000px] h-[476px]"> <!-- Ukuran tetap -->
+                    <img src="{{ Storage::url('articles/' . $featuredArticle->image) }}"
+                        alt="{{ $featuredArticle->title }}" class="w-full h-full object-cover rounded-lg">
+                    <!-- Gambar mengisi container -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 rounded-lg">
+                        <h2 class="text-white text-xl font-bold">
+                            {{ $featuredArticle->title }}
+                        </h2>
+                        <p class="text-gray-300">
+                            {{ Str::limit(strip_tags($featuredArticle->content), 150) }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News & Article Slider -->
+            <div x-data="{
+                currentIndex: 0,
+                totalSlides: 3,
+                next() {
+                    this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+                },
+                prev() {
+                    this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+                },
+                goToSlide(index) {
+                    this.currentIndex = index;
+                }
+            }" class="relative">
+                <div class="overflow-hidden">
+                    <div class="pb-4 flex transition-transform duration-700 ease-in-out"
+                        :style="'transform: translateX(-' + (currentIndex * 100) + '%)'">
+
+                        <!-- Looping artikel -->
+                        @foreach ($articles->chunk(3) as $chunkedArticles)
+                            <div class="w-full flex-none grid grid-cols-1 md:grid-cols-3 gap-6">
+                                @foreach ($chunkedArticles as $article)
+                                    <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                                        <a href="">
+                                            <div class="relative h-64">
+                                                <img src="{{ Storage::url('articles/' . $article->image) }}"
+                                                    alt="News" class="w-full h-full object-cover">
+                                            </div>
+                                            <div class="p-6">
+                                                <h4 class="text-xl font-semibold mb-3">{{ $article->title }}</h4>
+                                                <p class="text-gray-600 mb-4">
+                                                    {{ Str::limit(strip_tags($article->content), 150) }}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Indicator Dots -->
+                <div class="absolute -bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <template x-for="(_, index) in totalSlides" :key="index">
+                        <button @click="goToSlide(index)"
+                            :class="{
+                                'w-3 h-3 rounded-full bg-primary': currentIndex === index,
+                                'w-3 h-3 rounded-full bg-primary/50': currentIndex !== index
+                            }"
+                            class="transition-colors duration-300"></button>
+                    </template>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -73,104 +142,41 @@
 
             <!-- Events Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Event Card 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
-                    <div class="relative">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Event 1" class="w-full h-48 object-cover">
-                        <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm">
-                            25 Feb 2025
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">Interfaith Dialogue Forum</h3>
-                        <p class="text-gray-600 mb-4">Join religious leaders and scholars in a meaningful discussion
-                            about fostering religious harmony.</p>
-                        <div class="flex items-center space-x-4 text-sm text-gray-500">
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>14:00 WIB</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <span>Jakarta</span>
+                @foreach ($events as $event)
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
+                        <div class="relative">
+                            <img src="{{ Storage::url('events/' . $event->image) }}" alt="Event 1"
+                                class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm">
+                                {{ $event->date->format('d F Y') }}
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Event Card 2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
-                    <div class="relative">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Event 2" class="w-full h-48 object-cover">
-                        <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm">
-                            15 Mar 2025
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">Youth Peace Workshop</h3>
-                        <p class="text-gray-600 mb-4">Empowering young leaders to become advocates for religious
-                            tolerance and peace.</p>
-                        <div class="flex items-center space-x-4 text-sm text-gray-500">
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>09:00 WIB</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <span>Bandung</span>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3">{{ $event->title }}</h3>
+                            <p class="text-gray-600 mb-4">
+                                {!! Str::limit($event->description, 100) !!}
+                            </p>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <div class="flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>{{ $event->time->format('H:i') }} WIB</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <span>{{ $event->location }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Event Card 3 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
-                    <div class="relative">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Event 3" class="w-full h-48 object-cover">
-                        <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm">
-                            05 Apr 2025
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">Community Outreach Program</h3>
-                        <p class="text-gray-600 mb-4">Building bridges between communities through cultural exchange
-                            and dialogue.</p>
-                        <div class="flex items-center space-x-4 text-sm text-gray-500">
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>10:00 WIB</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <span>Surabaya</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -390,73 +396,33 @@
 
             <!-- Regular Collection -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <!-- Book Card 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
-                    <div class="relative aspect-[3/4] overflow-hidden">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Book 1"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="text-sm text-white/80">Religious Studies</span>
+                @foreach($libraries as $library)
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
+                        <div class="relative aspect-[3/4] overflow-hidden">
+                            <img src="{{ Storage::url('libraries/' . $library->image) }}" alt="{{ $library->title }}"
+                                 class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <span class="text-sm text-white/80">Religious Studies</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">{{ $library->title }}</h3>
+                            <p class="text-gray-600 mb-4">Penulis: {{ $library->author }}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">2023</span>
+                                <a href="" class="text-primary hover:text-primary/80 font-medium text-sm">
+                                    Baca Selengkapnya →
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Dialog Antar Agama</h3>
-                        <p class="text-gray-600 mb-4">Penulis: Dr. Ahmad Syafii Maarif</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">2023</span>
-                            <a href="#" class="text-primary hover:text-primary/80 font-medium text-sm">Baca
-                                Selengkapnya →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Book Card 2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
-                    <div class="relative aspect-[3/4] overflow-hidden">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Book 2"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="text-sm text-white/80">Peace Studies</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Harmoni dalam Keberagaman</h3>
-                        <p class="text-gray-600 mb-4">Penulis: Prof. Maria Sukmawati</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">2024</span>
-                            <a href="#" class="text-primary hover:text-primary/80 font-medium text-sm">Baca
-                                Selengkapnya →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Book Card 3 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
-                    <div class="relative aspect-[3/4] overflow-hidden">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Book 3"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="text-sm text-white/80">Social Studies</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Membangun Toleransi</h3>
-                        <p class="text-gray-600 mb-4">Penulis: Dr. Haedar Nashir</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">2024</span>
-                            <a href="#" class="text-primary hover:text-primary/80 font-medium text-sm">Baca
-                                Selengkapnya →</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <!-- View All Button -->
             <div class="text-center">
-                <a href="#"
+                <a href="{{ route('pustaka') }}"
                     class="inline-block px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition transform hover:scale-105">
                     Lihat Semua Buku
                 </a>
@@ -468,24 +434,23 @@
     <section class="relative py-32">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            <img src="{{ asset('images/hero.jpeg') }}" alt="CTA Background" class="w-full h-full object-cover">
+            <img src="{{ Storage::url('cta/' . $callToAction->image) }}" alt="{{ $callToAction->title }}" class="w-full h-full object-cover">
             <!-- Overlay -->
             <div class="absolute inset-0 bg-primary-950/70"></div>
         </div>
 
         <!-- Content -->
         <div class="relative container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
+            <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
-                    Mari Bergabung Bersama ICRP
+                    {{ $callToAction->title }}
                 </h2>
                 <p class="text-lg text-white/90 mb-8">
-                    Jadilah bagian dari gerakan membangun kerukunan umat beragama di Indonesia. Bersama kita wujudkan
-                    masyarakat yang toleran dan harmonis.
+                    {{ $callToAction->subtitle }}
                 </p>
-                <a href="#"
+                <a href="{{ route('kontak') }}"
                     class="inline-block px-8 py-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition transform hover:scale-105">
-                    Bergabung Sekarang
+                    {{ $callToAction->button_text }}
                 </a>
             </div>
         </div>

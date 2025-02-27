@@ -30,7 +30,8 @@
     <section class="relative min-h-[30vh] flex items-center justify-center">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            <img src="{{ asset('images/hero.jpeg') }}" alt="Hero Background" class="w-full h-full object-cover">
+            <img src="{{ Storage::url('hero/' . $heroSection->image) }}" alt="{{ $heroSection->title }}"
+                class="w-full h-full object-cover">
             <!-- Dark Overlay -->
             <div class="absolute inset-0 bg-black/50"></div>
         </div>
@@ -47,24 +48,23 @@
     <section class="relative py-32">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            <img src="{{ asset('images/hero.jpeg') }}" alt="CTA Background" class="w-full h-full object-cover">
+            <img src="{{ Storage::url('cta/' . $callToAction->image) }}" alt="{{ $callToAction->title }}" class="w-full h-full object-cover">
             <!-- Overlay -->
             <div class="absolute inset-0 bg-primary-950/70"></div>
         </div>
 
         <!-- Content -->
         <div class="relative container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
+            <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
-                    Mari Bergabung Bersama ICRP
+                    {{ $callToAction->title }}
                 </h2>
                 <p class="text-lg text-white/90 mb-8">
-                    Jadilah bagian dari gerakan membangun kerukunan umat beragama di Indonesia. Bersama kita wujudkan
-                    masyarakat yang toleran dan harmonis.
+                    {{ $callToAction->subtitle }}
                 </p>
-                <a href="#"
-                    class="inline-block px-8 py-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition transform hover:scale-105">
-                    Bergabung Sekarang
+                <a href="{{ route('kontak') }}"
+                   class="inline-block px-8 py-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition transform hover:scale-105">
+                    {{ $callToAction->button_text }}
                 </a>
             </div>
         </div>

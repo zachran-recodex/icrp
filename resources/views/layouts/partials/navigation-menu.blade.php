@@ -13,6 +13,13 @@
         <li>
             <h2 class="text-xs font-semibold leading-6 text-gray-400 uppercase">Sistem Manajemen Konten</h2>
             <ul role="list" class="-mx-2 space-y-1">
+
+                <x-nav-link :href="route('dashboard.hero-section')" :active="request()->routeIs('dashboard.hero-section')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-desktop {{ request()->routeIs('dashboard.hero-section') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Banner
+                </x-nav-link>
+
                 <x-nav-link :href="route('dashboard.articles')" :active="request()->routeIs('dashboard.articles')" class="flex items-center p-2 rounded-md gap-x-3">
                     <i
                         class="fa-solid fa-newspaper {{ request()->routeIs('dashboard.articles') ? 'text-primary-500' : 'text-gray-950' }}"></i>
@@ -41,6 +48,42 @@
                     <i
                         class="fa-solid fa-book {{ request()->routeIs('dashboard.libraries') ? 'text-primary-500' : 'text-gray-950' }}"></i>
                     Pustaka
+                </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.programs')" :active="request()->routeIs('dashboard.programs')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-key {{ request()->routeIs('dashboard.programs') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Program
+                </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.programs')" :active="request()->routeIs('dashboard.programs')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-video {{ request()->routeIs('dashboard.programs') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Video
+                </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.cta')" :active="request()->routeIs('dashboard.cta')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-video {{ request()->routeIs('dashboard.cta') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Call To Action
+                </x-nav-link>
+            </ul>
+        </li>
+
+        <li>
+            <h2 class="text-xs font-semibold leading-6 text-gray-400 uppercase">Lainnya</h2>
+            <ul role="list" class="-mx-2 space-y-1">
+
+                <x-nav-link :href="route('dashboard.setting')" :active="request()->routeIs('dashboard.setting')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-gear {{ request()->routeIs('dashboard.setting') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Setting
+                </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.comments')" :active="request()->routeIs('dashboard.comments')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-book {{ request()->routeIs('dashboard.comments') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Test Komentar
                 </x-nav-link>
             </ul>
         </li>
