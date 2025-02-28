@@ -58,9 +58,7 @@
                     <!-- Sidebar component for mobile -->
                     <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-gray-200 grow gap-y-5">
                         <div class="flex items-center h-16 shrink-0 border-b border-gray-200">
-                            <h3 class="text-2xl font-bold tracking-tight text-primary-500">
-                                ICRP
-                            </h3>
+                            <img class="h-8" src="{{ asset('images/logo.png') }}" alt="Logo ICRP">
                         </div>
                         @include('layouts.partials.navigation-menu')
                     </div>
@@ -72,9 +70,7 @@
         <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
             <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-gray-200 grow gap-y-5">
                 <div class="flex items-center h-16 shrink-0 border-b border-gray-200">
-                    <a href="" class="text-2xl font-bold tracking-tight text-primary-500">
-                        ICRP
-                    </a>
+                    <img class="h-8" src="{{ asset('images/logo.png') }}" alt="Logo ICRP">
                 </div>
                 @include('layouts.partials.navigation-menu')
             </div>

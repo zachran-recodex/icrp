@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\CallToAction;
 use App\Models\Event;
 use App\Models\Article;
+use App\Models\Founder;
 use App\Models\Library;
 use App\Models\HeroSection;
+use App\Models\Management;
 use App\Models\Program;
 
 class MainController extends Controller
@@ -34,7 +36,16 @@ class MainController extends Controller
 
         $callToAction = CallToAction::first();
 
-        return view('main.index', compact('heroSection', 'featuredArticle', 'articles', 'events', 'libraries', 'callToAction'));
+        return view('main.index',
+            compact(
+                'heroSection',
+                'featuredArticle',
+                'articles',
+                'events',
+                'libraries',
+                'callToAction'
+            )
+        );
     }
 
     public function tentang()
@@ -47,25 +58,55 @@ class MainController extends Controller
 
         $callToAction = CallToAction::first();
 
-        return view('main.tentang', compact('heroSection', 'programs', 'callToAction'));
+        return view('main.tentang',
+            compact(
+                'heroSection',
+                'programs',
+                'callToAction'
+            )
+        );
     }
 
     public function pendiri()
     {
         $heroSection = HeroSection::first();
 
+        $founders = Founder::orderBy('id', 'desc') // Urutkan dari id terbaru
+            ->take(4) // Ambil 4 data
+            ->get();
+
         $callToAction = CallToAction::first();
 
-        return view('main.pendiri', compact('heroSection', 'callToAction'));
+        return view('main.pendiri',
+            compact(
+                'heroSection',
+                'founders',
+                'callToAction'
+            )
+        );
     }
 
     public function pengurus()
     {
         $heroSection = HeroSection::first();
-
         $callToAction = CallToAction::first();
 
-        return view('main.pengurus', compact('heroSection', 'callToAction'));
+        // Fetch management members grouped by their respective boards
+        $dewanPengurus = Management::where('dewan', 'Pengurus')->get();
+        $dewanKehormatan = Management::where('dewan', 'Kehormatan')->get();
+        $dewanPembina = Management::where('dewan', 'Pembina')->get();
+        $dewanPengawas = Management::where('dewan', 'Pengawas')->get();
+        $dewanPengurusHarian = Management::where('dewan', 'Pengurus Harian')->get();
+
+        return view('main.pengurus', compact(
+            'heroSection',
+            'callToAction',
+            'dewanPengurus',
+            'dewanKehormatan',
+            'dewanPembina',
+            'dewanPengawas',
+            'dewanPengurusHarian'
+        ));
     }
 
     public function kontak()
@@ -74,7 +115,12 @@ class MainController extends Controller
 
         $callToAction = CallToAction::first();
 
-        return view('main.kontak', compact('heroSection', 'callToAction'));
+        return view('main.kontak',
+            compact(
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 
     public function sahabat()
@@ -83,7 +129,12 @@ class MainController extends Controller
 
         $callToAction = CallToAction::first();
 
-        return view('main.sahabat', compact('heroSection', 'callToAction'));
+        return view('main.sahabat',
+            compact(
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 
     public function jaringan()
@@ -92,7 +143,12 @@ class MainController extends Controller
 
         $callToAction = CallToAction::first();
 
-        return view('main.jaringan', compact('heroSection', 'callToAction'));
+        return view('main.jaringan',
+            compact(
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 
     public function berita()
@@ -101,13 +157,16 @@ class MainController extends Controller
 
         $callToAction = CallToAction::first();
 
-        return view('main.berita', compact('heroSection', 'callToAction'));
+        return view('main.berita',
+            compact(
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 
     public function beritaDetail($slug)
     {
-        $heroSection = HeroSection::first();
-
         $article = Article::with('category')
             ->where('slug', $slug)
             ->firstOrFail();
@@ -119,9 +178,18 @@ class MainController extends Controller
             ->take(3)
             ->get();
 
+        $heroSection = HeroSection::first();
+
         $callToAction = CallToAction::first();
 
-        return view('main.berita-detail', compact('heroSection', 'article', 'relatedArticles', 'callToAction'));
+        return view('main.berita-detail',
+            compact(
+                'article',
+                'relatedArticles',
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 
     public function pustaka()
@@ -130,16 +198,29 @@ class MainController extends Controller
 
         $callToAction = CallToAction::first();
 
-        return view('main.pustaka', compact('heroSection', 'callToAction'));
+        return view('main.pustaka',
+            compact(
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 
     public function pustakaDetail($slug)
     {
+        $library = Library::where('slug', $slug)->firstOrFail();
+
         $heroSection = HeroSection::first();
 
         $callToAction = CallToAction::first();
 
-        return view('main.pustaka-detail', compact('heroSection', 'callToAction'));
+        return view('main.pustaka-detail',
+            compact(
+                'library',
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 
     public function buku()

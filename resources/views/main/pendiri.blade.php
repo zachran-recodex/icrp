@@ -46,149 +46,19 @@
 
             <!-- Founders Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Founder 1 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="K.H. Abdurahman Wahid"
-                            class="w-full h-full rounded-full object-cover">
+                @foreach($founders as $founder)
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="w-32 h-32 mb-4">
+                            <img src="{{ Storage::url('founders/' . $founder->image) }}" alt="{{ $founder->name }}"
+                                 class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900">{{ $founder->name }}</h3>
+                        <p class="text-purple-600 mb-2">{{ $founder->position }}</p>
+                        <p class="text-sm text-gray-600 max-w-sm">
+                            {{ Str::limit(strip_tags($founder->description), 100) }}
+                        </p>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900">K.H. Abdurahman Wahid</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 2 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Budi Santoso Tanuwibowo"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Budi Santoso Tanuwibowo</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 3 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Chandra Setiawan"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Chandra Setiawan</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 4 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Djohan Efendi"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Djohan Efendi</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 1 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="K.H. Abdurahman Wahid"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">K.H. Abdurahman Wahid</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 2 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Budi Santoso Tanuwibowo"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Budi Santoso Tanuwibowo</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 3 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Chandra Setiawan"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Chandra Setiawan</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 4 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Djohan Efendi"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Djohan Efendi</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 1 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="K.H. Abdurahman Wahid"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">K.H. Abdurahman Wahid</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 2 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Budi Santoso Tanuwibowo"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Budi Santoso Tanuwibowo</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 3 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Chandra Setiawan"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Chandra Setiawan</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
-
-                <!-- Founder 4 -->
-                <div class="flex flex-col items-center text-center p-4">
-                    <div class="w-32 h-32 mb-4">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Djohan Efendi"
-                            class="w-full h-full rounded-full object-cover">
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Djohan Efendi</h3>
-                    <p class="text-purple-600 mb-2">Founder</p>
-                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has
-                        been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
