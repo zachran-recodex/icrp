@@ -45,6 +45,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // New users typically don't have admin roles, so redirect to home
+        // If you have a case where new users might be assigned roles immediately,
+        // you could add a role check here
+        return redirect('/');
     }
 }
