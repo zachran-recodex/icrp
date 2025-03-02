@@ -153,12 +153,23 @@ class MainController extends Controller
 
     public function berita()
     {
+        $featuredArticle = Article::with('category')
+            ->latest()
+            ->first();
+
+        $articles = Article::with('category')
+            ->where('id', '!=', $featuredArticle->id) // Menghindari duplikasi dengan $featuredArticle
+            ->latest()
+            ->get();
+
         $heroSection = HeroSection::first();
 
         $callToAction = CallToAction::first();
 
         return view('main.berita',
             compact(
+                'featuredArticle',
+                'articles',
                 'heroSection',
                 'callToAction'
             )
@@ -194,12 +205,16 @@ class MainController extends Controller
 
     public function pustaka()
     {
+        $libraries = Library::orderBy('id', 'desc') // Urutkan dari id terbaru
+            ->get();
+
         $heroSection = HeroSection::first();
 
         $callToAction = CallToAction::first();
 
         return view('main.pustaka',
             compact(
+                'libraries',
                 'heroSection',
                 'callToAction'
             )

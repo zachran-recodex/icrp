@@ -41,16 +41,13 @@
         <div class="container mx-auto px-4">
 
             <!-- Featured Article -->
-            <div class="mb-16">
-                <div class="relative rounded-2xl overflow-hidden">
-                    <img src="{{ asset('images/hero.jpeg') }}" alt="Featured News"
-                        class="w-full h-[600px] object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8">
-                        <h3 class="text-2xl md:text-4xl font-bold text-white mb-4">
-                            Menag dan ICRP Sepakat Memperkuat Kerukunan Umat Beragama di Indonesia
-                        </h3>
-                        <p class="text-white/80 mb-4">Inauguration of ICRP Management</p>
+            <div class="flex justify-center mt-16">
+                <div class="relative rounded-2xl w-[706px] h-[405px]">
+                    <img src="{{ asset('images/sahabat.png') }}" alt="Featured News"
+                        class="w-[706px] h-[405px] object-cover">
+                    <div class="absolute -top-20 -right-20">
+                        <img src="{{ asset('images/boox.png') }}" alt="Featured News"
+                             class="w-[365px] h-[197px] object-cover">
                     </div>
                 </div>
             </div>

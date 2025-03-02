@@ -37,6 +37,88 @@
         </div>
     </section>
 
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 space-y-12">
+
+            <!-- Section Header -->
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Jaringan & Kemitraan</h2>
+                <p class="text-gray-600">
+                    ICRP memiliki jaringan dan kemitraan yang luas dengan berbagai organisasi, lembaga swadaya masyarakat, komunitas lintas iman, akademisi, dan media. Kemitraan ini bertujuan untuk mempromosikan perdamaian, toleransi, dan dialog antaragama di Indonesia.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Mitra Lembaga - Lembaga Agama</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="flex flex-col items-center text-center p-4">
+                    <div class="w-32 h-32 mb-4">
+                        <div class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                            <i class="fa-solid fa-user text-gray-400 text-4xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Komunitas Agama</h3>
+                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center p-4">
+                    <div class="w-32 h-32 mb-4">
+                        <div class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                            <i class="fa-solid fa-user text-gray-400 text-4xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Lembaga Agama</h3>
+                    <p class="text-sm text-gray-600 max-w-sm">As one of the founders of ICRP, Prof. Maria Sukmawati has been an inspiration in building bridges for inter-religious dialogue in Indonesia.</p>
+                </div>
+            </div>
+
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Mitra Dialog Antar Agama</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="flex flex-col items-center text-center p-4">
+                    <div class="w-32 h-32 mb-4">
+                        <div class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                            <i class="fa-solid fa-user text-gray-400 text-4xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Mitra Pengusaha</h3>
+                </div>
+
+                <div class="flex flex-col items-center text-center p-4">
+                    <div class="w-32 h-32 mb-4">
+                        <div class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                            <i class="fa-solid fa-user text-gray-400 text-4xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Mitra Media</h3>
+                </div>
+
+                <div class="flex flex-col items-center text-center p-4">
+                    <div class="w-32 h-32 mb-4">
+                        <div class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                            <i class="fa-solid fa-user text-gray-400 text-4xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Mitra Agama</h3>
+                </div>
+
+                <div class="flex flex-col items-center text-center p-4">
+                    <div class="w-32 h-32 mb-4">
+                        <div class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                            <i class="fa-solid fa-user text-gray-400 text-4xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Mitra Aktivis</h3>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="relative py-32">
         <!-- Background Image -->

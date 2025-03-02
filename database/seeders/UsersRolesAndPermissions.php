@@ -27,6 +27,7 @@ class UsersRolesAndPermissions extends Seeder
             'delete users',
             'manage roles',
             'manage permissions',
+            'access dashboard',
         ];
 
         // Create permissions in the database
@@ -48,6 +49,7 @@ class UsersRolesAndPermissions extends Seeder
             'create users',
             'edit users',
             'delete users',
+            'access dashboard',
         ];
         $adminRole->givePermissionTo($adminPermissions);
 

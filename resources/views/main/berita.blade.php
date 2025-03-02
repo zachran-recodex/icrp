@@ -40,129 +40,101 @@
     <!-- News & Articles Section -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
+
             <!-- Section Header -->
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Berita & Artikel</h2>
-                <p class="text-primary-700">
-                    Mengenai berita terkini mengenai konferensi agama dan perdamaian Indonesia.
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Berita & Artikel</h2>
+                <p class="text-gray-600">
+                    Jelajahi berita dan artikel yang membahas dialog lintas agama, perdamaian, serta inisiatif kolaboratif dalam membangun harmoni di Indonesia.
                 </p>
             </div>
 
-        </div>
-    </section>
+            <!-- Featured News & Articles -->
+            <div class="flex justify-center mb-8">
+                <a href="" class="relative w-[1000px] h-[476px]">
+                    <!-- Gambar Artikel -->
+                    <img src="{{ Storage::url('articles/' . $featuredArticle->image) }}"
+                         alt="{{ $featuredArticle->title }}" class="w-full h-full object-cover rounded-lg">
 
-    <section class="py-20 bg-primary-50">
-        <div class="container mx-auto px-4">
+                    <!-- Badge Kategori -->
+                    <div class="absolute top-4 left-4 bg-primary-500 z-10 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        {{ $featuredArticle->category->title }}
+                    </div>
 
-        </div>
-    </section>
+                    <!-- Overlay & Konten -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 rounded-lg">
+                        <h2 class="text-white text-xl font-bold mb-3">
+                            {{ $featuredArticle->title }}
+                        </h2>
+                        <p class="text-gray-300">
+                            {{ Str::limit(strip_tags($featuredArticle->content), 150) }}
+                        </p>
+                    </div>
+                </a>
+            </div>
 
-    <!-- Videos Section -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row gap-8">
-                <!-- Featured Video -->
-                <div class="w-full md:w-1/2">
-                    <div class="relative rounded-xl overflow-hidden aspect-video">
-                        <img src="{{ asset('images/hero.jpeg') }}" alt="Featured Video"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                            <button
-                                class="w-16 h-16 bg-white/25 rounded-full flex items-center justify-center hover:bg-white/40 transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </button>
-                        </div>
+            <!-- Slider News & Article -->
+            <div x-data="{
+                    currentIndex: 0,
+                    totalSlides: 3,
+                    next() {
+                        this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+                    },
+                    prev() {
+                        this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+                    },
+                    goToSlide(index) {
+                        this.currentIndex = index;
+                    }
+                }" class="relative">
+                <div class="overflow-hidden">
+                    <div class="pb-4 flex transition-transform duration-700 ease-in-out"
+                         :style="'transform: translateX(-' + (currentIndex * 100) + '%)'">
+
+                        <!-- Looping artikel -->
+                        @foreach ($articles->chunk(3) as $chunkedArticles)
+                            <div class="w-full flex-none grid grid-cols-1 md:grid-cols-3 gap-6">
+                                @foreach ($chunkedArticles as $article)
+                                    <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                                        <div class="relative h-64">
+                                            <!-- Gambar Artikel -->
+                                            <img src="{{ Storage::url('articles/' . $article->image) }}"
+                                                 alt="News" class="w-full h-full object-cover">
+
+                                            <!-- Badge Kategori -->
+                                            <div class="absolute top-4 left-4 bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                                {{ $article->category->title }}
+                                            </div>
+                                        </div>
+                                        <div class="p-6">
+                                            <h4 class="text-xl font-semibold mb-3">{{ $article->title }}</h4>
+                                            <p class="text-gray-600 mb-3">
+                                                {{ Str::limit(strip_tags($article->content), 150) }}
+                                            </p>
+                                            <a href="" class="text-primary hover:text-primary/80 font-medium text-sm">
+                                                Baca Selengkapnya →
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
-                <!-- Video Slider -->
-                <div class="w-full md:w-1/2">
-                    <div x-data="{
-                        activeSlide: 0,
-                        slides: [0, 1, 2],
-                        init() {
-                            setInterval(() => {
-                                this.activeSlide = (this.activeSlide + 1) % 2;
-                            }, 5000);
-                        }
-                    }" class="relative">
-                        <div class="overflow-hidden">
-                            <div class="pb-4 flex transition-transform duration-700 ease-in-out"
-                                :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
-                                <!-- First Slide -->
-                                <div class="w-full flex-none grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <template x-for="i in 2">
-                                        <div class="bg-white rounded-xl overflow-hidden shadow-lg">
-                                            <div class="relative h-64">
-                                                <img src="{{ asset('images/hero.jpeg') }}" alt="News"
-                                                    class="w-full h-full object-cover">
-                                            </div>
-                                            <div class="p-6">
-                                                <h4 class="text-xl font-semibold mb-3">Minister of Religion and ICRP
-                                                    Agree to Strengthen Interfaith Harmony in Indonesia</h4>
-                                                <p class="text-gray-600 mb-4">Inauguration of ICRP Management</p>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </div>
-
-                                <!-- Second Slide -->
-                                <div class="w-full flex-none grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <template x-for="i in 2">
-                                        <div class="bg-white rounded-xl overflow-hidden shadow-lg">
-                                            <div class="relative h-64">
-                                                <img src="{{ asset('images/hero.jpeg') }}" alt="News"
-                                                    class="w-full h-full object-cover">
-                                            </div>
-                                            <div class="p-6">
-                                                <h4 class="text-xl font-semibold mb-3">Minister of Religion and ICRP
-                                                    Agree to Strengthen Interfaith Harmony in Indonesia</h4>
-                                                <p class="text-gray-600 mb-4">Inauguration of ICRP Management</p>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </div>
-
-                                <!-- Third Slide -->
-                                <div class="w-full flex-none grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <template x-for="i in 2">
-                                        <div class="bg-white rounded-xl overflow-hidden shadow-lg">
-                                            <div class="relative h-64">
-                                                <img src="{{ asset('images/hero.jpeg') }}" alt="News"
-                                                    class="w-full h-full object-cover">
-                                            </div>
-                                            <div class="p-6">
-                                                <h4 class="text-xl font-semibold mb-3">Minister of Religion and ICRP
-                                                    Agree to Strengthen Interfaith Harmony in Indonesia</h4>
-                                                <p class="text-gray-600 mb-4">Inauguration of ICRP Management</p>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slider Navigation Dots -->
-                        <div class="flex justify-center mt-8 space-x-2">
-                            <template x-for="(slide, index) in slides" :key="index">
-                                <button class="w-3 h-3 rounded-full transition-opacity duration-200"
-                                    :class="{
-                                        'bg-primary opacity-100': activeSlide ===
-                                            index,
-                                        'bg-primary opacity-50': activeSlide !== index
-                                    }"
-                                    @click="activeSlide = index"></button>
-                            </template>
-                        </div>
-                    </div>
+                <!-- Indicator Dots -->
+                <div class="absolute -bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <template x-for="(_, index) in totalSlides" :key="index">
+                        <button @click="goToSlide(index)"
+                                :class="{
+                    'w-3 h-3 rounded-full bg-primary': currentIndex === index,
+                    'w-3 h-3 rounded-full bg-primary/50': currentIndex !== index
+                }"
+                                class="transition-colors duration-300"></button>
+                    </template>
                 </div>
             </div>
+
         </div>
     </section>
 

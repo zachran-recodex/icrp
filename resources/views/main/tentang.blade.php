@@ -150,7 +150,7 @@
                                 <h3 class="text-white text-xl font-semibold">{{ $program->title }}</h3>
                             </div>
                             <p class="text-white mt-2">
-                                {{ $program->description }}
+                                {{ Str::limit(strip_tags($program->description), 150) }}
                             </p>
                         </div>
                     </div>
