@@ -29,6 +29,7 @@
     <!-- Hero Section -->
     <x-hero-section :title="$heroSection->title" :image="$heroSection->image" />
 
+    <!-- Management Section -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4 space-y-12">
 

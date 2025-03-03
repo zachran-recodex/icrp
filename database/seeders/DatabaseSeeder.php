@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             LibrarySeeder::class,
             CallToActionSeeder::class,
-            ProgramSeeder::class
+            ProgramSeeder::class,
+            FounderSeeder::class,
+            ManagementSeeder::class,
         ]);
     }
 }

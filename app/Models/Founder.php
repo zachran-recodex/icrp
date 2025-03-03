@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Founder extends Model
 {
-    protected $fillable = ['image', 'name', 'position', 'description'];
+    protected $fillable = [
+        'image',
+        'name',
+        'description'
+    ];
 }

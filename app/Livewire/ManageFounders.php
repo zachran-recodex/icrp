@@ -15,7 +15,6 @@ class ManageFounders extends Component
 
     public $image;
     public $name;
-    public $position;
     public $description;
     public $founder_id;
     public $isOpen = false;
@@ -55,7 +54,6 @@ class ManageFounders extends Component
     {
         $this->image = '';
         $this->name = '';
-        $this->position = '';
         $this->description = '';
         $this->founder_id = '';
         $this->temp_image = '';
@@ -66,13 +64,11 @@ class ManageFounders extends Component
         $this->validate([
             'temp_image' => $this->founder_id ? 'nullable|image|max:2048' : 'required|image|max:2048',
             'name' => 'required',
-            'position' => 'required',
             'description' => 'required',
         ]);
 
         $data = [
             'name' => $this->name,
-            'position' => $this->position,
             'description' => $this->description,
         ];
 
@@ -110,7 +106,6 @@ class ManageFounders extends Component
         $this->founder_id = $id;
         $this->image = $founder->image;
         $this->name = $founder->name;
-        $this->position = $founder->position;
         $this->description = $founder->description;
 
         $this->openModal();
