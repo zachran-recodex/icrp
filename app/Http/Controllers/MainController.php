@@ -71,8 +71,7 @@ class MainController extends Controller
     {
         $heroSection = HeroSection::first();
 
-        $founders = Founder::orderBy('id', 'desc') // Urutkan dari id terbaru
-            ->take(4) // Ambil 4 data
+        $founders = Founder::orderBy('id', 'asc') // Urutkan dari id terbaru
             ->get();
 
         $callToAction = CallToAction::first();
