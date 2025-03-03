@@ -111,7 +111,7 @@
                                             <p class="text-gray-600 mb-3">
                                                 {{ Str::limit(strip_tags($article->content), 150) }}
                                             </p>
-                                            <a href="" class="text-primary hover:text-primary/80 font-medium text-sm">
+                                            <a href="{{ route('berita.detail', $article->slug) }}" class="text-primary hover:text-primary/80 font-medium text-sm">
                                                 Baca Selengkapnya →
                                             </a>
                                         </div>

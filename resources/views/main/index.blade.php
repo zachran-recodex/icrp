@@ -67,7 +67,7 @@
 
             <!-- Featured News & Articles -->
             <div class="flex justify-center mb-8">
-                <a href="" class="relative w-[1000px] h-[476px]">
+                <a href="{{ route('berita.detail', $featuredArticle->slug) }}" class="relative w-[1000px] h-[476px]">
                     <!-- Gambar Artikel -->
                     <img src="{{ Storage::url('articles/' . $featuredArticle->image) }}"
                          alt="{{ $featuredArticle->title }}" class="w-full h-full object-cover rounded-lg">
@@ -127,7 +127,7 @@
                                             <p class="text-gray-600 mb-3">
                                                 {{ Str::limit(strip_tags($article->content), 150) }}
                                             </p>
-                                            <a href="" class="text-primary hover:text-primary/80 font-medium text-sm">
+                                            <a href="{{ route('berita.detail', $article->slug) }}" class="text-primary hover:text-primary/80 font-medium text-sm">
                                                 Baca Selengkapnya →
                                             </a>
                                         </div>
@@ -345,7 +345,7 @@
                             <p class="text-gray-600 mb-4">Penulis: {{ $library->author }}</p>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm text-gray-500">2023</span>
-                                <a href="" class="text-primary hover:text-primary/80 font-medium text-sm">
+                                <a href="{{ route('pustaka.detail', $library->slug) }}" class="text-primary hover:text-primary/80 font-medium text-sm">
                                     Baca Selengkapnya →
                                 </a>
                             </div>
