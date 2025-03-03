@@ -51,7 +51,7 @@
 
             <!-- Featured News & Articles -->
             <div class="flex justify-center mb-8">
-                <a href="" class="relative w-[1000px] h-[476px]">
+                <a href="{{ route('berita.detail', $featuredArticle->slug) }}" class="relative w-[1000px] h-[476px]">
                     <!-- Gambar Artikel -->
                     <img src="{{ Storage::url('articles/' . $featuredArticle->image) }}"
                          alt="{{ $featuredArticle->title }}" class="w-full h-full object-cover rounded-lg">
@@ -99,7 +99,7 @@
                                         <div class="relative h-64">
                                             <!-- Gambar Artikel -->
                                             <img src="{{ Storage::url('articles/' . $article->image) }}"
-                                                 alt="News" class="w-full h-full object-cover">
+                                                 alt="{{ $article->title }}" class="w-full h-full object-cover">
 
                                             <!-- Badge Kategori -->
                                             <div class="absolute top-4 left-4 bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
@@ -111,7 +111,7 @@
                                             <p class="text-gray-600 mb-3">
                                                 {{ Str::limit(strip_tags($article->content), 150) }}
                                             </p>
-                                            <a href="" class="text-primary hover:text-primary/80 font-medium text-sm">
+                                            <a href="{{ route('berita.detail', $article->slug) }}" class="text-primary hover:text-primary/80 font-medium text-sm">
                                                 Baca Selengkapnya →
                                             </a>
                                         </div>

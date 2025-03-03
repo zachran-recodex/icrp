@@ -182,11 +182,9 @@ class MainController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $relatedArticles = Article::with('category')
-            ->where('category_id', $article->category_id)
-            ->where('id', '!=', $article->id)
+        $articles = Article::with('category')
+            ->where('id', '!=', $article->id) // Menghindari duplikasi dengan $featuredArticle
             ->latest()
-            ->take(3)
             ->get();
 
         $heroSection = HeroSection::first();
@@ -196,7 +194,7 @@ class MainController extends Controller
         return view('main.berita-detail',
             compact(
                 'article',
-                'relatedArticles',
+                'articles',
                 'heroSection',
                 'callToAction'
             )
