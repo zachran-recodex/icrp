@@ -29,7 +29,7 @@
 
     <!-- About Section -->
     <section class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6 space-y-16">
+        <div class="container mx-auto px-4 space-y-12">
 
             <!-- Section Header -->
             <div class="max-w-3xl mx-auto text-center">
@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 items-center gap-16">
+            <div class="grid grid-cols-2 items-center gap-12">
                 <!-- Visi -->
                 <div class="text-center">
                     <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Visi</h2>
@@ -154,16 +154,12 @@
 
     <!-- Programs Section -->
     <section class="py-20 bg-primary-50">
-        <div class="container mx-auto px-4">
+        <div class="container mx-auto px-4 space-y-12">
 
             <!-- Section Header -->
-            <div class="max-w-3xl mx-auto text-center mb-8">
-                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Program Kami</h2>
-                <p class="text-gray-600">
-                    The following is the work program of the Indonesian Religion and Peace Conference (ICRP) which was
-                    prepared with the aim of encouraging peace, tolerance, and inter-religious dialogue in Indonesia,
-                    for the sake of creating a harmonious and inclusive social life.
-                </p>
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl font-extrabold text-primary-600 mb-4">Program Kerja</h2>
+                <p class="text-lg text-gray-600">Indonesian Conference on Religion and Peace (ICRP)</p>
             </div>
 
             <!-- Programs Grid -->
@@ -173,10 +169,7 @@
                         <img src="{{ Storage::url('programs/' . $program->image) }}" alt="{{ $program->title }}"
                              class="w-full h-[312px] object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-6">
-                            <div class="flex items-center gap-2 text-primary-400">
-                                <i class="fas fa-users w-6 h-6"></i>
-                                <h3 class="text-white text-xl font-semibold">{{ $program->title }}</h3>
-                            </div>
+                            <h3 class="text-white text-xl font-semibold">{{ $program->title }}</h3>
                             <p class="text-white mt-2">
                                 {{ Str::limit(strip_tags($program->description), 150) }}
                             </p>
