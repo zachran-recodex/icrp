@@ -56,16 +56,10 @@
                     Program
                 </x-nav-link>
 
-                <x-nav-link :href="route('dashboard.programs')" :active="request()->routeIs('dashboard.programs')" class="flex items-center p-2 rounded-md gap-x-3">
-                    <i
-                        class="fa-solid fa-video {{ request()->routeIs('dashboard.programs') ? 'text-primary-500' : 'text-gray-950' }}"></i>
-                    Video
-                </x-nav-link>
-
                 <x-nav-link :href="route('dashboard.cta')" :active="request()->routeIs('dashboard.cta')" class="flex items-center p-2 rounded-md gap-x-3">
                     <i
-                        class="fa-solid fa-video {{ request()->routeIs('dashboard.cta') ? 'text-primary-500' : 'text-gray-950' }}"></i>
-                    Call To Action
+                        class="fa-solid fa-rectangle-ad {{ request()->routeIs('dashboard.cta') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    CTA Section
                 </x-nav-link>
             </ul>
         </li>
@@ -80,11 +74,6 @@
                     Setting
                 </x-nav-link>
 
-                <x-nav-link :href="route('dashboard.comments')" :active="request()->routeIs('dashboard.comments')" class="flex items-center p-2 rounded-md gap-x-3">
-                    <i
-                        class="fa-solid fa-book {{ request()->routeIs('dashboard.comments') ? 'text-primary-500' : 'text-gray-950' }}"></i>
-                    Test Komentar
-                </x-nav-link>
             </ul>
         </li>
     </ul>
