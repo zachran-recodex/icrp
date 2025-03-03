@@ -11,7 +11,7 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
-        <meta name="theme-color" content="#171717">
+        <meta name="theme-color" class="bg-background-primary" content="#171717">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -239,13 +239,14 @@
                         <div class="container mx-auto px-4 py-6">
                             <div class="flex flex-col md:flex-row justify-between items-center">
                                 <p class="text-gray-400 text-sm">
-                                    © 2025 Indonesian Conference on Religion and Peace (ICRP). All rights reserved.
+                                    © {{ date('Y') }} Indonesian Conference on Religion and Peace (ICRP). All rights reserved.
                                 </p>
                                 <div class="flex space-x-6 mt-4 md:mt-0">
                                     <a href="#" class="text-sm text-gray-400 hover:text-primary transition">Privacy
                                         Policy</a>
                                     <a href="#" class="text-sm text-gray-400 hover:text-primary transition">Terms of
                                         Service</a>
+                                    <span class="text-sm text-gray-400">Created by <a href="https://recodex.id" target="_blank" class="text-[#86c332]">Recodex ID</a></span>
                                 </div>
                             </div>
                         </div>
