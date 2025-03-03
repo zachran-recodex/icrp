@@ -32,7 +32,7 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen">
 
-            <div x-data="{ isExpanded: false, tentangOpen: false }" class="fixed inset-y-0 z-[99] flex bg-background-primary"
+            <div x-data="{ isExpanded: false, tentangOpen: false }" class="fixed inset-y-0 z-[99] flex bg-background-primary border-r border-white/20"
                  :class="{ 'w-64': isExpanded, 'w-16': !isExpanded }">
 
                 <div class="flex flex-col flex-grow w-full">
@@ -283,7 +283,7 @@
                     </div>
 
                     <!-- Bottom Footer -->
-                    <div class="border-t border-gray-800">
+                    <div class="border-t border-white/20">
                         <div class="container mx-auto px-4 py-6">
                             <div class="flex flex-col md:flex-row justify-between items-center">
                                 <p class="text-gray-400 text-sm">
