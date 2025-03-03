@@ -54,7 +54,7 @@
                                  class="w-full h-full rounded-full object-cover">
                         </div>
                         <h3 class="text-lg font-bold text-gray-900">{{ $founder->name }}</h3>
-                        <p class="text-purple-600 mb-2">{{ $founder->position }}</p>
+                        <p class="text-primary-600 mb-2">{{ $founder->position }}</p>
                         <p class="text-sm text-gray-600 max-w-sm">
                             {{ Str::limit(strip_tags($founder->description), 100) }}
                         </p>
