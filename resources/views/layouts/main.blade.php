@@ -237,21 +237,22 @@
                                 </div>
                             </div>
 
-                            <!-- Newsletter -->
+                            <!-- Google Maps (Replacing Newsletter) -->
                             <div>
-                                <h4 class="text-lg font-semibold mb-6">Newsletter</h4>
-                                <p class="text-gray-400 mb-4">Berlangganan newsletter kami untuk mendapatkan informasi
-                                    terbaru.</p>
-                                <form class="space-y-3">
-                                    <div class="flex">
-                                        <input type="email" placeholder="Alamat Email"
-                                               class="flex-1 px-4 py-2 rounded-l-lg bg-background-footer border border-gray-700 text-white focus:outline-none focus:border-primary">
-                                        <button type="submit"
-                                                class="px-4 py-2 bg-primary text-white rounded-r-lg hover:bg-primary/90 transition">
-                                            Subscribe
-                                        </button>
-                                    </div>
-                                </form>
+                                <h4 class="text-lg font-semibold mb-6">Lokasi Kami</h4>
+                                <div class="w-full h-48 bg-gray-700 rounded-lg overflow-hidden">
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.666400520032!2d106.83000731476908!3d-6.1753870622773105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764b12d%3A0x3d2ad6e1e0e9bcc8!2sJl.%20Pemuda%2C%20Jakarta!5e0!3m2!1sen!2sid!4v1614565833183!5m2!1sen!2sid"
+                                        width="100%"
+                                        height="100%"
+                                        style="border:0;"
+                                        allowfullscreen=""
+                                        loading="lazy"
+                                        class="rounded-lg"
+                                        title="Lokasi ICRP">
+                                    </iframe>
+                                </div>
+                                <p class="text-gray-400 mt-3 text-sm">Kunjungi kantor kami untuk informasi lebih lanjut.</p>
                             </div>
                         </div>
                     </div>
@@ -275,6 +276,7 @@
                         </div>
                     </div>
                 </footer>
+
             </div>
         </div>
 
