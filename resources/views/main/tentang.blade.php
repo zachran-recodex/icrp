@@ -64,33 +64,35 @@
                 </div>
             </div>
 
-            <!-- Visi -->
-            <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Visi</h2>
-                <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                    Masyarakat yang damai dan sejahtera dalam konteks kemajemukan agama dan kepercayaan di Indonesia.
-                </p>
-            </div>
+            <div class="grid grid-cols-2 items-center gap-16">
+                <!-- Visi -->
+                <div class="text-center">
+                    <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Visi</h2>
+                    <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                        Masyarakat yang damai dan sejahtera dalam konteks kemajemukan agama dan kepercayaan di Indonesia.
+                    </p>
+                </div>
 
-            <!-- Misi -->
-            <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Misi</h2>
-                <ul class="text-lg text-gray-700 max-w-3xl mx-auto space-y-4 text-left list-disc list-inside">
-                    <li>Menumbuhkembangkan multikulturalisme dan pluralisme dalam kehidupan Masyarakat.</li>
-                    <li>
-                        Membangun kesadaran dan mengembangkan budaya religiusitas yang sehat, saling menghormati dan
-                        bebas dari rasa saling curiga di antara seluruh elemen bangsa khususnya komunitas dan lembaga
-                        antar iman.
-                    </li>
-                    <li>
-                        Mendorong usaha-usaha dialog, advokasi, pengkajian dan pemecahan masalah-masalah sosial politik
-                        dan keagamaan baik dalam skala daerah, nasional, regional, maupun internasional.
-                    </li>
-                    <li>
-                        Mendorong semua pihak untuk menghormati dan mensyukuri keanekaragaman dan kekayaan tradisi
-                        keagamaan masing-masing.
-                    </li>
-                </ul>
+                <!-- Misi -->
+                <div class="text-center">
+                    <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Misi</h2>
+                    <ul class="text-lg text-gray-700 max-w-3xl mx-auto space-y-4 text-left list-disc list-inside">
+                        <li>Menumbuhkembangkan multikulturalisme dan pluralisme dalam kehidupan Masyarakat.</li>
+                        <li>
+                            Membangun kesadaran dan mengembangkan budaya religiusitas yang sehat, saling menghormati dan
+                            bebas dari rasa saling curiga di antara seluruh elemen bangsa khususnya komunitas dan lembaga
+                            antar iman.
+                        </li>
+                        <li>
+                            Mendorong usaha-usaha dialog, advokasi, pengkajian dan pemecahan masalah-masalah sosial politik
+                            dan keagamaan baik dalam skala daerah, nasional, regional, maupun internasional.
+                        </li>
+                        <li>
+                            Mendorong semua pihak untuk menghormati dan mensyukuri keanekaragaman dan kekayaan tradisi
+                            keagamaan masing-masing.
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Prinsip-Prinsip -->
