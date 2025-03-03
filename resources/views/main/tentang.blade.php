@@ -30,94 +30,127 @@
     <x-hero-section :title="$heroSection->title" :image="$heroSection->image" />
 
     <!-- About Section -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-4 space-y-12">
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 space-y-16">
 
             <!-- Section Header -->
-            <div class="max-w-3xl mx-auto text-center mb-8">
-                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Tentang Kami</h2>
-                <p class="text-gray-600">
-                    Indonesian Conference on Religion and Peace (ICRP)
-                </p>
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl font-extrabold text-primary-600 mb-4">Tentang Kami</h2>
+                <p class="text-lg text-gray-600">Indonesian Conference on Religion and Peace (ICRP)</p>
             </div>
 
-            <!-- Bagian 2: Sejarah & Gambar -->
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="w-full md:w-1/2 space-y-4 text-gray-700 text-lg">
+            <!-- Sejarah & Gambar -->
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2 text-gray-700 text-lg space-y-6 leading-relaxed">
                     <p>
-                        <em>Indonesian Conference on Religion and Peace</em> (ICRP) adalah lembaga sosial dan
-                        kemanusiaan
-                        berbadan hukum Yayasan yang berkantor di Jl. Cempaka Putih Barat XXI No. 34 Jakarta Pusat.
+                        ICRP adalah sebuah organisasi berbadan hukum yayasan yang bersifat non-sektarian, nonprofit,
+                        non-pemerintah, dan independen. ICRP mempromosikan dialog dan kerjasama lintas iman dibidani
+                        kelahirannya oleh para tokoh dari berbagai agama dan kepercayaan di Indonesia. ICRP berusaha
+                        mempromosikan dialog dalam pengembangan kehidupan beragama yang demokratis, humanis dan
+                        pluralis.
                     </p>
                     <p>
-                        ICRP memiliki komitmen sebagai Rumah Bersama dalam mewujudkan perdamaian, membangun dan
-                        menciptakan
-                        forum dialog sebagai ruang perjumpaan, penghormatan atas keberagaman, toleransi, dan perdamaian,
-                        serta menjunjung tinggi martabat nilai-nilai kemanusiaan.
-                    </p>
-                    <p>
-                        Sebelum diresmikan pada 12 Juli 2000 oleh Presiden Indonesia ke-4, KH. Abdurrahman Wahid, upaya
-                        dialog antaragama telah dibangun di Indonesia.
+                        Jauh sebelum ICRP diresmikan pada 12 Juli 2000 oleh Presiden RI Abdurrahman Wahid, upaya-upaya
+                        dialog lintas agama sudah tumbuh dan berkembang di Indonesia. ICRP bersama berbagai lembaga dan
+                        individu yang peduli memperjuangkan pluralisme dan perdamaian lebih mempertegas upaya-upaya
+                        tersebut demi menegakkan keadilan dalam berbagai perspektif gender, HAM, kehidupan beragama,
+                        ekonomi, sosial, pendidikan, kesehatan dan politik. ICRP turut aktif dalam mengembangkan studi
+                        perdamaian dan resolusi konflik, serta memperjuangkan hak-hak sipil, kebebasan beragama dan
+                        berkeyakinan.
                     </p>
                 </div>
                 <div class="w-full md:w-1/2">
                     <img src="{{ asset('images/hero.jpeg') }}" alt="KH. Abdurrahman Wahid"
-                        class="w-full h-auto rounded-lg shadow-lg">
+                         class="w-full h-auto rounded-xl shadow-lg">
                     <p class="text-center text-sm text-gray-500 mt-2">Source: https://www.icrp.com</p>
                 </div>
             </div>
 
-            <!-- Paragraf Pembuka -->
-            <div class="text-gray-700 text-lg space-y-6 mx-auto">
-                <p>
-                    ICRP bersama dengan berbagai lembaga maupun individu yang memperjuangkan pluralisme dan
-                    perdamaian lebih menekankan pada keadilan dalam berbagai perspektif: gender, HAM, spiritualitas,
-                    ekonomi, sosial, dan politik.
+            <!-- Visi -->
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Visi</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                    Masyarakat yang damai dan sejahtera dalam konteks kemajemukan agama dan kepercayaan di Indonesia.
                 </p>
             </div>
 
-            <!-- Bagian 3: Ide Pendirian & Gambar -->
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="w-full md:w-1/2">
-                    <img src="{{ asset('images/hero.jpeg') }}" alt="Diskusi ICRP"
-                        class="w-full h-auto rounded-lg shadow-lg">
-                    <p class="text-center text-sm text-gray-500 mt-2">Source: https://www.icrp.com</p>
-                </div>
-                <div class="w-full md:w-1/2 space-y-4 text-gray-700 text-lg">
-                    <p>
-                        Ide pendirian ICRP berawal dari pemikiran Djohan Effendi, Mensekneg era Presiden Abdurrahman
-                        Wahid (Gus Dur). Djohan Effendi adalah tokoh penting dalam pengembangan kehidupan keagamaan yang
-                        lebih dialogis, harmonis, dan toleran di Indonesia.
-                    </p>
-                    <p>
-                        Sebagai organisasi nirlaba, nonsektarian, non-pemerintah, dan independen, ICRP didedikasikan
-                        untuk mempromosikan dialog antaragama, demokrasi, dan perdamaian di Indonesia.
-                    </p>
-                </div>
+            <!-- Misi -->
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Misi</h2>
+                <ul class="text-lg text-gray-700 max-w-3xl mx-auto space-y-4 text-left list-disc list-inside">
+                    <li>Menumbuhkembangkan multikulturalisme dan pluralisme dalam kehidupan Masyarakat.</li>
+                    <li>
+                        Membangun kesadaran dan mengembangkan budaya religiusitas yang sehat, saling menghormati dan
+                        bebas dari rasa saling curiga di antara seluruh elemen bangsa khususnya komunitas dan lembaga
+                        antar iman.
+                    </li>
+                    <li>
+                        Mendorong usaha-usaha dialog, advokasi, pengkajian dan pemecahan masalah-masalah sosial politik
+                        dan keagamaan baik dalam skala daerah, nasional, regional, maupun internasional.
+                    </li>
+                    <li>
+                        Mendorong semua pihak untuk menghormati dan mensyukuri keanekaragaman dan kekayaan tradisi
+                        keagamaan masing-masing.
+                    </li>
+                </ul>
             </div>
 
-            <!-- Bagian Visi -->
-            <div class="text-center mt-12">
-                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Visi</h2>
-                <p class="text-gray-700 text-lg max-w-3xl mx-auto">
-                    Mewujudkan masyarakat damai, berkeadilan, setara, persaudaraan dalam pluralisme agama dan keyakinan,
-                    serta kesejahteraan dalam konteks kemajemukan agama di Indonesia.
+            <!-- Prinsip-Prinsip -->
+            <div class="space-y-10">
+                <p class="text-lg text-gray-700 font-semibold text-center max-w-4xl mx-auto leading-relaxed">
+                    Prinsip-prinsip Bumi ini disediakan oleh Sang Maha Pencipta untuk semua manusia, sehingga semua
+                    manusia memiliki hak yang sama pula. Karena itu:
                 </p>
-            </div>
-
-            <!-- Bagian Misi -->
-            <div class="text-center mt-12">
-                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Misi</h2>
-                <ul class="list-decimal list-inside text-gray-700 text-lg max-w-3xl mx-auto space-y-4">
-                    <li>Menumbuhkan multikulturalisme dan pluralisme dalam kehidupan bermasyarakat.</li>
-                    <li>Membangun kesadaran budaya religius yang sehat dan saling menghormati.</li>
-                    <li>Memfasilitasi dialog, advokasi, dan pemecahan masalah sosial-politik terkait keagamaan.</li>
-                    <li>Mendorong generasi muda untuk menghormati dan menyayangi keberagaman.</li>
+                <ul class="text-lg text-gray-700 max-w-5xl mx-auto space-y-4 list-decimal list-inside">
+                    <li>
+                        ICRP percaya bahwa keragaman suku, agama, budaya, adat Indonesia adalah kekayaan yang diberikan
+                        Tuhan untuk mendorong integrasi sosial, bukan untuk alasan memecah belah.
+                    </li>
+                    <li>
+                        ICRP percaya bahwa pluralisme, penghargaan terhadap yang lain, adalah pilihan sikap terbaik
+                        dalam kehidupan beragama di tengah keragaman tersebut.
+                    </li>
+                    <li>
+                        ICRP percaya bahwa misi utama agama-agama adalah terwujudnya kehidupan rukun, damai, dan
+                        sejahtera, bagi manusia dan kemanusiaan secara keseluruhan.
+                    </li>
+                    <li>
+                        ICRP percaya bahwa pada prinsipnya agama tidak mengajarkan kekerasan. Karena itu setiap
+                        komunitas agama harus mengambil peran aktif untuk menolak segala bentuk kekerasan atas nama
+                        agama.
+                    </li>
+                    <li>
+                        ICRP percaya bahwa setiap individu, setiap warga negara, harus dijamin hak-hak dan kebebasan
+                        sipilnya oleh negara. Termasuk di dalamnya adalah hak dan kebebasan beragama dan berkeyakinan.
+                    </li>
+                    <li>
+                        ICRP percaya bahwa negara harus “netral agama”. Negara harus berdiri di atas semua agama dan
+                        keyakinan dalam merumuskan dan mengimplementasikan setiap kebijakannya.
+                    </li>
+                    <li>
+                        ICRP menolak “logika pengakuan” yang membawa pada kesimpulan “agama resmi” atau “agama yang
+                        diakui”. Negara sudah secara otomatis harus mengakui, melindungi, dan menghargai setiap
+                        pengakuan agama oleh individu maupun kelompok.
+                    </li>
+                    <li>
+                        ICRP percaya bahwa komunitas dan kelompok agama menempati posisi strategis dan peran yang
+                        signifikan dalam kehidupan berbangsa.
+                    </li>
+                    <li>
+                        ICRP percaya bahwa kelompok agama adalah modal sosial yang harus didorong untuk berperan aktif
+                        dalam pemajuan kehidupan sosial masyarakat, dan karena itu mereka harus peduli terhadap masalah
+                        sosial di luar isu-isu agama.
+                    </li>
+                    <li>
+                        ICRP menolak politisasi agama, penggunaan agama dan simbol-simbol agama untuk kepentingan
+                        politik sesaat dan untuk meraih dukungan dalam politik praktis
+                    </li>
                 </ul>
             </div>
 
         </div>
     </section>
+
 
     <!-- Programs Section -->
     <section class="py-20 bg-primary-50">
