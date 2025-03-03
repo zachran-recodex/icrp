@@ -85,6 +85,24 @@ class MainController extends Controller
         );
     }
 
+    public function pendiriDetail($slug)
+    {
+        $heroSection = HeroSection::first();
+        $callToAction = CallToAction::first();
+
+        $founder = Founder::with(['contributions' => function($query) {
+            $query->orderBy('order');
+        }, 'legacies'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return view('main.pendiri-detail', compact(
+            'founder',
+            'heroSection',
+            'callToAction',
+        ));
+    }
+
     public function pengurus()
     {
         $heroSection = HeroSection::first();

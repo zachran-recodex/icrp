@@ -3,30 +3,76 @@
 namespace App\Livewire;
 
 use App\Models\Founder;
+use App\Models\FounderContribution;
+use App\Models\FounderLegacy;
 use Livewire\Component;
 use App\WithNotification;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ManageFounders extends Component
 {
     use WithFileUploads, WithNotification, WithPagination;
 
-    public $image;
-    public $name;
-    public $description;
+    // Base founder properties
     public $founder_id;
-    public $isOpen = false;
+    public $name;
+    public $nickname;
+    public $slug;
+    public $birth_date;
+    public $death_date;
+    public $birth_place;
+    public $known_as;
+    public $quote;
+    public $biography;
+    public $image;
     public $temp_image;
+    public $order = 0;
+
+    // Legacy and contributions
+    public $contributions = [];
+    public $legacyContent;
+
+    // UI control
+    public $isOpen = false;
+    public $activeTab = 'basic'; // tabs: basic, contributions, legacy
     public $search;
+
+    // Contribution temporary variables
+    public $newContributionTitle = '';
+    public $newContributionDescription = '';
+
+    protected $rules = [
+        'name' => 'required|string|max:255',
+        'nickname' => 'nullable|string|max:255',
+        'birth_date' => 'required|date',
+        'death_date' => 'nullable|date',
+        'birth_place' => 'required|string|max:255',
+        'known_as' => 'required|string|max:255',
+        'quote' => 'nullable|string',
+        'biography' => 'required|string',
+        'temp_image' => 'nullable|image|max:2048',
+        'order' => 'integer',
+        'contributions.*.title' => 'required|string|max:255',
+        'contributions.*.description' => 'required|string',
+        'legacyContent' => 'nullable|string',
+    ];
+
+    public function mount()
+    {
+        // Initialize with an empty contribution row
+        $this->resetContributions();
+    }
 
     public function render()
     {
         $founders = Founder::when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy('id', 'asc')
+            $query->where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('nickname', 'like', '%' . $this->search . '%');
+        })
+            ->orderBy('order', 'asc')
             ->paginate(10);
 
         return view('livewire.manage-founders', [
@@ -52,32 +98,92 @@ class ManageFounders extends Component
 
     private function resetInputFields()
     {
-        $this->image = '';
+        $this->founder_id = null;
         $this->name = '';
-        $this->description = '';
-        $this->founder_id = '';
+        $this->nickname = '';
+        $this->slug = '';
+        $this->birth_date = '';
+        $this->death_date = '';
+        $this->birth_place = '';
+        $this->known_as = '';
+        $this->quote = '';
+        $this->biography = '';
+        $this->image = '';
         $this->temp_image = '';
+        $this->order = 0;
+        $this->resetContributions();
+        $this->legacyContent = '';
+        $this->activeTab = 'basic';
+    }
+
+    private function resetContributions()
+    {
+        $this->contributions = [
+            [
+                'id' => null,
+                'title' => '',
+                'description' => '',
+                'order' => 0
+            ]
+        ];
+    }
+
+    public function addContribution()
+    {
+        $this->contributions[] = [
+            'id' => null,
+            'title' => '',
+            'description' => '',
+            'order' => count($this->contributions)
+        ];
+    }
+
+    public function removeContribution($index)
+    {
+        if (count($this->contributions) > 1) {
+            array_splice($this->contributions, $index, 1);
+
+            // Reset order values
+            foreach ($this->contributions as $i => $contribution) {
+                $this->contributions[$i]['order'] = $i;
+            }
+        }
+    }
+
+    public function setTab($tab)
+    {
+        $this->activeTab = $tab;
     }
 
     public function store()
     {
-        $this->validate([
-            'temp_image' => $this->founder_id ? 'nullable|image|max:2048' : 'required|image|max:2048',
-            'name' => 'required',
-            'description' => 'required',
-        ]);
+        $this->validate();
 
+        // Generate slug if not exists
+        if (empty($this->slug)) {
+            $this->slug = Str::slug($this->name);
+        }
+
+        // Prepare founder data
         $data = [
             'name' => $this->name,
-            'description' => $this->description,
+            'nickname' => $this->nickname,
+            'slug' => $this->slug,
+            'birth_date' => $this->birth_date,
+            'death_date' => $this->death_date ?: null,
+            'birth_place' => $this->birth_place,
+            'known_as' => $this->known_as,
+            'quote' => $this->quote,
+            'biography' => $this->biography,
+            'order' => $this->order,
         ];
 
         // Handle image upload
         if ($this->temp_image) {
-            // Delete old image if exists
+            // Delete old image if exists when updating
             if ($this->founder_id) {
                 $founder = Founder::find($this->founder_id);
-                if ($founder->image) {
+                if ($founder && $founder->image) {
                     Storage::disk('public')->delete('founders/' . $founder->image);
                 }
             }
@@ -88,25 +194,113 @@ class ManageFounders extends Component
             $data['image'] = $imageName;
         }
 
-        Founder::updateOrCreate(['id' => $this->founder_id], $data);
+        // Create or update founder
+        $founder = Founder::updateOrCreate(['id' => $this->founder_id], $data);
+
+        // Handle contributions
+        $this->storeContributions($founder);
+
+        // Handle legacy content
+        $this->storeLegacy($founder);
 
         $this->notifySuccess(
             $this->founder_id
-                ? 'Founder successfully updated.'
-                : 'Founder successfully created.'
+                ? 'Pendiri berhasil diperbarui.'
+                : 'Pendiri berhasil ditambahkan.'
         );
 
         $this->closeModal();
         $this->resetInputFields();
     }
 
+    private function storeContributions($founder)
+    {
+        // Get existing contribution IDs for this founder
+        $existingIds = $founder->contributions()->pluck('id')->toArray();
+        $keepIds = [];
+
+        // Update or create contributions
+        foreach ($this->contributions as $index => $contribution) {
+            if (!empty($contribution['title']) && !empty($contribution['description'])) {
+                $contribData = [
+                    'title' => $contribution['title'],
+                    'description' => $contribution['description'],
+                    'order' => $index
+                ];
+
+                if (!empty($contribution['id'])) {
+                    // Update existing
+                    $contrib = FounderContribution::find($contribution['id']);
+                    if ($contrib) {
+                        $contrib->update($contribData);
+                        $keepIds[] = $contrib->id;
+                    }
+                } else {
+                    // Create new
+                    $contrib = $founder->contributions()->create($contribData);
+                    $keepIds[] = $contrib->id;
+                }
+            }
+        }
+
+        // Delete contributions that were removed
+        $deleteIds = array_diff($existingIds, $keepIds);
+        if (!empty($deleteIds)) {
+            FounderContribution::whereIn('id', $deleteIds)->delete();
+        }
+    }
+
+    private function storeLegacy($founder)
+    {
+        if ($this->legacyContent) {
+            $legacy = $founder->legacies()->first();
+
+            if ($legacy) {
+                $legacy->update(['content' => $this->legacyContent]);
+            } else {
+                $founder->legacies()->create(['content' => $this->legacyContent]);
+            }
+        } else {
+            // Remove legacy if content is empty
+            $founder->legacies()->delete();
+        }
+    }
+
     public function edit($id)
     {
-        $founder = Founder::findOrFail($id);
+        $founder = Founder::with(['contributions', 'legacies'])->findOrFail($id);
+
+        // Basic info
         $this->founder_id = $id;
-        $this->image = $founder->image;
         $this->name = $founder->name;
-        $this->description = $founder->description;
+        $this->nickname = $founder->nickname;
+        $this->slug = $founder->slug;
+        $this->birth_date = $founder->birth_date ? $founder->birth_date->format('Y-m-d') : null;
+        $this->death_date = $founder->death_date ? $founder->death_date->format('Y-m-d') : null;
+        $this->birth_place = $founder->birth_place;
+        $this->known_as = $founder->known_as;
+        $this->quote = $founder->quote;
+        $this->biography = $founder->biography;
+        $this->image = $founder->image;
+        $this->order = $founder->order;
+
+        // Contributions
+        if ($founder->contributions->count() > 0) {
+            $this->contributions = $founder->contributions->map(function($contribution) {
+                return [
+                    'id' => $contribution->id,
+                    'title' => $contribution->title,
+                    'description' => $contribution->description,
+                    'order' => $contribution->order
+                ];
+            })->toArray();
+        } else {
+            $this->resetContributions();
+        }
+
+        // Legacy
+        $legacy = $founder->legacies->first();
+        $this->legacyContent = $legacy ? $legacy->content : '';
 
         $this->openModal();
     }
@@ -115,12 +309,20 @@ class ManageFounders extends Component
     {
         $founder = Founder::find($id);
 
-        // Delete image from storage if exists
-        if ($founder->image) {
-            Storage::disk('public')->delete('founders/' . $founder->image);
-        }
+        if ($founder) {
+            // Delete image from storage if exists
+            if ($founder->image) {
+                Storage::disk('public')->delete('founders/' . $founder->image);
+            }
 
-        $founder->delete();
-        $this->notifySuccess('Founder successfully deleted.');
+            // Delete will cascade to contributions and legacies because of the migration
+            $founder->delete();
+            $this->notifySuccess('Pendiri berhasil dihapus.');
+        }
+    }
+
+    public function updatedName()
+    {
+        $this->slug = Str::slug($this->name);
     }
 }

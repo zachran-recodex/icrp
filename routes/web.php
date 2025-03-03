@@ -7,14 +7,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(MainController::class)->group(function () {
     Route::get('/', 'index')->name('beranda');
+
     Route::get('/tentang-kami', 'tentang')->name('tentang');
+
     Route::get('/pendiri', 'pendiri')->name('pendiri');
+    Route::get('/pendiri/{slug}', 'pendiriDetail')->name('pendiri.detail');
+
     Route::get('/pengurus', 'pengurus')->name('pengurus');
+
     Route::get('/kontak', 'kontak')->name('kontak');
+
     Route::get('/sahabat', 'sahabat')->name('sahabat');
+
     Route::get('/jaringan', 'jaringan')->name('jaringan');
+
     Route::get('/berita-artikel', 'berita')->name('berita');
     Route::get('/berita-artikel/{slug}', 'beritaDetail')->name('berita.detail');
+
     Route::get('/pustaka', 'pustaka')->name('pustaka');
     Route::get('/pustaka/{slug}', 'pustakaDetail')->name('pustaka.detail');
 });

@@ -13,9 +13,35 @@ return new class extends Migration
     {
         Schema::create('founders', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
             $table->string('name');
+            $table->string('nickname')->nullable();
+            $table->string('slug')->unique();
+            $table->date('birth_date');
+            $table->date('death_date')->nullable();
+            $table->string('birth_place');
+            $table->string('known_as');
+            $table->text('quote')->nullable();
+            $table->text('biography');
+            $table->string('image')->nullable();
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
+
+        // Membuat tabel untuk kontribusi pendiri
+        Schema::create('founder_contributions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('founder_id')->constrained()->onDelete('cascade');
+            $table->string('title');
             $table->text('description');
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
+
+        // Membuat tabel untuk warisan pemikiran pendiri
+        Schema::create('founder_legacies', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('founder_id')->constrained()->onDelete('cascade');
+            $table->text('content');
             $table->timestamps();
         });
     }
@@ -25,6 +51,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('founder_legacies');
+        Schema::dropIfExists('founder_contributions');
         Schema::dropIfExists('founders');
     }
 };
