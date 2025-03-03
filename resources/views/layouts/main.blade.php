@@ -52,20 +52,29 @@
 
                     <!-- Navigation -->
                     <nav class="flex-1 px-3 mt-3 space-y-1">
-                        <a href="{{ route('beranda') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
-                            <i class="fa-solid fa-house w-6 h-6"></i>
-                            <span x-show="isExpanded" class="text-sm">Beranda</span>
-                        </a>
+                        <!-- Beranda with tooltip -->
+                        <div class="relative">
+                            <a href="{{ route('beranda') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                <i class="fa-solid fa-house w-6 h-6"></i>
+                                <span x-show="isExpanded" class="text-sm">Beranda</span>
+                            </a>
+                            <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                Beranda
+                            </div>
+                        </div>
 
-                        <!-- Tentang ICRP dengan Submenu -->
-                        <div class="space-y-1">
-                            <button @click="tentangOpen = !tentangOpen" class="flex items-center w-full px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
+                        <!-- Tentang ICRP dengan Submenu and tooltip -->
+                        <div class="space-y-1 relative">
+                            <button @click="tentangOpen = !tentangOpen" class="flex items-center w-full px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
                                 <i class="fa-solid fa-circle-info w-6 h-6"></i>
                                 <div x-show="isExpanded" class="flex items-center justify-between w-full ml-3">
                                     <span class="text-sm">Tentang ICRP</span>
                                     <i class="fa-solid" :class="tentangOpen ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
                                 </div>
                             </button>
+                            <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                Tentang ICRP
+                            </div>
 
                             <div x-show="isExpanded && tentangOpen" class="pl-11 space-y-1">
                                 <a href="{{ route('tentang') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Tentang Kami</a>
@@ -75,25 +84,49 @@
                             </div>
                         </div>
 
-                        <a href="{{ route('sahabat') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
-                            <i class="fa-solid fa-users w-6 h-6"></i>
-                            <span x-show="isExpanded" class="text-sm">Sahabat ICRP</span>
-                        </a>
+                        <!-- Sahabat ICRP with tooltip -->
+                        <div class="relative">
+                            <a href="{{ route('sahabat') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                <i class="fa-solid fa-users w-6 h-6"></i>
+                                <span x-show="isExpanded" class="text-sm">Sahabat ICRP</span>
+                            </a>
+                            <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                Sahabat ICRP
+                            </div>
+                        </div>
 
-                        <a href="{{ route('jaringan') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
-                            <i class="fa-solid fa-network-wired w-6 h-6"></i>
-                            <span x-show="isExpanded" class="text-sm">Jaringan</span>
-                        </a>
+                        <!-- Jaringan with tooltip -->
+                        <div class="relative">
+                            <a href="{{ route('jaringan') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                <i class="fa-solid fa-network-wired w-6 h-6"></i>
+                                <span x-show="isExpanded" class="text-sm">Jaringan</span>
+                            </a>
+                            <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                Jaringan
+                            </div>
+                        </div>
 
-                        <a href="{{ route('berita') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
-                            <i class="fa-solid fa-newspaper w-6 h-6"></i>
-                            <span x-show="isExpanded" class="text-sm">Berita & Artikel</span>
-                        </a>
+                        <!-- Berita & Artikel with tooltip -->
+                        <div class="relative">
+                            <a href="{{ route('berita') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                <i class="fa-solid fa-newspaper w-6 h-6"></i>
+                                <span x-show="isExpanded" class="text-sm">Berita & Artikel</span>
+                            </a>
+                            <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                Berita & Artikel
+                            </div>
+                        </div>
 
-                        <a href="{{ route('pustaka') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
-                            <i class="fa-solid fa-book w-6 h-6"></i>
-                            <span x-show="isExpanded" class="text-sm">Pustaka</span>
-                        </a>
+                        <!-- Pustaka with tooltip -->
+                        <div class="relative">
+                            <a href="{{ route('pustaka') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                <i class="fa-solid fa-book w-6 h-6"></i>
+                                <span x-show="isExpanded" class="text-sm">Pustaka</span>
+                            </a>
+                            <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                Pustaka
+                            </div>
+                        </div>
                     </nav>
 
                     <!-- Login / Register atau User Info -->
@@ -101,14 +134,24 @@
                         @guest
                             <!-- Jika pengguna belum login -->
                             <div class="space-y-2">
-                                <a href="{{ route('login') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
-                                    <i class="fa-solid fa-sign-in-alt w-6 h-6"></i>
-                                    <span x-show="isExpanded" class="text-sm">Login</span>
-                                </a>
-                                <a href="{{ route('register') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
-                                    <i class="fa-solid fa-user-plus w-6 h-6"></i>
-                                    <span x-show="isExpanded" class="text-sm">Register</span>
-                                </a>
+                                <div class="relative">
+                                    <a href="{{ route('login') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                        <i class="fa-solid fa-sign-in-alt w-6 h-6"></i>
+                                        <span x-show="isExpanded" class="text-sm">Login</span>
+                                    </a>
+                                    <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                        Login
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <a href="{{ route('register') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                        <i class="fa-solid fa-user-plus w-6 h-6"></i>
+                                        <span x-show="isExpanded" class="text-sm">Register</span>
+                                    </a>
+                                    <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                        Register
+                                    </div>
+                                </div>
                             </div>
                         @else
                             <!-- Jika pengguna sudah login -->
@@ -117,12 +160,17 @@
                                     <i class="fa-solid fa-user w-6 h-6"></i>
                                     <span class="text-sm">{{ Auth::user()->name }}</span>
                                 </div>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="text-white/60 hover:text-white transition-colors duration-200">
-                                        <i class="fa-solid fa-sign-out-alt w-6 h-6"></i>
-                                    </button>
-                                </form>
+                                <div class="relative">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="text-white/60 hover:text-white transition-colors duration-200 peer">
+                                            <i class="fa-solid fa-sign-out-alt w-6 h-6"></i>
+                                        </button>
+                                        <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                            Logout
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         @endguest
                     </div>
