@@ -42,9 +42,11 @@
         <div class="container mx-auto px-4 space-y-12">
 
             <!-- Section Header -->
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Tentang</h2>
-                <p class="text-xl font-semibold text-primary">ICRP - Indonesian Conference on Religion and Peace</p>
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Tentang Kami</h2>
+                <p class="text-gray-600">
+                    Indonesian Conference on Religion and Peace (ICRP)
+                </p>
             </div>
 
             <!-- Bagian 2: Sejarah & Gambar -->
@@ -103,8 +105,8 @@
             </div>
 
             <!-- Bagian Visi -->
-            <div class="text-center mt-16">
-                <h3 class="text-2xl md:text-3xl font-bold text-primary mb-4">Visi</h3>
+            <div class="text-center mt-12">
+                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Visi</h2>
                 <p class="text-gray-700 text-lg max-w-3xl mx-auto">
                     Mewujudkan masyarakat damai, berkeadilan, setara, persaudaraan dalam pluralisme agama dan keyakinan,
                     serta kesejahteraan dalam konteks kemajemukan agama di Indonesia.
@@ -112,8 +114,8 @@
             </div>
 
             <!-- Bagian Misi -->
-            <div class="mt-12">
-                <h3 class="text-2xl md:text-3xl font-bold text-center text-primary mb-6">Misi</h3>
+            <div class="text-center mt-12">
+                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Misi</h2>
                 <ul class="list-decimal list-inside text-gray-700 text-lg max-w-3xl mx-auto space-y-4">
                     <li>Menumbuhkan multikulturalisme dan pluralisme dalam kehidupan bermasyarakat.</li>
                     <li>Membangun kesadaran budaya religius yang sehat dan saling menghormati.</li>
@@ -128,10 +130,11 @@
     <!-- Programs Section -->
     <section class="py-20 bg-primary-50">
         <div class="container mx-auto px-4">
+
             <!-- Section Header -->
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-primary-900 mb-4">Our Program</h2>
-                <p class="text-primary-700">
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Program Kami</h2>
+                <p class="text-gray-600">
                     The following is the work program of the Indonesian Religion and Peace Conference (ICRP) which was
                     prepared with the aim of encouraging peace, tolerance, and inter-religious dialogue in Indonesia,
                     for the sake of creating a harmonious and inclusive social life.

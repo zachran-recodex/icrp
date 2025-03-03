@@ -44,10 +44,10 @@
                 <!-- Alamat & Kontak -->
                 <div>
                     <h3 class="text-lg font-semibold mb-2">Alamat :</h3>
-                    <p class="font-bold text-primary-900">Rumah Perdamaian</p>
+                    <p class="font-bold text-primary">Rumah Perdamaian</p>
                     <p>Jl. Cempaka Putih Barat XXI No. 34<br>Jakarta Pusat 10520</p>
 
-                    <p class="mt-4">Telp. 021-42802349<br>icrp.indonesia@gmail.com</p>
+                    <p class="mt-4">Telp. 021-42802349<br>icrp.indonesia@gmail.com<br>info@icrp.id</p>
 
                     <!-- Sosial Media -->
                     <div class="mt-6 flex items-center gap-4">
@@ -66,7 +66,7 @@
                 <div>
                     <iframe width="100%" height="300" style="border:0" loading="lazy" allowfullscreen
                         referrerpolicy="no-referrer-when-downgrade"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.776064377371!2d106.86304067418592!3d-6.159251860550536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5ff3847e4a5%3A0xb31d86a1d14431ae!2sJl.%20Cempaka%20Putih%20Barat%20XXI%20No.34%2C%20RW.5%2C%20Cemp.%20Putih%20Barat%2C%20Kec.%20Cemp.%20Putih%2C%20Kota%20Jakarta%20Pusat%2C%20Daerah%20Khusus%20Ibukota%20Jakarta%2010520!5e0!3m2!1sen!2sid!4v1708185483742">
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.633068725179!2d106.8659217!3d-6.179844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f4ff60232a8b%3A0xc77634900d08328d!2sIndonesian%20Conference%20on%20Religion%20and%20Peace%20(ICRP)!5e0!3m2!1sid!2sid!4v1740990622369!5m2!1sid!2sid">
                     </iframe>
                 </div>
             </div>

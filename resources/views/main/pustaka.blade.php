@@ -54,7 +54,7 @@
                          alt="" class="w-[281px] h-[333px] object-cover rounded-lg">
                 </div>
                 <div class="col-span-2">
-                    <h2 class="text-2xl text-primary-500 font-bold mb-4">Sang Pelintas Batas: Biografi Djohan Effendi</h2>
+                    <h2 class="text-2xl font-bold mb-4">Sang Pelintas Batas: Biografi Djohan Effendi</h2>
                     <p class="text-gray-600">
                         Djohan Effendi adalah salah satu sosok penting dalam upaya pengembangan kehidupan keagamaan yang lebih dialogis, harmonis, dan toleran dalam era Indonesia modern. Kehidupan keagamaan-baik intra maupun antaragama- seperti itu tentu saja merupakan kebutuhan yang senantiasa harus diperjuangkan, bukan hanya untuk umat beragama itu sendiri, tapi juga untuk kepentingan keberlanjutan negara-bangsa Indonesia Kesediaan pak Djohan ikut berjuang menegakkan hak-hak kebebasan beragama di Indonesia tidaklah setengah-setengah melainkan all-out. Ini dilakukan beliau sejak jaman Orde Baru, hingga sekarang.
                     </p>

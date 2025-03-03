@@ -39,10 +39,11 @@
 
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4 space-y-12">
+
             <!-- Section Header -->
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Pengurus ICRP</h2>
-                <p class="text-primary-700">
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Pengurus ICRP</h2>
+                <p class="text-gray-600">
                     Berikut ini adalah para pengurus yang menjalankan ICRP, menjalankan misi perdamaian,
                     kerukunan dan dialog antaragama di Indonesia.
                 </p>

@@ -39,9 +39,10 @@
 
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4 space-y-12">
+
             <!-- Section Header -->
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Jajaran Pendiri ICRP</h2>
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Jajaran Pendiri ICRP</h2>
             </div>
 
             <!-- Founders Grid -->
