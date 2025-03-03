@@ -27,7 +27,7 @@ class ManageFounders extends Component
         $founders = Founder::when($this->search, function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
-            ->latest()
+            ->orderBy('id', 'asc')
             ->paginate(10);
 
         return view('livewire.manage-founders', [
