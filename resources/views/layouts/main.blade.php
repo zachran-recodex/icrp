@@ -51,94 +51,80 @@
 
                     <!-- Navigation -->
                     <nav class="flex-1 px-3 mt-3 space-y-1">
-                        <!-- Beranda -->
-                        <a href="{{ route('beranda') }}"
-                           class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg
-                            transition-colors duration-200">
+                        <a href="{{ route('beranda') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
                             <i class="fa-solid fa-house w-6 h-6"></i>
-                            <span x-show="isExpanded" x-transition:enter="transition-opacity duration-300"
-                                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                  class="text-sm">Beranda</span>
+                            <span x-show="isExpanded" class="text-sm">Beranda</span>
                         </a>
 
                         <!-- Tentang ICRP dengan Submenu -->
                         <div class="space-y-1">
-                            <button @click="tentangOpen = !tentangOpen"
-                                    class="flex items-center w-full px-3 py-2 text-white/60 hover:text-white rounded-lg
-                                transition-colors duration-200">
+                            <button @click="tentangOpen = !tentangOpen" class="flex items-center w-full px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
                                 <i class="fa-solid fa-circle-info w-6 h-6"></i>
-                                <div x-show="isExpanded" x-transition:enter="transition-opacity duration-300"
-                                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                     class="flex items-center justify-between w-full ml-3">
+                                <div x-show="isExpanded" class="flex items-center justify-between w-full ml-3">
                                     <span class="text-sm">Tentang ICRP</span>
                                     <i class="fa-solid" :class="tentangOpen ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
                                 </div>
                             </button>
 
-                            <!-- Submenu -->
-                            <div x-show="isExpanded && tentangOpen"
-                                 x-transition:enter="transition-all duration-200 ease-out"
-                                 x-transition:enter-start="opacity-0 -translate-y-1"
-                                 x-transition:enter-end="opacity-100 translate-y-0" class="pl-11 space-y-1">
-                                <a href="{{ route('tentang') }}"
-                                   class="block py-2 text-sm text-white/60 hover:text-white transition-colors
-                                    duration-200">
-                                    Siapa Kami
-                                </a>
-                                <a href="{{ route('pendiri') }}"
-                                   class="block py-2 text-sm text-white/60 hover:text-white transition-colors
-                                    duration-200">
-                                    Profil Pendiri ICRP
-                                </a>
-                                <a href="{{ route('pengurus') }}"
-                                   class="block py-2 text-sm text-white/60 hover:text-white transition-colors
-                                    duration-200">
-                                    Pengurus ICRP
-                                </a>
-                                <a href="{{ route('kontak') }}"
-                                   class="block py-2 text-sm text-white/60 hover:text-white transition-colors
-                                    duration-200">
-                                    Kontak Kami
-                                </a>
+                            <div x-show="isExpanded && tentangOpen" class="pl-11 space-y-1">
+                                <a href="{{ route('tentang') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Siapa Kami</a>
+                                <a href="{{ route('pendiri') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Profil Pendiri ICRP</a>
+                                <a href="{{ route('pengurus') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Pengurus ICRP</a>
+                                <a href="{{ route('kontak') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Kontak Kami</a>
                             </div>
                         </div>
 
-                        <!-- Sahabat ICRP -->
-                        <a href="{{ route('sahabat') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60
-                        hover:text-white rounded-lg transition-colors duration-200">
+                        <a href="{{ route('sahabat') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
                             <i class="fa-solid fa-users w-6 h-6"></i>
-                            <span x-show="isExpanded" x-transition:enter="transition-opacity duration-300"
-                                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                  class="text-sm">Sahabat ICRP</span>
+                            <span x-show="isExpanded" class="text-sm">Sahabat ICRP</span>
                         </a>
 
-                        <!-- Network -->
-                        <a href="{{ route('jaringan') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60
-                        hover:text-white rounded-lg transition-colors duration-200">
+                        <a href="{{ route('jaringan') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
                             <i class="fa-solid fa-network-wired w-6 h-6"></i>
-                            <span x-show="isExpanded" x-transition:enter="transition-opacity duration-300"
-                                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                  class="text-sm">Jaringan</span>
+                            <span x-show="isExpanded" class="text-sm">Jaringan</span>
                         </a>
 
-                        <!-- Berita -->
-                        <a href="{{ route('berita') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60
-                        hover:text-white rounded-lg transition-colors duration-200">
+                        <a href="{{ route('berita') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
                             <i class="fa-solid fa-newspaper w-6 h-6"></i>
-                            <span x-show="isExpanded" x-transition:enter="transition-opacity duration-300"
-                                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                  class="text-sm">Berita & Artikel</span>
+                            <span x-show="isExpanded" class="text-sm">Berita & Artikel</span>
                         </a>
 
-                        <!-- Pustaka -->
-                        <a href="{{ route('pustaka') }}"
-                           class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
+                        <a href="{{ route('pustaka') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
                             <i class="fa-solid fa-book w-6 h-6"></i>
-                            <span x-show="isExpanded" x-transition:enter="transition-opacity duration-300"
-                                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                  class="text-sm">Pustaka</span>
+                            <span x-show="isExpanded" class="text-sm">Pustaka</span>
                         </a>
                     </nav>
+
+                    <!-- Login / Register atau User Info -->
+                    <div class="mt-auto px-3 py-4 border-t border-white/20">
+                        @guest
+                            <!-- Jika pengguna belum login -->
+                            <div class="space-y-2">
+                                <a href="{{ route('login') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
+                                    <i class="fa-solid fa-sign-in-alt w-6 h-6"></i>
+                                    <span x-show="isExpanded" class="text-sm">Login</span>
+                                </a>
+                                <a href="{{ route('register') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200">
+                                    <i class="fa-solid fa-user-plus w-6 h-6"></i>
+                                    <span x-show="isExpanded" class="text-sm">Register</span>
+                                </a>
+                            </div>
+                        @else
+                            <!-- Jika pengguna sudah login -->
+                            <div class="flex items-center justify-between px-3 py-2 text-white/60 rounded-lg">
+                                <div x-show="isExpanded" class="flex items-center space-x-3">
+                                    <i class="fa-solid fa-user w-6 h-6"></i>
+                                    <span class="text-sm">{{ Auth::user()->name }}</span>
+                                </div>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="text-white/60 hover:text-white transition-colors duration-200">
+                                        <i class="fa-solid fa-sign-out-alt w-6 h-6"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        @endguest
+                    </div>
                 </div>
             </div>
 
@@ -290,8 +276,8 @@
                     </div>
                 </footer>
             </div>
-
-            @livewireScripts
         </div>
+
+        @livewireScripts
     </body>
 </html>
