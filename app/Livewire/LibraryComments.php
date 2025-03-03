@@ -37,6 +37,19 @@ class LibraryComments extends Component
         session()->flash('message', 'Komentar berhasil ditambahkan');
     }
 
+    public function deleteComment($commentId)
+    {
+        // Check if user has the super-admin role or any specific permission to delete comments
+        if (auth()->user()->hasRole('super-admin')) {
+            $comment = LibraryComment::find($commentId);
+
+            if ($comment) {
+                $comment->delete();
+                session()->flash('message', 'Komentar berhasil dihapus');
+            }
+        }
+    }
+
     public function render()
     {
         return view('livewire.library-comments', [

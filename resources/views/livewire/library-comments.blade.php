@@ -51,6 +51,16 @@
                             {{ $comment->created_at->diffForHumans() }}
                         </div>
                     </div>
+
+                    @auth
+                        @role('super-admin')
+                        <button wire:click="deleteComment({{ $comment->id }})"
+                                wire:confirm="Yakin ingin menghapus komentar ini?"
+                                class="text-white bg-red-600 hover:bg-red-800 rounded-md font-semibold text-xs px-4 py-2 uppercase">
+                            Hapus Komentar
+                        </button>
+                        @endrole
+                    @endauth
                 </div>
 
                 <div class="mt-2 text-sm text-gray-700 whitespace-pre-line">
