@@ -97,11 +97,11 @@
 
             <!-- Prinsip-Prinsip -->
             <div class="space-y-10">
-                <p class="text-lg text-gray-700 font-semibold text-center max-w-4xl mx-auto leading-relaxed">
+                <p class="text-lg text-gray-700 font-semibold text-center mx-auto leading-relaxed">
                     Prinsip-prinsip Bumi ini disediakan oleh Sang Maha Pencipta untuk semua manusia, sehingga semua
                     manusia memiliki hak yang sama pula. Karena itu:
                 </p>
-                <ul class="text-lg text-gray-700 max-w-5xl mx-auto space-y-4 list-decimal list-inside">
+                <ul class="text-lg text-gray-700 mx-auto space-y-4 list-decimal list-inside">
                     <li>
                         ICRP percaya bahwa keragaman suku, agama, budaya, adat Indonesia adalah kekayaan yang diberikan
                         Tuhan untuk mendorong integrasi sosial, bukan untuk alasan memecah belah.
