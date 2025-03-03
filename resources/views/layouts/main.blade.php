@@ -11,7 +11,7 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
-        <meta name="theme-color" class="bg-background-primary" content="#171717">
+        <meta name="theme-color" class="bg-background-primary border-b bg-white/20" content="#171717">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
