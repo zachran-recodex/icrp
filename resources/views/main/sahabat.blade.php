@@ -18,8 +18,6 @@
 
     <link rel="canonical" href="">
 
-    <meta name="theme-color" content="#FD38EC">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <meta name="robots" content="index, follow">

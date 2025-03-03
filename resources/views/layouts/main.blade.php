@@ -11,6 +11,8 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
+        <meta name="theme-color" content="#171717">
+
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
@@ -30,7 +32,7 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen">
 
-            <div x-data="{ isExpanded: false, tentangOpen: false }" class="fixed inset-y-0 z-[99] flex bg-background-sidebar"
+            <div x-data="{ isExpanded: false, tentangOpen: false }" class="fixed inset-y-0 z-[99] flex bg-background-primary"
                  :class="{ 'w-64': isExpanded, 'w-16': !isExpanded }">
 
                 <div class="flex flex-col flex-grow w-full">
@@ -140,7 +142,7 @@
                 {{ $slot }}
 
                 <!-- Footer -->
-                <footer class="bg-background-footer text-white">
+                <footer class="bg-background-primary text-white">
                     <!-- Main Footer -->
                     <div class="container mx-auto px-4 pt-16 pb-8">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

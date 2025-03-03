@@ -60,8 +60,7 @@ export default {
                 background: {
                     light: '#f4f6f7',
                     dark: '#23262b',
-                    sidebar: '#171717',
-                    footer: '#171717',
+                    primary: '#171717',
                 },
             },
         },
