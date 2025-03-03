@@ -27,15 +27,7 @@
 
 <x-main-layout>
     <!-- Hero Section -->
-    <section class="relative min-h-[30vh] flex items-center justify-center">
-        <!-- Background Image -->
-        <div class="absolute inset-0">
-            <img src="{{ Storage::url('hero/' . $heroSection->image) }}" alt="{{ $heroSection->title }}"
-                class="w-full h-full object-cover">
-            <!-- Dark Overlay -->
-            <div class="absolute inset-0 bg-black/50"></div>
-        </div>
-    </section>
+    <x-hero-section :title="$heroSection->title" :image="$heroSection->image" />
 
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4 space-y-12">
@@ -187,28 +179,11 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="relative py-32">
-        <!-- Background Image -->
-        <div class="absolute inset-0">
-            <img src="{{ Storage::url('cta/' . $callToAction->image) }}" alt="{{ $callToAction->title }}" class="w-full h-full object-cover">
-            <!-- Overlay -->
-            <div class="absolute inset-0 bg-primary-950/70"></div>
-        </div>
-
-        <!-- Content -->
-        <div class="relative container mx-auto px-4">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
-                    {{ $callToAction->title }}
-                </h2>
-                <p class="text-lg text-white/90 mb-8">
-                    {{ $callToAction->subtitle }}
-                </p>
-                <a href="{{ route('kontak') }}"
-                   class="inline-block px-8 py-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition transform hover:scale-105">
-                    {{ $callToAction->button_text }}
-                </a>
-            </div>
-        </div>
-    </section>
+    <x-call-to-action
+        :title="$callToAction->title"
+        :subtitle="$callToAction->subtitle"
+        :image="$callToAction->image"
+        :button-text="$callToAction->button_text"
+        :button-link="route('kontak')"
+    />
 </x-main-layout>
