@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advocacy;
 use App\Models\CallToAction;
 use App\Models\Event;
 use App\Models\Article;
@@ -253,16 +254,49 @@ class MainController extends Controller
         );
     }
 
-    public function buku()
+    public function advokasi()
     {
-        $libraries = Library::latest()
-            ->paginate(9);
+        $featuredAdvocacy = Advocacy::latest()
+            ->first();
 
-        return view('dashboard.test-comment', compact('libraries'));
+        $advocacies = Advocacy::where('id', '!=', $featuredAdvocacy->id) // Menghindari duplikasi dengan $featuredArticle
+            ->latest()
+            ->get();
+
+        $heroSection = HeroSection::first();
+
+        $callToAction = CallToAction::first();
+
+        return view('main.advokasi',
+            compact(
+                'featuredAdvocacy',
+                'advocacies',
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 
-    public function bukuDetail(Library $library)
+    public function advokasiDetail($slug)
     {
-        return view('dashboard.comment', compact('library'));
+        $advocacy = Advocacy::where('slug', $slug)
+            ->firstOrFail();
+
+        $advocacies = Advocacy::where('id', '!=', $advocacy->id) // Menghindari duplikasi dengan $featuredArticle
+            ->latest()
+            ->get();
+
+        $heroSection = HeroSection::first();
+
+        $callToAction = CallToAction::first();
+
+        return view('main.advokasi-detail',
+            compact(
+                'advocacy',
+                'advocacies',
+                'heroSection',
+                'callToAction'
+            )
+        );
     }
 }

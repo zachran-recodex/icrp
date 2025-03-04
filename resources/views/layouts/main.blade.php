@@ -127,6 +127,17 @@
                                 Pustaka
                             </div>
                         </div>
+
+                        <!-- Advokasi with tooltip -->
+                        <div class="relative">
+                            <a href="{{ route('advokasi') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                <i class="fa-solid fa-comment w-6 h-6"></i>
+                                <span x-show="isExpanded" class="text-sm">Advokasi KBB</span>
+                            </a>
+                            <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                Advokasi KBB
+                            </div>
+                        </div>
                     </nav>
 
                     <!-- Login / Register atau User Info -->

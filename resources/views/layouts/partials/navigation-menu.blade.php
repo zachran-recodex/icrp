@@ -61,6 +61,12 @@
                         class="fa-solid fa-rectangle-ad {{ request()->routeIs('dashboard.cta') ? 'text-primary-500' : 'text-gray-950' }}"></i>
                     CTA Section
                 </x-nav-link>
+
+                <x-nav-link :href="route('dashboard.advocacies')" :active="request()->routeIs('dashboard.advocacies')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-comment {{ request()->routeIs('dashboard.advocacies') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Advokasi KBB
+                </x-nav-link>
             </ul>
         </li>
 

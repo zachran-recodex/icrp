@@ -26,6 +26,9 @@ Route::controller(MainController::class)->group(function () {
 
     Route::get('/pustaka', 'pustaka')->name('pustaka');
     Route::get('/pustaka/{slug}', 'pustakaDetail')->name('pustaka.detail');
+
+    Route::get('/advokasi', 'advokasi')->name('advokasi');
+    Route::get('/advokasi/{slug}', 'advokasiDetail')->name('advokasi.detail');
 });
 
 Route::domain('djohan-effendi.' . env('APP_URL'))->group(function () {
@@ -54,8 +57,7 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::view('/call-to-action', 'dashboard.call-to-action')->name('cta');
 
-        Route::get('/comment', [MainController::class, 'buku'])->name('comments');
-        Route::get('/comment/{library}', [MainController::class, 'bukuDetail'])->name('books.show');
+        Route::view('/advocacy', 'dashboard.advocacy')->name('advocacies');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
