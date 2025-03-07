@@ -229,9 +229,8 @@
                                         </div>
 
                                         <!-- Program Details -->
-                                        <div class="space-y-4">
+                                        <div class="mt-4 space-y-4">
                                             <div>
-                                                <h4 class="text-lg font-semibold text-primary-600">Deskripsi Program</h4>
                                                 <div class="mt-2 prose prose-sm max-w-none">
                                                     {!! $program->description !!}
                                                 </div>

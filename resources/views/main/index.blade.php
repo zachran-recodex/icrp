@@ -180,35 +180,176 @@
             <!-- Events Section - Versi yang Lebih Responsif -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
                 @foreach ($events as $event)
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
-                        <div class="relative">
-                            <img src="{{ Storage::url('events/' . $event->image) }}" alt="{{ $event->title }}"
-                                 class="w-full h-40 sm:h-44 md:h-48 object-cover">
-                            <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm">
-                                {{ $event->date->format('d F Y') }}
+                    <div
+                        x-data="{ openModal: false }"
+                        class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl cursor-pointer"
+                    >
+                        <!-- Event Card -->
+                        <div @click="openModal = true">
+                            <div class="relative">
+                                <img src="{{ Storage::url('events/' . $event->image) }}" alt="{{ $event->title }}"
+                                    class="w-full h-40 sm:h-44 md:h-48 object-cover">
+                                <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm">
+                                    {{ $event->date->format('d F Y') }}
+                                </div>
+                            </div>
+                            <div class="p-4 md:p-6">
+                                <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">{{ $event->title }}</h3>
+                                <p class="text-gray-600 text-sm md:text-base">
+                                    {{ Str::limit(strip_tags($event->description), 80) }}
+                                </p>
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0 text-xs md:text-sm text-gray-500 mt-3">
+                                    <div class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span>{{ $event->time->format('H:i') }} WIB</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        <span class="truncate">{{ $event->location }}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="p-4 md:p-6">
-                            <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">{{ $event->title }}</h3>
-                            <p class="text-gray-600 text-sm md:text-base">
-                                {{ Str::limit(strip_tags($event->description), 80) }}
-                            </p>
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0 text-xs md:text-sm text-gray-500 mt-3">
-                                <div class="flex items-center">
-                                    <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span>{{ $event->time->format('H:i') }} WIB</span>
+
+                        <!-- Modal for this event -->
+                        <div
+                            x-cloak
+                            x-show="openModal"
+                            x-transition.opacity.duration.200ms
+                            x-trap.inert.noscroll="openModal"
+                            @keydown.escape.window="openModal = false"
+                            @click.self="openModal = false"
+                            class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                            role="dialog"
+                            aria-modal="true"
+                            :aria-labelledby="'eventModalTitle-{{ $event->id }}'"
+                        >
+                            <!-- Modal Dialog -->
+                            <div
+                                x-show="openModal"
+                                x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                                x-transition:enter-start="opacity-0 scale-50"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                class="flex max-w-3xl flex-col gap-4 overflow-hidden rounded-xl border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300"
+                            >
+                                <!-- Dialog Header -->
+                                <div class="flex items-center justify-between border-b border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
+                                    <h3 id="eventModalTitle-{{ $event->id }}" class="font-semibold tracking-wide text-neutral-900 dark:text-white">{{ $event->title }}</h3>
+                                    <button @click="openModal = false" aria-label="close modal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1.4" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                                <div class="flex items-center">
-                                    <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    <span class="truncate">{{ $event->location }}</span>
+
+                                <!-- Dialog Body -->
+                                <div class="p-6 max-h-[70vh] overflow-y-auto">
+                                    <!-- Event Details -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <!-- Event Image -->
+                                        <div>
+                                            <img
+                                                src="{{ Storage::url('events/' . $event->image) }}"
+                                                alt="{{ $event->title }}"
+                                                class="w-full h-auto rounded-lg object-cover"
+                                            >
+
+                                            <!-- Event Info Cards -->
+                                            <div class="mt-4 grid grid-cols-2 gap-3">
+                                                <div class="bg-neutral-50 p-3 rounded-lg border border-neutral-200">
+                                                    <div class="flex items-center text-primary-500 mb-1">
+                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                        </svg>
+                                                        <span class="text-sm font-medium">Tanggal</span>
+                                                    </div>
+                                                    <p class="text-sm">{{ $event->date->format('d F Y') }}</p>
+                                                </div>
+
+                                                <div class="bg-neutral-50 p-3 rounded-lg border border-neutral-200">
+                                                    <div class="flex items-center text-primary-500 mb-1">
+                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        <span class="text-sm font-medium">Waktu</span>
+                                                    </div>
+                                                    <p class="text-sm">{{ $event->time->format('H:i') }} WIB</p>
+                                                </div>
+
+                                                <div class="bg-neutral-50 p-3 rounded-lg border border-neutral-200 col-span-2">
+                                                    <div class="flex items-center text-primary-500 mb-1">
+                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        </svg>
+                                                        <span class="text-sm font-medium">Lokasi</span>
+                                                    </div>
+                                                    <p class="text-sm">{{ $event->location }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Event Description and Details -->
+                                        <div class="space-y-4">
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-primary-500 mb-2">Deskripsi Acara</h4>
+                                                <div class="prose prose-sm max-w-none">
+                                                    {!! $event->description !!}
+                                                </div>
+                                            </div>
+
+                                            @if($event->speakers)
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-primary-500 mb-2">Pembicara</h4>
+                                                <div class="prose prose-sm max-w-none">
+                                                    {!! $event->speakers !!}
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                            @if($event->moderator)
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-primary-500 mb-2">Moderator</h4>
+                                                <p>{{ $event->moderator }}</p>
+                                            </div>
+                                            @endif
+
+                                            @if($event->registration_link)
+                                            <div class="pt-2">
+                                                <a
+                                                    href="{{ $event->registration_link }}"
+                                                    target="_blank"
+                                                    class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition"
+                                                >
+                                                    Daftar Sekarang
+                                                </a>
+                                            </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dialog Footer -->
+                                <div class="flex justify-end border-t border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
+                                    <button
+                                        @click="openModal = false"
+                                        type="button"
+                                        class="whitespace-nowrap rounded-lg bg-primary-500 hover:bg-primary-600 px-4 py-2 text-center text-sm font-medium tracking-wide text-white transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 active:opacity-100 active:outline-offset-0"
+                                    >
+                                        Tutup
+                                    </button>
                                 </div>
                             </div>
                         </div>
