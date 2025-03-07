@@ -1,26 +1,24 @@
 @section('meta_tag')
+    <meta name="description" content="{!! $advocacy->content !!}">
+    <meta name="keywords" content="{{ optional($pageSetups['advokasi'])->meta_keywords ?? '' }}">
+    <meta name="author" content="RECODEX ID">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-
-    <meta name="google-site-verification" content="">
-
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="">
-    <meta property="og:url" content="">
-
-    <meta name="twitter:card" content="">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="">
-
-    <link rel="canonical" href="">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
     <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="{{ $advocacy->title }} | {{ optional($pageSetups['advokasi'])->title ?? 'Advokasi KBB' }}">
+    <meta property="og:description" content="{!! $advocacy->content !!}">
+    <meta property="og:image" content="{{ Storage::url('advocacies/' . $advocacy->image) }}"">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $advocacy->title }} | {{ optional($pageSetups['advokasi'])->title ?? 'Advokasi KBB' }}">
+    <meta name="twitter:description" content="{!! $advocacy->content !!}">
+    <meta name="twitter:image" content="{{ Storage::url('advocacies/' . $advocacy->image) }}">
+
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <title>{{ $advocacy->title }} | {{ optional($pageSetups['advokasi'])->title ?? 'Advokasi KBB' }}</title>
 @endsection
 
 <x-main-layout>

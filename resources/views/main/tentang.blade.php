@@ -1,26 +1,24 @@
 @section('meta_tag')
+    <meta name="description" content="{{ optional($pageSetups['tentang'])->meta_description ?? '' }}">
+    <meta name="keywords" content="{{ optional($pageSetups['tentang'])->meta_keywords ?? '' }}">
+    <meta name="author" content="RECODEX ID">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
 
-    <meta name="google-site-verification" content="">
+    <meta property="og:title" content="{{ optional($pageSetups['tentang'])->title ?? 'Tentang Kami' }}">
+    <meta property="og:description" content="{{ optional($pageSetups['tentang'])->meta_description ?? '' }}">
+    <meta property="og:image" content="{{ isset($heroSection) && $heroSection->image ? Storage::url('hero/' . $heroSection->image) : asset('images/hero.jpeg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
 
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="">
-    <meta property="og:url" content="">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ optional($pageSetups['tentang'])->title ?? 'Tentang Kami' }}">
+    <meta name="twitter:description" content="{{ optional($pageSetups['tentang'])->meta_description ?? '' }}">
+    <meta name="twitter:image" content="{{ isset($heroSection) && $heroSection->image ? Storage::url('hero/' . $heroSection->image) : asset('images/hero.jpeg') }}">
 
-    <meta name="twitter:card" content="">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="">
+    <link rel="canonical" href="{{ url()->current() }}">
 
-    <link rel="canonical" href="">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <meta name="robots" content="">
+    <title>{{ optional($pageSetups['tentang'])->title ?? 'Tentang Kami' }}</title>
 @endsection
 
 <x-main-layout>

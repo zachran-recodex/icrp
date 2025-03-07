@@ -60,6 +60,8 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::view('/advocacy', 'dashboard.advocacy')->name('advocacies');
 
+        Route::view('/page-setup', 'dashboard.page-setup')->name('page-setup');
+
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

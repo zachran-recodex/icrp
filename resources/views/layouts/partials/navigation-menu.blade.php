@@ -74,6 +74,12 @@
             <h2 class="text-xs font-semibold leading-6 text-gray-400 uppercase">Lainnya</h2>
             <ul role="list" class="-mx-2 space-y-1">
 
+                <x-nav-link :href="route('dashboard.page-setup')" :active="request()->routeIs('dashboard.page-setup')" class="flex items-center p-2 rounded-md gap-x-3">
+                    <i
+                        class="fa-solid fa-pager {{ request()->routeIs('dashboard.page-setup') ? 'text-primary-500' : 'text-gray-950' }}"></i>
+                    Page Setup
+                </x-nav-link>
+
                 <x-nav-link :href="route('dashboard.setting')" :active="request()->routeIs('dashboard.setting')" class="flex items-center p-2 rounded-md gap-x-3">
                     <i
                         class="fa-solid fa-gear {{ request()->routeIs('dashboard.setting') ? 'text-primary-500' : 'text-gray-950' }}"></i>
