@@ -109,6 +109,7 @@ class MainController extends Controller
         $callToAction = CallToAction::first();
 
         // Fetch management members grouped by their respective boards
+        $dewanDirectureExcecutive = Management::where('dewan', 'Directure Excecutive')->get();
         $dewanPengurus = Management::where('dewan', 'Pengurus')->get();
         $dewanKehormatan = Management::where('dewan', 'Kehormatan')->get();
         $dewanPembina = Management::where('dewan', 'Pembina')->get();
@@ -118,6 +119,7 @@ class MainController extends Controller
         return view('main.pengurus', compact(
             'heroSection',
             'callToAction',
+            'dewanDirectureExcecutive',
             'dewanPengurus',
             'dewanKehormatan',
             'dewanPembina',

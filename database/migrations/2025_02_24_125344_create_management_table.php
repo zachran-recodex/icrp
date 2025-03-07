@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('position');
             $table->text('description');
-            $table->enum('dewan', ['Pengurus', 'Kehormatan', 'Pembina', 'Pengawas', 'Pengurus Harian']);
+            $table->enum('dewan', ['Directure Excecutive', 'Pengurus', 'Kehormatan', 'Pembina', 'Pengawas', 'Pengurus Harian']);
             $table->timestamps();
         });
     }
