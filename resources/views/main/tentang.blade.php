@@ -151,7 +151,7 @@
         </div>
     </section>
 
-    <!-- Programs Section with Modal -->
+    <!-- Programs Section -->
     <section class="py-20 bg-primary-50">
         <div class="container mx-auto px-4 space-y-12">
 
@@ -165,94 +165,111 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($programs as $program)
                     <div
-                        x-data="{ open: false }"
+                        x-data="{ openModal: false }"
                         class="relative bg-white shadow-lg rounded-lg overflow-hidden group cursor-pointer"
-                        @click="open = true"
                     >
-                        <img src="{{ Storage::url('programs/' . $program->image) }}" alt="{{ $program->title }}"
-                            class="w-full h-[312px] object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-6">
+                        <!-- Program Card -->
+                        <img
+                            src="{{ Storage::url('programs/' . $program->image) }}"
+                            alt="{{ $program->title }}"
+                            class="w-full h-[312px] object-cover"
+                            @click="openModal = true"
+                        >
+                        <div
+                            class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-6"
+                            @click="openModal = true"
+                        >
                             <h3 class="text-white text-xl font-semibold">{{ $program->title }}</h3>
                             <p class="text-white mt-2">
                                 {{ Str::limit(strip_tags($program->description), 80) }}
                             </p>
                         </div>
 
-                        <!-- Modal -->
+                        <!-- Modal for this program -->
                         <div
-                            x-show="open"
-                            x-transition:enter="transition ease-out duration-300"
-                            x-transition:enter-start="opacity-0 transform scale-90"
-                            x-transition:enter-end="opacity-100 transform scale-100"
-                            x-transition:leave="transition ease-in duration-300"
-                            x-transition:leave-start="opacity-100 transform scale-100"
-                            x-transition:leave-end="opacity-0 transform scale-90"
-                            class="fixed inset-0 z-50 flex items-center justify-center"
-                            @click.away="open = false"
+                            x-cloak
+                            x-show="openModal"
+                            x-transition.opacity.duration.200ms
+                            x-trap.inert.noscroll="openModal"
+                            @keydown.escape.window="openModal = false"
+                            @click.self="openModal = false"
+                            class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                            role="dialog"
+                            aria-modal="true"
+                            :aria-labelledby="'programModalTitle-{{ $program->id }}'"
                         >
-                            <div class="fixed inset-0 bg-black bg-opacity-50" @click="open = false"></div>
-
-                            <div class="relative bg-white rounded-lg shadow-xl overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                                <!-- Modal Header with Close Button -->
-                                <div class="flex justify-between items-center p-6 border-b">
-                                    <h3 class="text-2xl font-bold text-primary-600">{{ $program->title }}</h3>
-                                    <button @click="open = false" class="text-gray-400 hover:text-gray-600">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            <!-- Modal Dialog -->
+                            <div
+                                x-show="openModal"
+                                x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                                x-transition:enter-start="opacity-0 scale-50"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                class="flex max-w-3xl flex-col gap-4 overflow-hidden rounded-sm border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300"
+                            >
+                                <!-- Dialog Header -->
+                                <div class="flex items-center justify-between border-b border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
+                                    <h3 id="programModalTitle-{{ $program->id }}" class="font-semibold tracking-wide text-neutral-900 dark:text-white">{{ $program->title }}</h3>
+                                    <button @click="openModal = false" aria-label="close modal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1.4" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                                         </svg>
                                     </button>
                                 </div>
 
-                                <!-- Modal Content -->
-                                <div class="p-6">
-                                    <div class="mb-6">
-                                        <img src="{{ Storage::url('programs/' . $program->image) }}" alt="{{ $program->title }}"
-                                            class="w-full h-64 object-cover rounded-lg">
-                                    </div>
-
-                                    <div class="space-y-4">
-                                        <!-- Display all program data here -->
+                                <!-- Dialog Body -->
+                                <div class="p-6 max-h-[70vh] overflow-y-auto">
+                                    <div class="flex flex-col">
+                                        <!-- Program Image -->
                                         <div>
-                                            <h4 class="text-lg font-semibold text-gray-700">Deskripsi Program:</h4>
-                                            <div class="mt-2 text-gray-600">
-                                                {!! $program->description !!}
-                                            </div>
+                                            <img
+                                                src="{{ Storage::url('programs/' . $program->image) }}"
+                                                alt="{{ $program->title }}"
+                                                class="w-full h-auto object-cover rounded-lg"
+                                            >
                                         </div>
 
-                                        @if($program->goals)
-                                        <div>
-                                            <h4 class="text-lg font-semibold text-gray-700">Tujuan:</h4>
-                                            <div class="mt-2 text-gray-600">
-                                                {!! $program->goals !!}
+                                        <!-- Program Details -->
+                                        <div class="space-y-4">
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-primary-600">Deskripsi Program</h4>
+                                                <div class="mt-2 prose prose-sm max-w-none">
+                                                    {!! $program->description !!}
+                                                </div>
                                             </div>
-                                        </div>
-                                        @endif
 
-                                        @if($program->timeline)
-                                        <div>
-                                            <h4 class="text-lg font-semibold text-gray-700">Timeline:</h4>
-                                            <div class="mt-2 text-gray-600">
-                                                {!! $program->timeline !!}
+                                            @if($program->objectives)
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-primary-600">Tujuan</h4>
+                                                <div class="mt-2 prose prose-sm max-w-none">
+                                                    {!! $program->objectives !!}
+                                                </div>
                                             </div>
-                                        </div>
-                                        @endif
+                                            @endif
 
-                                        @if($program->status)
-                                        <div>
-                                            <h4 class="text-lg font-semibold text-gray-700">Status:</h4>
-                                            <div class="mt-2">
-                                                <span class="px-3 py-1 text-sm rounded-full {{ $program->status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                                    {{ $program->status }}
-                                                </span>
+                                            @if($program->date)
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-primary-600">Tanggal Pelaksanaan</h4>
+                                                <p class="mt-1">{{ $program->date }}</p>
                                             </div>
+                                            @endif
+
+                                            @if($program->location)
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-primary-600">Lokasi</h4>
+                                                <p class="mt-1">{{ $program->location }}</p>
+                                            </div>
+                                            @endif
                                         </div>
-                                        @endif
                                     </div>
                                 </div>
 
-                                <!-- Modal Footer -->
-                                <div class="p-6 border-t bg-gray-50 flex justify-end">
-                                    <button @click="open = false" class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition">
+                                <!-- Dialog Footer -->
+                                <div class="flex justify-end border-t border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
+                                    <button
+                                        @click="openModal = false"
+                                        type="button"
+                                        class="whitespace-nowrap rounded-sm bg-primary-600 px-4 py-2 text-center text-sm font-medium tracking-wide text-white transition hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 active:opacity-100 active:outline-offset-0"
+                                    >
                                         Tutup
                                     </button>
                                 </div>
