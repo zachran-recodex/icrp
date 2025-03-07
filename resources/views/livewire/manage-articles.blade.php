@@ -25,7 +25,7 @@
 
     <!-- Articles Table -->
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-100">
+        <table class="min-w-full divide-y divide-gray-200">
             <thead>
                 <tr class="bg-gray-50">
                     <th scope="col"

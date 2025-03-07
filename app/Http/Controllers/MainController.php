@@ -54,7 +54,6 @@ class MainController extends Controller
         $heroSection = HeroSection::first();
 
         $programs = Program::orderBy('id', 'desc') // Urutkan dari id terbaru
-            ->take(3) // Ambil 3 data
             ->get();
 
         $callToAction = CallToAction::first();

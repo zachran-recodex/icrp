@@ -151,8 +151,7 @@
         </div>
     </section>
 
-
-    <!-- Programs Section -->
+    <!-- Programs Section with Modal -->
     <section class="py-20 bg-primary-50">
         <div class="container mx-auto px-4 space-y-12">
 
@@ -165,14 +164,99 @@
             <!-- Programs Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($programs as $program)
-                    <div class="relative bg-white shadow-lg rounded-lg overflow-hidden group">
+                    <div
+                        x-data="{ open: false }"
+                        class="relative bg-white shadow-lg rounded-lg overflow-hidden group cursor-pointer"
+                        @click="open = true"
+                    >
                         <img src="{{ Storage::url('programs/' . $program->image) }}" alt="{{ $program->title }}"
-                             class="w-full h-[312px] object-cover">
+                            class="w-full h-[312px] object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-6">
                             <h3 class="text-white text-xl font-semibold">{{ $program->title }}</h3>
                             <p class="text-white mt-2">
-                                {{ Str::limit(strip_tags($program->description), 150) }}
+                                {{ Str::limit(strip_tags($program->description), 80) }}
                             </p>
+                        </div>
+
+                        <!-- Modal -->
+                        <div
+                            x-show="open"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform scale-90"
+                            x-transition:enter-end="opacity-100 transform scale-100"
+                            x-transition:leave="transition ease-in duration-300"
+                            x-transition:leave-start="opacity-100 transform scale-100"
+                            x-transition:leave-end="opacity-0 transform scale-90"
+                            class="fixed inset-0 z-50 flex items-center justify-center"
+                            @click.away="open = false"
+                        >
+                            <div class="fixed inset-0 bg-black bg-opacity-50" @click="open = false"></div>
+
+                            <div class="relative bg-white rounded-lg shadow-xl overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                                <!-- Modal Header with Close Button -->
+                                <div class="flex justify-between items-center p-6 border-b">
+                                    <h3 class="text-2xl font-bold text-primary-600">{{ $program->title }}</h3>
+                                    <button @click="open = false" class="text-gray-400 hover:text-gray-600">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <!-- Modal Content -->
+                                <div class="p-6">
+                                    <div class="mb-6">
+                                        <img src="{{ Storage::url('programs/' . $program->image) }}" alt="{{ $program->title }}"
+                                            class="w-full h-64 object-cover rounded-lg">
+                                    </div>
+
+                                    <div class="space-y-4">
+                                        <!-- Display all program data here -->
+                                        <div>
+                                            <h4 class="text-lg font-semibold text-gray-700">Deskripsi Program:</h4>
+                                            <div class="mt-2 text-gray-600">
+                                                {!! $program->description !!}
+                                            </div>
+                                        </div>
+
+                                        @if($program->goals)
+                                        <div>
+                                            <h4 class="text-lg font-semibold text-gray-700">Tujuan:</h4>
+                                            <div class="mt-2 text-gray-600">
+                                                {!! $program->goals !!}
+                                            </div>
+                                        </div>
+                                        @endif
+
+                                        @if($program->timeline)
+                                        <div>
+                                            <h4 class="text-lg font-semibold text-gray-700">Timeline:</h4>
+                                            <div class="mt-2 text-gray-600">
+                                                {!! $program->timeline !!}
+                                            </div>
+                                        </div>
+                                        @endif
+
+                                        @if($program->status)
+                                        <div>
+                                            <h4 class="text-lg font-semibold text-gray-700">Status:</h4>
+                                            <div class="mt-2">
+                                                <span class="px-3 py-1 text-sm rounded-full {{ $program->status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                                    {{ $program->status }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <!-- Modal Footer -->
+                                <div class="p-6 border-t bg-gray-50 flex justify-end">
+                                    <button @click="open = false" class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition">
+                                        Tutup
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
