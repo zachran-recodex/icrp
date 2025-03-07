@@ -18,21 +18,27 @@ class MainController extends Controller
     {
         $heroSection = HeroSection::first();
 
+        // Check if any articles exist
         $featuredArticle = Article::with('category')
             ->latest()
             ->first();
 
-        $articles = Article::with('category')
-            ->where('id', '!=', $featuredArticle->id) // Menghindari duplikasi dengan $featuredArticle
-            ->latest()
+        $articles = collect(); // Initialize as empty collection
+
+        // Only query for additional articles if a featured article exists
+        if ($featuredArticle) {
+            $articles = Article::with('category')
+                ->where('id', '!=', $featuredArticle->id)
+                ->latest()
+                ->get();
+        }
+
+        $events = Event::orderBy('id', 'desc')
+            ->take(3)
             ->get();
 
-        $events = Event::orderBy('id', 'desc') // Urutkan dari id terbaru
-            ->take(3) // Ambil 3 data
-            ->get();
-
-        $libraries = Library::orderBy('id', 'desc') // Urutkan dari id terbaru
-            ->take(3) // Ambil 4 data
+        $libraries = Library::orderBy('id', 'desc')
+            ->take(3)
             ->get();
 
         $callToAction = CallToAction::first();
