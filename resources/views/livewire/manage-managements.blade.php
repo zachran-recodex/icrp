@@ -63,7 +63,7 @@
                                         {{ $management->name }}
                                     </div>
                                     <div class="text-sm text-gray-500 mt-1">
-                                        {!! Str::limit($management->description, 100) !!}
+                                        {!! Str::limit($management->biography, 100) !!}
                                     </div>
                                 </div>
                             </div>
@@ -138,172 +138,378 @@
                 <!-- Modal container -->
                 <div
                     class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
-                    <form>
-                        <!-- Modal content -->
-                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div class="mb-4" x-data="imageUpload()" x-cloak>
-                                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Gambar</label>
-
-                                <!-- Image input and preview -->
-                                <div class="space-y-4">
-                                    <input type="file" id="image-input" accept="image/*" @change="fileChosen"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-
-                                    <template x-if="showCropper">
-                                        <div class="space-y-4">
-                                            <!-- Cropper container -->
-                                            <div>
-                                                <div id="cropper-container" class="max-w-full max-h-96 overflow-hidden">
-                                                    <img id="cropperImage" :src="imageSrc" class="max-w-full" />
-                                                </div>
-                                            </div>
-
-                                            <!-- Cropper controls -->
-                                            <div class="flex flex-wrap gap-2">
-                                                <button type="button" @click="rotate(-90)"
-                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
-                                                    <i class="fa-solid fa-rotate-left"></i>
-                                                </button>
-                                                <button type="button" @click="rotate(90)"
-                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
-                                                    <i class="fa-solid fa-rotate-right"></i>
-                                                </button>
-                                                <button type="button" @click="zoom(0.1)"
-                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
-                                                    <i class="fa-solid fa-magnifying-glass-plus"></i>
-                                                </button>
-                                                <button type="button" @click="zoom(-0.1)"
-                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
-                                                    <i class="fa-solid fa-magnifying-glass-minus"></i>
-                                                </button>
-                                                <button type="button" @click="resetCrop()"
-                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
-                                                    <i class="fa-solid fa-arrows-rotate"></i>
-                                                </button>
-                                                <button type="button" @click="applyCrop()"
-                                                    class="px-3 py-1 bg-primary-500 text-white rounded-md hover:bg-primary-600">
-                                                    <i class="fa-solid fa-crop mr-1"></i> Potong & Simpan
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </template>
-
-                                    <!-- Preview after cropping -->
-                                    <template x-if="!showCropper && croppedImageUrl">
-                                        <div class="space-y-2">
-                                            <img :src="croppedImageUrl" class="max-w-xs rounded-lg" />
-                                            <button type="button" @click="resetImage()"
-                                                class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
-                                                <i class="fa-solid fa-xmark mr-1"></i> Ganti Gambar
-                                            </button>
-                                        </div>
-                                    </template>
-
-                                    <!-- Existing image -->
-                                    <template x-if="!showCropper && !croppedImageUrl">
-                                        <div>
-                                            @if ($image)
-                                                <div class="space-y-2">
-                                                    <img src="{{ Storage::url('managements/' . $image) }}" class="max-w-xs rounded-lg">
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </template>
-                                </div>
-
-                                <!-- Hidden input for sending image data to Livewire -->
-                                <input type="hidden" wire:model="croppedImage" id="cropped-image-data" />
-
-                                @error('croppedImage')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
+                    <form wire:submit.prevent="store">
+                        <!-- Modal header with tabs -->
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">
+                                    {{ $management_id ? 'Edit Pengurus' : 'Tambah Pengurus' }}
+                                </h3>
+                                <button wire:click="closeModal()" type="button" class="text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Close</span>
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
                             </div>
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama</label>
-                                <input type="text" wire:model="name" id="name"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('name')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-4">
-                                <label for="position" class="block text-gray-700 text-sm font-bold mb-2">Posisi</label>
-                                <input type="text" wire:model="position" id="position"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('position')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-4">
-                                <label for="description"
-                                    class="block text-gray-700 text-sm font-bold mb-2">Deskripsi</label>
-                                <div x-data="{
-                                    description: @entangle('description'),
-                                    quill: null,
-                                    init() {
-                                        this.quill = new Quill(this.$refs.quillEditor, {
-                                            theme: 'snow',
-                                            placeholder: 'Write your description here...',
-                                            modules: {
-                                                toolbar: [
-                                                    ['bold', 'italic', 'underline', 'strike'],
-                                                    ['blockquote'],
-                                                    [{ 'header': 1 }, { 'header': 2 }],
-                                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                                    [{ 'script': 'sub' }, { 'script': 'super' }],
-                                                    [{ 'indent': '-1' }, { 'indent': '+1' }],
-                                                    [{ 'size': ['small', false, 'large', 'huge'] }],
-                                                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                                                    [{ 'color': [] }, { 'background': [] }],
-                                                    [{ 'font': [] }],
-                                                    ['link', 'image', 'video'],
-                                                    [{ 'align': [] }],
-                                                    ['clean']
-                                                ]
-                                            }
-                                        });
 
-                                        // Set initial description
-                                        if (this.description) {
-                                            this.quill.root.innerHTML = this.description;
-                                        }
-
-                                        // Update Livewire description when editor changes
-                                        this.quill.on('text-change', () => {
-                                            this.description = this.quill.root.innerHTML;
-                                            @this.set('description', this.quill.root.innerHTML);
-                                        });
-                                    }
-                                }" wire:ignore>
-                                    <div x-ref="quillEditor" style="min-height: 200px;"></div>
-                                </div>
-                                @error('description')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-4">
-                                <label for="dewan" class="block text-gray-700 text-sm font-bold mb-2">Dewan</label>
-                                <select wire:model="dewan" id="dewan"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    <option value="">Pilih Dewan</option>
-                                    <option value="Directure Excecutive">Directure Excecutive</option>
-                                    <option value="Pengurus">Pengurus</option>
-                                    <option value="Kehormatan">Kehormatan</option>
-                                    <option value="Pembina">Pembina</option>
-                                    <option value="Pengawas">Pengawas</option>
-                                    <option value="Pengurus Harian">Pengurus Harian</option>
-                                </select>
-                                @error('dewan')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
+                            <!-- Tabs -->
+                            <div class="flex border-b">
+                                <button
+                                    type="button"
+                                    wire:click="setTab('basic')"
+                                    class="py-2 px-4 {{ $activeTab === 'basic' ? 'border-b-2 border-primary-500 font-medium text-primary-600' : 'text-gray-500 hover:text-gray-700' }}"
+                                >
+                                    Informasi Dasar
+                                </button>
+                                <button
+                                    type="button"
+                                    wire:click="setTab('contributions')"
+                                    class="py-2 px-4 {{ $activeTab === 'contributions' ? 'border-b-2 border-primary-500 font-medium text-primary-600' : 'text-gray-500 hover:text-gray-700' }}"
+                                >
+                                    Kontribusi
+                                </button>
+                                <button
+                                    type="button"
+                                    wire:click="setTab('legacy')"
+                                    class="py-2 px-4 {{ $activeTab === 'legacy' ? 'border-b-2 border-primary-500 font-medium text-primary-600' : 'text-gray-500 hover:text-gray-700' }}"
+                                >
+                                    Warisan Pemikiran
+                                </button>
                             </div>
                         </div>
+
+                        <!-- Modal content -->
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[70vh] overflow-y-auto">
+                            <!-- Basic Information Tab -->
+                            <div x-show="$wire.activeTab === 'basic'">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Image upload with cropping functionality -->
+                                    <div class="mb-4" x-data="imageUpload()" x-cloak>
+                                        <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Gambar</label>
+
+                                        <!-- Image input and preview -->
+                                        <div class="space-y-4">
+                                            <input type="file" id="image-input" accept="image/*" @change="fileChosen"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                                            <template x-if="showCropper">
+                                                <div class="space-y-4">
+                                                    <!-- Cropper container -->
+                                                    <div>
+                                                        <div id="cropper-container" class="max-w-full max-h-96 overflow-hidden">
+                                                            <img id="cropperImage" :src="imageSrc" class="max-w-full" />
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Cropper controls -->
+                                                    <div class="flex flex-wrap gap-2">
+                                                        <button type="button" @click="rotate(-90)"
+                                                            class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                            <i class="fa-solid fa-rotate-left"></i>
+                                                        </button>
+                                                        <button type="button" @click="rotate(90)"
+                                                            class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                            <i class="fa-solid fa-rotate-right"></i>
+                                                        </button>
+                                                        <button type="button" @click="zoom(0.1)"
+                                                            class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                                        </button>
+                                                        <button type="button" @click="zoom(-0.1)"
+                                                            class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                            <i class="fa-solid fa-magnifying-glass-minus"></i>
+                                                        </button>
+                                                        <button type="button" @click="resetCrop()"
+                                                            class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                            <i class="fa-solid fa-arrows-rotate"></i>
+                                                        </button>
+                                                        <button type="button" @click="applyCrop()"
+                                                            class="px-3 py-1 bg-primary-500 text-white rounded-md hover:bg-primary-600">
+                                                            <i class="fa-solid fa-crop mr-1"></i> Potong & Simpan
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </template>
+
+                                            <!-- Preview after cropping -->
+                                            <template x-if="!showCropper && croppedImageUrl">
+                                                <div class="space-y-2">
+                                                    <img :src="croppedImageUrl" class="max-w-xs rounded-lg" />
+                                                    <button type="button" @click="resetImage()"
+                                                        class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                                                        <i class="fa-solid fa-xmark mr-1"></i> Ganti Gambar
+                                                    </button>
+                                                </div>
+                                            </template>
+
+                                            <!-- Existing image -->
+                                            <template x-if="!showCropper && !croppedImageUrl">
+                                                <div>
+                                                    @if ($image)
+                                                        <div class="space-y-2">
+                                                            <img src="{{ Storage::url('managements/' . $image) }}" class="max-w-xs rounded-lg">
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </template>
+                                        </div>
+
+                                        <!-- Hidden input for sending image data to Livewire -->
+                                        <input type="hidden" wire:model="croppedImage" id="cropped-image-data" />
+
+                                        @error('croppedImage')
+                                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama</label>
+                                        <input type="text" wire:model="name" id="name"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('name')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="nickname" class="block text-gray-700 text-sm font-bold mb-2">Nama Panggilan</label>
+                                        <input type="text" wire:model="nickname" id="nickname"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('nickname')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="known_as" class="block text-gray-700 text-sm font-bold mb-2">Dikenal Sebagai</label>
+                                        <input type="text" wire:model="known_as" id="known_as"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('known_as')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="birth_date" class="block text-gray-700 text-sm font-bold mb-2">Tanggal Lahir</label>
+                                        <input type="date" wire:model="birth_date" id="birth_date"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('birth_date')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="death_date" class="block text-gray-700 text-sm font-bold mb-2">Tanggal Wafat</label>
+                                        <input type="date" wire:model="death_date" id="death_date"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('death_date')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="birth_place" class="block text-gray-700 text-sm font-bold mb-2">Tempat Lahir</label>
+                                        <input type="text" wire:model="birth_place" id="birth_place"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('birth_place')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="quote" class="block text-gray-700 text-sm font-bold mb-2">Kutipan</label>
+                                        <textarea wire:model="quote" id="quote" rows="3"
+                                                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                                        @error('quote')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="order" class="block text-gray-700 text-sm font-bold mb-2">Urutan</label>
+                                        <input type="number" wire:model="order" id="order"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('order')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="position" class="block text-gray-700 text-sm font-bold mb-2">Posisi</label>
+                                        <input type="text" wire:model="position" id="position"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('position')
+                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="dewan" class="block text-gray-700 text-sm font-bold mb-2">Dewan</label>
+                                        <select wire:model="dewan" id="dewan"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                            <option value="">Pilih Dewan</option>
+                                            <option value="Directure Excecutive">Directure Excecutive</option>
+                                            <option value="Pengurus">Pengurus</option>
+                                            <option value="Kehormatan">Kehormatan</option>
+                                            <option value="Pembina">Pembina</option>
+                                            <option value="Pengawas">Pengawas</option>
+                                            <option value="Pengurus Harian">Pengurus Harian</option>
+                                        </select>
+                                        @error('dewan')
+                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 col-span-2">
+                                    <label for="biography" class="block text-gray-700 text-sm font-bold mb-2">Biografi</label>
+                                    <div x-data="{
+                                        biography: @entangle('biography'),
+                                        quill: null,
+                                        init() {
+                                            this.quill = new Quill(this.$refs.quillEditor, {
+                                                theme: 'snow',
+                                                placeholder: 'Tulis biografi pendiri di sini...',
+                                                modules: {
+                                                    toolbar: [
+                                                        ['bold', 'italic', 'underline', 'strike'],
+                                                        ['blockquote'],
+                                                        [{ 'header': 1 }, { 'header': 2 }],
+                                                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                        [{ 'indent': '-1' }, { 'indent': '+1' }],
+                                                        [{ 'size': ['small', false, 'large', 'huge'] }],
+                                                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                        [{ 'color': [] }, { 'background': [] }],
+                                                        [{ 'align': [] }],
+                                                        ['clean']
+                                                    ]
+                                                }
+                                            });
+
+                                            // Set initial content
+                                            if (this.biography) {
+                                                this.quill.root.innerHTML = this.biography;
+                                            }
+
+                                            // Update Livewire when editor changes
+                                            this.quill.on('text-change', () => {
+                                                this.biography = this.quill.root.innerHTML;
+                                                @this.set('biography', this.quill.root.innerHTML);
+                                            });
+                                        }
+                                    }" wire:ignore>
+                                        <div x-ref="quillEditor" style="min-height: 200px;"></div>
+                                    </div>
+                                    @error('biography')
+                                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Contributions Tab -->
+                            <div x-show="$wire.activeTab === 'contributions'">
+                                <div class="mb-4">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h3 class="text-lg font-medium text-gray-900">Kontribusi</h3>
+                                        <button type="button" wire:click="addContribution"
+                                                class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600">
+                                            <i class="fa-solid fa-plus mr-1"></i>
+                                            Tambah Kontribusi
+                                        </button>
+                                    </div>
+
+                                    @foreach ($contributions as $index => $contribution)
+                                        <div class="p-4 mb-4 border rounded-lg bg-gray-50">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <h4 class="font-medium">Kontribusi #{{ $index + 1 }}</h4>
+                                                <button type="button" wire:click="removeContribution({{ $index }})"
+                                                        class="text-red-500 hover:text-red-700">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </div>
+                                            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                                                <div class="mb-2">
+                                                    <label class="block text-gray-700 text-sm font-bold mb-1">Judul</label>
+                                                    <input type="text" wire:model="contributions.{{ $index }}.title"
+                                                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                                    @error("contributions.{$index}.title")
+                                                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="block text-gray-700 text-sm font-bold mb-1">Deskripsi</label>
+                                                    <textarea wire:model="contributions.{{ $index }}.description" rows="2"
+                                                              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                                                    @error("contributions.{$index}.description")
+                                                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <!-- Legacy Tab -->
+                            <div x-show="$wire.activeTab === 'legacy'">
+                                <div class="mb-4">
+                                    <label for="legacyContent" class="block text-gray-700 text-sm font-bold mb-2">Warisan Pemikiran</label>
+                                    <div x-data="{
+                                        legacyContent: @entangle('legacyContent'),
+                                        quill: null,
+                                        init() {
+                                            this.quill = new Quill(this.$refs.legacyEditor, {
+                                                theme: 'snow',
+                                                placeholder: 'Tulis warisan pemikiran pendiri di sini...',
+                                                modules: {
+                                                    toolbar: [
+                                                        ['bold', 'italic', 'underline', 'strike'],
+                                                        ['blockquote'],
+                                                        [{ 'header': 1 }, { 'header': 2 }],
+                                                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                        [{ 'indent': '-1' }, { 'indent': '+1' }],
+                                                        [{ 'size': ['small', false, 'large', 'huge'] }],
+                                                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                        [{ 'color': [] }, { 'background': [] }],
+                                                        [{ 'align': [] }],
+                                                        ['clean']
+                                                    ]
+                                                }
+                                            });
+
+                                            // Set initial content
+                                            if (this.legacyContent) {
+                                                this.quill.root.innerHTML = this.legacyContent;
+                                            }
+
+                                            // Update Livewire when editor changes
+                                            this.quill.on('text-change', () => {
+                                                this.legacyContent = this.quill.root.innerHTML;
+                                                @this.set('legacyContent', this.quill.root.innerHTML);
+                                            });
+                                        }
+                                    }" wire:ignore>
+                                        <div x-ref="legacyEditor" style="min-height: 200px;"></div>
+                                    </div>
+                                    @error('legacyContent')
+                                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Modal footer -->
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button wire:click.prevent="store()" type="button"
-                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-500 text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:ml-3 sm:w-auto sm:text-sm">Save</button>
+                            <button wire:loading.attr="disabled" type="submit"
+                                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-500 text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                <span wire:loading wire:target="store" class="mr-2">
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                </span>
+                                Simpan
+                            </button>
                             <button wire:click="closeModal()" type="button"
-                                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
+                                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                Batal
+                            </button>
                         </div>
                     </form>
                 </div>

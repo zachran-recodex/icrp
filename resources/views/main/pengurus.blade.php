@@ -61,7 +61,7 @@
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
                             <p class="text-purple-600 mb-2">{{ $member->position }}</p>
-                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->description), 100) }}</p>
+                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -88,7 +88,7 @@
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
                             <p class="text-purple-600 mb-2">{{ $member->position }}</p>
-                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->description), 100) }}</p>
+                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -115,7 +115,7 @@
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
                             <p class="text-purple-600 mb-2">{{ $member->position }}</p>
-                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->description), 100) }}</p>
+                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -142,7 +142,7 @@
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
                             <p class="text-purple-600 mb-2">{{ $member->position }}</p>
-                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->description), 100) }}</p>
+                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -169,7 +169,7 @@
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
                             <p class="text-purple-600 mb-2">{{ $member->position }}</p>
-                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->description), 100) }}</p>
+                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -196,7 +196,7 @@
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
                             <p class="text-purple-600 mb-2">{{ $member->position }}</p>
-                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->description), 100) }}</p>
+                            <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
                         </div>
                     @endforeach
                 </div>
