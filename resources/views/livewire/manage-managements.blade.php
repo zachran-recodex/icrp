@@ -286,7 +286,7 @@
                                 <select wire:model="dewan" id="dewan"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                     <option value="">Pilih Dewan</option>
-                                    <option value="Directur Excecutive">Directur Excecutive</option>
+                                    <option value="Directure Excecutive">Directure Excecutive</option>
                                     <option value="Pengurus">Pengurus</option>
                                     <option value="Kehormatan">Kehormatan</option>
                                     <option value="Pembina">Pembina</option>

@@ -72,7 +72,7 @@ class ManageManagements extends Component
             'name' => 'required',
             'position' => 'required',
             'description' => 'required',
-            'dewan' => 'required|in:Directur Excecutive,Pengurus,Kehormatan,Pembina,Pengawas,Pengurus Harian',
+            'dewan' => 'required|in:Directure Excecutive,Pengurus,Kehormatan,Pembina,Pengawas,Pengurus Harian',
         ]);
 
         // If there's no management_id and no croppedImage, require an image
