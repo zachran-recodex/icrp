@@ -166,6 +166,7 @@
     </section>
 
     <!-- Events Section -->
+    @if($events->count() > 0)
     <section class="py-20 bg-primary-50">
         <div class="container mx-auto px-4">
 
@@ -359,8 +360,10 @@
 
         </div>
     </section>
+    @endif
 
     <!-- Library Section -->
+    @if($libraries->count() > 0)
     <section class="py-20 bg-gray-50">
         <div class="container mx-auto px-4">
             <!-- Section Header -->
@@ -406,6 +409,7 @@
             </div>
         </div>
     </section>
+    @endif
 
     <!-- CTA Section -->
     <x-call-to-action
