@@ -48,7 +48,7 @@
                 <!-- Dewan Pengurus Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach($dewanDirectureExcecutive as $member)
-                        <div class="flex flex-col items-center text-center p-4">
+                        <a href="{{ route('pengurus.detail', $member->slug) }}" class="flex flex-col items-center text-center p-4">
                             <div class="w-32 h-32 mb-4">
                                 @if($member->image)
                                     <img src="{{ Storage::url('managements/' . $member->image) }}" alt="{{ $member->name }}"
@@ -60,9 +60,9 @@
                                 @endif
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
-                            <p class="text-purple-600 mb-2">{{ $member->position }}</p>
+                            <p class="text-primary-600 mb-2">{{ $member->position }}</p>
                             <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endif
@@ -75,7 +75,7 @@
                 <!-- Dewan Pengurus Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach($dewanPengurus as $member)
-                        <div class="flex flex-col items-center text-center p-4">
+                        <a href="{{ route('pengurus.detail', $member->slug) }}" class="flex flex-col items-center text-center p-4">
                             <div class="w-32 h-32 mb-4">
                                 @if($member->image)
                                     <img src="{{ Storage::url('managements/' . $member->image) }}" alt="{{ $member->name }}"
@@ -87,7 +87,7 @@
                                 @endif
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
-                            <p class="text-purple-600 mb-2">{{ $member->position }}</p>
+                            <p class="text-primary-600 mb-2">{{ $member->position }}</p>
                             <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
                         </div>
                     @endforeach
@@ -102,7 +102,7 @@
                 <!-- Dewan Kehormatan Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach($dewanKehormatan as $member)
-                        <div class="flex flex-col items-center text-center p-4">
+                        <a href="{{ route('pengurus.detail', $member->slug) }}" class="flex flex-col items-center text-center p-4">
                             <div class="w-32 h-32 mb-4">
                                 @if($member->image)
                                     <img src="{{ Storage::url('managements/' . $member->image) }}" alt="{{ $member->name }}"
@@ -114,9 +114,9 @@
                                 @endif
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
-                            <p class="text-purple-600 mb-2">{{ $member->position }}</p>
+                            <p class="text-primary-600 mb-2">{{ $member->position }}</p>
                             <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endif
@@ -129,7 +129,7 @@
                 <!-- Dewan Pembina Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach($dewanPembina as $member)
-                        <div class="flex flex-col items-center text-center p-4">
+                        <a href="{{ route('pengurus.detail', $member->slug) }}" class="flex flex-col items-center text-center p-4">
                             <div class="w-32 h-32 mb-4">
                                 @if($member->image)
                                     <img src="{{ Storage::url('managements/' . $member->image) }}" alt="{{ $member->name }}"
@@ -141,9 +141,9 @@
                                 @endif
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
-                            <p class="text-purple-600 mb-2">{{ $member->position }}</p>
+                            <p class="text-primary-600 mb-2">{{ $member->position }}</p>
                             <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endif
@@ -156,7 +156,7 @@
                 <!-- Dewan Pengawas Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach($dewanPengawas as $member)
-                        <div class="flex flex-col items-center text-center p-4">
+                        <a href="{{ route('pengurus.detail', $member->slug) }}" class="flex flex-col items-center text-center p-4">
                             <div class="w-32 h-32 mb-4">
                                 @if($member->image)
                                     <img src="{{ Storage::url('managements/' . $member->image) }}" alt="{{ $member->name }}"
@@ -168,9 +168,9 @@
                                 @endif
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
-                            <p class="text-purple-600 mb-2">{{ $member->position }}</p>
+                            <p class="text-primary-600 mb-2">{{ $member->position }}</p>
                             <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endif
@@ -183,7 +183,7 @@
                 <!-- Dewan Pengurus Harian Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach($dewanPengurusHarian as $member)
-                        <div class="flex flex-col items-center text-center p-4">
+                        <a href="{{ route('pengurus.detail', $member->slug) }}" class="flex flex-col items-center text-center p-4">
                             <div class="w-32 h-32 mb-4">
                                 @if($member->image)
                                     <img src="{{ Storage::url('managements/' . $member->image) }}" alt="{{ $member->name }}"
@@ -195,11 +195,11 @@
                                 @endif
                             </div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $member->name }}</h3>
-                            <p class="text-purple-600 mb-2">{{ $member->position }}</p>
+                            <p class="text-primary-600 mb-2">{{ $member->position }}</p>
                             <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
-                        </div>
+                        </a>
                     @endforeach
-                </div>
+                </d>
             @endif
         </div>
     </section>
