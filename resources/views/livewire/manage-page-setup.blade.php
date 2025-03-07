@@ -2,7 +2,7 @@
     <!-- Tabs -->
     <div x-data="{ selectedTab: '{{ $activeTab }}' }" class="w-full pt-2" wire:ignore>
         <div x-on:keydown.right.prevent="$focus.wrap().next()" x-on:keydown.left.prevent="$focus.wrap().previous()"
-            class="flex gap-2 overflow-x-auto border-b border-neutral-300 dark:border-neutral-700 px-6" role="tablist"
+            class="flex gap-2 overflow-x-auto border-b border-neutral-300 px-6" role="tablist"
             aria-label="page setup tabs">
 
             @foreach($this->availablePages as $key => $pageName)
@@ -10,8 +10,8 @@
                     x-bind:aria-selected="selectedTab === '{{ $key }}'"
                     x-bind:tabindex="selectedTab === '{{ $key }}' ? '0' : '-1'"
                     x-bind:class="selectedTab === '{{ $key }}' ?
-                        'font-bold text-black border-b-2 border-black dark:border-white dark:text-white' :
-                        'text-neutral-600 font-medium dark:text-neutral-300 dark:hover:border-b-neutral-300 dark:hover:text-white hover:border-b-2 hover:border-b-neutral-800 hover:text-neutral-900'"
+                        'font-bold text-black border-b-2 border-black' :
+                        'text-neutral-600 font-medium hover:border-b-2 hover:border-b-neutral-800 hover:text-neutral-900'"
                     class="h-min px-4 py-2 text-sm" type="button" role="tab" aria-controls="tabpanel{{ ucfirst($key) }}">
                     {{ $pageName }}
                 </button>

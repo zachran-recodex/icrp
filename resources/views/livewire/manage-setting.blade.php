@@ -2,30 +2,30 @@
     <!-- Tabs -->
     <div x-data="{ selectedTab: '{{ $activeTab }}' }" class="w-full pt-2" wire:ignore>
         <div x-on:keydown.right.prevent="$focus.wrap().next()" x-on:keydown.left.prevent="$focus.wrap().previous()"
-            class="flex gap-2 overflow-x-auto border-b border-neutral-300 dark:border-neutral-700 px-6" role="tablist"
+            class="flex gap-2 overflow-x-auto border-b border-neutral-300 px-6" role="tablist"
             aria-label="tab options">
             <button x-on:click="selectedTab = 'general'; @this.setActiveTab('general')"
                 x-bind:aria-selected="selectedTab === 'general'"
                 x-bind:tabindex="selectedTab === 'general' ? '0' : '-1'"
                 x-bind:class="selectedTab === 'general' ?
-                    'font-bold text-black border-b-2 border-black dark:border-white dark:text-white' :
-                    'text-neutral-600 font-medium dark:text-neutral-300 dark:hover:border-b-neutral-300 dark:hover:text-white hover:border-b-2 hover:border-b-neutral-800 hover:text-neutral-900'"
+                    'font-bold text-black border-b-2 border-black' :
+                    'text-neutral-600 font-medium hover:border-b-2 hover:border-b-neutral-800 hover:text-neutral-900'"
                 class="h-min px-4 py-2 text-sm" type="button" role="tab" aria-controls="tabpanelGeneral">General
                 Settings</button>
             <button x-on:click="selectedTab = 'social'; @this.setActiveTab('social')"
                 x-bind:aria-selected="selectedTab === 'social'"
                 x-bind:tabindex="selectedTab === 'social' ? '0' : '-1'"
                 x-bind:class="selectedTab === 'social' ?
-                    'font-bold text-black border-b-2 border-black dark:border-white dark:text-white' :
-                    'text-neutral-600 font-medium dark:text-neutral-300 dark:hover:border-b-neutral-300 dark:hover:text-white hover:border-b-2 hover:border-b-neutral-800 hover:text-neutral-900'"
+                    'font-bold text-black border-b-2 border-black' :
+                    'text-neutral-600 font-medium hover:border-b-2 hover:border-b-neutral-800 hover:text-neutral-900'"
                 class="h-min px-4 py-2 text-sm" type="button" role="tab" aria-controls="tabpanelSocial">Social
                 Media</button>
             <button x-on:click="selectedTab = 'appearance'; @this.setActiveTab('appearance')"
                 x-bind:aria-selected="selectedTab === 'appearance'"
                 x-bind:tabindex="selectedTab === 'appearance' ? '0' : '-1'"
                 x-bind:class="selectedTab === 'appearance' ?
-                    'font-bold text-black border-b-2 border-black dark:border-white dark:text-white' :
-                    'text-neutral-600 font-medium dark:text-neutral-300 dark:hover:border-b-neutral-300 dark:hover:text-white hover:border-b-2 hover:border-b-neutral-800 hover:text-neutral-900'"
+                    'font-bold text-black border-b-2 border-black' :
+                    'text-neutral-600 font-medium hover:border-b-2 hover:border-b-neutral-800 hover:text-neutral-900'"
                 class="h-min px-4 py-2 text-sm" type="button" role="tab" aria-controls="tabpanelAppearance">Logo &
                 Appearance</button>
         </div>
