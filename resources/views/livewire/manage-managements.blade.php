@@ -141,30 +141,98 @@
                     <form>
                         <!-- Modal content -->
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div class="mb-4">
+                            <div class="mb-4" x-data="imageUpload()" x-cloak>
                                 <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Gambar</label>
-                                <input type="file" wire:model="temp_image" id="image"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('temp_image')
-                                    <span class="text-red-500">{{ $message }}</span>
+
+                                <!-- Image input and preview -->
+                                <div class="space-y-4">
+                                    <input type="file" id="image-input" accept="image/*" @change="fileChosen"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                                    <template x-if="showCropper">
+                                        <div class="space-y-4">
+                                            <!-- Cropper container -->
+                                            <div>
+                                                <div id="cropper-container" class="max-w-full max-h-96 overflow-hidden">
+                                                    <img id="cropperImage" :src="imageSrc" class="max-w-full" />
+                                                </div>
+                                            </div>
+
+                                            <!-- Cropper controls -->
+                                            <div class="flex flex-wrap gap-2">
+                                                <button type="button" @click="rotate(-90)"
+                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                    <i class="fa-solid fa-rotate-left"></i>
+                                                </button>
+                                                <button type="button" @click="rotate(90)"
+                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                    <i class="fa-solid fa-rotate-right"></i>
+                                                </button>
+                                                <button type="button" @click="zoom(0.1)"
+                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                                </button>
+                                                <button type="button" @click="zoom(-0.1)"
+                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                                                </button>
+                                                <button type="button" @click="resetCrop()"
+                                                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                                </button>
+                                                <button type="button" @click="applyCrop()"
+                                                    class="px-3 py-1 bg-primary-500 text-white rounded-md hover:bg-primary-600">
+                                                    <i class="fa-solid fa-crop mr-1"></i> Potong & Simpan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <!-- Preview after cropping -->
+                                    <template x-if="!showCropper && croppedImageUrl">
+                                        <div class="space-y-2">
+                                            <img :src="croppedImageUrl" class="max-w-xs rounded-lg" />
+                                            <button type="button" @click="resetImage()"
+                                                class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                                                <i class="fa-solid fa-xmark mr-1"></i> Ganti Gambar
+                                            </button>
+                                        </div>
+                                    </template>
+
+                                    <!-- Existing image -->
+                                    <template x-if="!showCropper && !croppedImageUrl">
+                                        <div>
+                                            @if ($image)
+                                                <div class="space-y-2">
+                                                    <img src="{{ Storage::url('managements/' . $image) }}" class="max-w-xs rounded-lg">
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- Hidden input for sending image data to Livewire -->
+                                <input type="hidden" wire:model="croppedImage" id="cropped-image-data" />
+
+                                @error('croppedImage')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
-                                @if ($temp_image)
-                                    <img src="{{ $temp_image->temporaryUrl() }}" class="mt-2"
-                                        style="max-width: 200px;">
-                                @elseif ($image)
-                                    <img src="{{ Storage::url('managements/' . $image) }}" class="mt-2"
-                                        style="max-width: 200px;">
-                                @endif
                             </div>
                             <div class="mb-4">
                                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama</label>
                                 <input type="text" wire:model="name" id="name"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                @error('name')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mb-4">
                                 <label for="position" class="block text-gray-700 text-sm font-bold mb-2">Posisi</label>
                                 <input type="text" wire:model="position" id="position"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                @error('position')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mb-4">
                                 <label for="description"
@@ -194,12 +262,12 @@
                                                 ]
                                             }
                                         });
-                                
+
                                         // Set initial description
                                         if (this.description) {
                                             this.quill.root.innerHTML = this.description;
                                         }
-                                
+
                                         // Update Livewire description when editor changes
                                         this.quill.on('text-change', () => {
                                             this.description = this.quill.root.innerHTML;
@@ -209,17 +277,24 @@
                                 }" wire:ignore>
                                     <div x-ref="quillEditor" style="min-height: 200px;"></div>
                                 </div>
+                                @error('description')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mb-4">
                                 <label for="dewan" class="block text-gray-700 text-sm font-bold mb-2">Dewan</label>
                                 <select wire:model="dewan" id="dewan"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <option value="">Pilih Dewan</option>
                                     <option value="Pengurus">Pengurus</option>
                                     <option value="Kehormatan">Kehormatan</option>
                                     <option value="Pembina">Pembina</option>
                                     <option value="Pengawas">Pengawas</option>
                                     <option value="Pengurus Harian">Pengurus Harian</option>
                                 </select>
+                                @error('dewan')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <!-- Modal footer -->
@@ -235,3 +310,111 @@
         </div>
     @endif
 </div>
+
+<!-- Alpine.js Image Upload and Cropping Script -->
+<script>
+    function imageUpload() {
+        return {
+            cropper: null,
+            showCropper: false,
+            imageSrc: null,
+            croppedImageUrl: null,
+
+            fileChosen(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                // Create URL for preview
+                this.imageSrc = URL.createObjectURL(file);
+                this.showCropper = true;
+
+                // Initialize cropper after the image is loaded
+                this.$nextTick(() => {
+                    // Destroy existing cropper if it exists
+                    if (this.cropper) {
+                        this.cropper.destroy();
+                    }
+
+                    // Initialize Cropper.js
+                    const image = document.getElementById('cropperImage');
+                    this.cropper = new Cropper(image, {
+                        aspectRatio: 1, // Square aspect ratio for profile pictures
+                        viewMode: 2,    // Restrict the crop box to not exceed the size of the canvas
+                        minCropBoxWidth: 100,
+                        minCropBoxHeight: 100,
+                        responsive: true,
+                        guides: true,
+                        background: false,
+                        autoCropArea: 0.8, // 80% of the image will be selected by default
+                    });
+                });
+            },
+
+            rotate(degree) {
+                if (this.cropper) {
+                    this.cropper.rotate(degree);
+                }
+            },
+
+            zoom(ratio) {
+                if (this.cropper) {
+                    this.cropper.zoom(ratio);
+                }
+            },
+
+            resetCrop() {
+                if (this.cropper) {
+                    this.cropper.reset();
+                }
+            },
+
+            resetImage() {
+                // Reset everything
+                this.showCropper = false;
+                this.croppedImageUrl = null;
+                document.getElementById('image-input').value = '';
+                document.getElementById('cropped-image-data').value = '';
+                @this.set('croppedImage', null);
+
+                if (this.cropper) {
+                    this.cropper.destroy();
+                    this.cropper = null;
+                }
+            },
+
+            applyCrop() {
+                if (this.cropper) {
+                    // Get cropped canvas
+                    const canvas = this.cropper.getCroppedCanvas({
+                        width: 400,    // Output image width
+                        height: 400,   // Output image height
+                        fillColor: '#fff',
+                        imageSmoothingEnabled: true,
+                        imageSmoothingQuality: 'high',
+                    });
+
+                    // Convert canvas to blob
+                    canvas.toBlob((blob) => {
+                        // Create URL for preview
+                        if (this.croppedImageUrl) {
+                            URL.revokeObjectURL(this.croppedImageUrl);
+                        }
+                        this.croppedImageUrl = URL.createObjectURL(blob);
+
+                        // Convert to base64 for sending to server
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            // Set the base64 value to the hidden input for Livewire
+                            document.getElementById('cropped-image-data').value = reader.result;
+                            @this.set('croppedImage', reader.result);
+                        };
+                        reader.readAsDataURL(blob);
+
+                        // Hide cropper
+                        this.showCropper = false;
+                    }, 'image/jpeg', 0.9); // 90% quality JPEG
+                }
+            }
+        };
+    }
+</script>

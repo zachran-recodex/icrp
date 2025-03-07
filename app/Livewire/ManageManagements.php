@@ -8,6 +8,7 @@ use App\Models\Management;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ManageManagements extends Component
 {
@@ -22,6 +23,7 @@ class ManageManagements extends Component
     public $isOpen = false;
     public $temp_image;
     public $search;
+    public $croppedImage;
 
     public function render()
     {
@@ -61,17 +63,26 @@ class ManageManagements extends Component
         $this->dewan = '';
         $this->management_id = '';
         $this->temp_image = '';
+        $this->croppedImage = null;
     }
 
     public function store()
     {
         $this->validate([
-            'temp_image' => $this->management_id ? 'nullable|image|max:2048' : 'required|image|max:2048',
             'name' => 'required',
             'position' => 'required',
             'description' => 'required',
             'dewan' => 'required|in:Pengurus,Kehormatan,Pembina,Pengawas,Pengurus Harian',
         ]);
+
+        // If there's no management_id and no croppedImage, require an image
+        if (!$this->management_id && !$this->croppedImage) {
+            $this->validate([
+                'croppedImage' => 'required',
+            ], [
+                'croppedImage.required' => 'Gambar pengurus wajib diunggah.'
+            ]);
+        }
 
         $data = [
             'name' => $this->name,
@@ -80,28 +91,54 @@ class ManageManagements extends Component
             'dewan' => $this->dewan,
         ];
 
-        // Handle image upload
-        if ($this->temp_image) {
-            // Delete old image if exists
+        // Handle cropped image
+        if ($this->croppedImage) {
+            // Delete old image if exists during update
             if ($this->management_id) {
                 $management = Management::find($this->management_id);
-                if ($management->image) {
+                if ($management && $management->image) {
                     Storage::disk('public')->delete('managements/' . $management->image);
                 }
             }
 
-            // Store new image
-            $imageName = time() . '_' . $this->temp_image->getClientOriginalName();
-            $this->temp_image->storeAs('managements', $imageName, 'public');
-            $data['image'] = $imageName;
+            // Process the base64 image data
+            try {
+                // Convert base64 to image and save
+                $imageData = $this->croppedImage;
+
+                // Extract the actual base64 string (handle different base64 formats)
+                if (strpos($imageData, ';base64,') !== false) {
+                    $imageData = explode(';base64,', $imageData)[1];
+                } elseif (strpos($imageData, ',') !== false) {
+                    $imageData = substr($imageData, strpos($imageData, ',') + 1);
+                }
+
+                // Decode the base64 string
+                $imageData = base64_decode($imageData);
+
+                if ($imageData === false) {
+                    throw new \Exception("Invalid base64 image data");
+                }
+
+                // Generate a unique filename
+                $imageName = time() . '_' . Str::random(10) . '.jpg';
+
+                // Store the image
+                Storage::disk('public')->put('managements/' . $imageName, $imageData);
+
+                $data['image'] = $imageName;
+            } catch (\Exception $e) {
+                $this->notifyError('Terjadi kesalahan dalam memproses gambar: ' . $e->getMessage());
+                return;
+            }
         }
 
         Management::updateOrCreate(['id' => $this->management_id], $data);
 
         $this->notifySuccess(
             $this->management_id
-                ? 'Management successfully updated.'
-                : 'Management successfully created.'
+                ? 'Pengurus berhasil diperbarui.'
+                : 'Pengurus berhasil dibuat.'
         );
 
         $this->closeModal();
@@ -117,6 +154,7 @@ class ManageManagements extends Component
         $this->position = $management->position;
         $this->description = $management->description;
         $this->dewan = $management->dewan;
+        $this->croppedImage = null;
 
         $this->openModal();
     }
@@ -125,12 +163,16 @@ class ManageManagements extends Component
     {
         $management = Management::find($id);
 
-        // Delete image from storage if exists
-        if ($management->image) {
-            Storage::disk('public')->delete('managements/' . $management->image);
-        }
+        if ($management) {
+            // Delete image from storage if exists
+            if ($management->image) {
+                Storage::disk('public')->delete('managements/' . $management->image);
+            }
 
-        $management->delete();
-        $this->notifySuccess('Management successfully deleted.');
+            $management->delete();
+            $this->notifySuccess('Pengurus berhasil dihapus.');
+        } else {
+            $this->notifyError('Pengurus tidak ditemukan.');
+        }
     }
 }
