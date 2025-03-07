@@ -34,7 +34,7 @@
                 <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Jajaran Pendiri ICRP</h2>
             </div>
 
-            @if($founder->count() > 0)
+            @if($founders->count() > 0)
                 <!-- Grid Founders -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach($founders as $founder)

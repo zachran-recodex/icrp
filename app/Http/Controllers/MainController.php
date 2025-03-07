@@ -57,7 +57,7 @@ class MainController extends Controller
 
     public function tentang()
     {
-        $programs = Program::orderBy('id', 'desc') // Urutkan dari id terbaru
+        $programs = Program::orderBy('id', 'desc')
             ->get();
 
         $heroSection = HeroSection::first();
@@ -75,7 +75,7 @@ class MainController extends Controller
 
     public function pendiri()
     {
-        $founders = Founder::orderBy('order') // Urutkan dari id terbaru
+        $founders = Founder::orderBy('order')
             ->get();
 
         $heroSection = HeroSection::first();
@@ -267,7 +267,8 @@ class MainController extends Controller
 
     public function pustaka()
     {
-        $libraries = Library::orderBy('id', 'desc') // Urutkan dari id terbaru
+        $libraries = Library::orderBy('id', 'desc')
+            ->take(6)
             ->get();
 
         $heroSection = HeroSection::first();
