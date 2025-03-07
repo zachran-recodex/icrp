@@ -29,6 +29,7 @@ class ManageFounders extends Component
     public $biography;
     public $image;
     public $temp_image;
+    public $croppedImage;
     public $order = 0;
 
     // Legacy and contributions
@@ -110,6 +111,7 @@ class ManageFounders extends Component
         $this->biography = '';
         $this->image = '';
         $this->temp_image = '';
+        $this->croppedImage = null;
         $this->order = 0;
         $this->resetContributions();
         $this->legacyContent = '';
@@ -178,8 +180,48 @@ class ManageFounders extends Component
             'order' => $this->order,
         ];
 
-        // Handle image upload
-        if ($this->temp_image) {
+        // Handle cropped image
+        if ($this->croppedImage) {
+            // Delete old image if exists when updating
+            if ($this->founder_id) {
+                $founder = Founder::find($this->founder_id);
+                if ($founder && $founder->image) {
+                    Storage::disk('public')->delete('founders/' . $founder->image);
+                }
+            }
+
+            try {
+                // Convert base64 to image and save
+                $imageData = $this->croppedImage;
+
+                // Extract the actual base64 string (handle different base64 formats)
+                if (strpos($imageData, ';base64,') !== false) {
+                    $imageData = explode(';base64,', $imageData)[1];
+                } elseif (strpos($imageData, ',') !== false) {
+                    $imageData = substr($imageData, strpos($imageData, ',') + 1);
+                }
+
+                // Decode the base64 string
+                $imageData = base64_decode($imageData);
+
+                if ($imageData === false) {
+                    throw new \Exception("Invalid base64 image data");
+                }
+
+                // Generate a unique filename
+                $imageName = time() . '_' . Str::random(10) . '.jpg';
+
+                // Store the image
+                Storage::disk('public')->put('founders/' . $imageName, $imageData);
+
+                $data['image'] = $imageName;
+            } catch (\Exception $e) {
+                $this->notifyError('Terjadi kesalahan dalam memproses gambar: ' . $e->getMessage());
+                return;
+            }
+        }
+        // Handle image upload (legacy way, as fallback)
+        elseif ($this->temp_image) {
             // Delete old image if exists when updating
             if ($this->founder_id) {
                 $founder = Founder::find($this->founder_id);
@@ -282,6 +324,7 @@ class ManageFounders extends Component
         $this->quote = $founder->quote;
         $this->biography = $founder->biography;
         $this->image = $founder->image;
+        $this->croppedImage = null;
         $this->order = $founder->order;
 
         // Contributions
@@ -318,6 +361,8 @@ class ManageFounders extends Component
             // Delete will cascade to contributions and legacies because of the migration
             $founder->delete();
             $this->notifySuccess('Pendiri berhasil dihapus.');
+        } else {
+            $this->notifyError('Pendiri tidak ditemukan.');
         }
     }
 
