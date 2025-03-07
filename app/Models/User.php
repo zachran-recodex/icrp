@@ -46,4 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Relasi ke tabel library_comments
+    public function comments()
+    {
+        return $this->hasMany(LibraryComment::class);
+    }
 }

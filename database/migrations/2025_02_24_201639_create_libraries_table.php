@@ -18,6 +18,26 @@ return new class extends Migration
             $table->string('author');
             $table->text('description');
             $table->string('image');
+            $table->string('publisher')->nullable();
+            $table->year('publication_year')->nullable();
+            $table->string('isbn')->unique()->nullable();
+            $table->string('category')->nullable();
+            $table->integer('page_count')->nullable();
+            $table->string('language')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('library_comments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('library_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->text('content');
+            $table->timestamps();
+        });
+
+        Schema::create('library_reviews', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('library_id')->constrained('libraries')->onDelete('cascade');
             $table->string('reviewer');
             $table->text('review');
             $table->timestamps();
@@ -29,6 +49,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('library_reviews');
+        Schema::dropIfExists('library_comments');
         Schema::dropIfExists('libraries');
     }
 };
