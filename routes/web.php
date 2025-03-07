@@ -14,6 +14,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/pendiri/{slug}', 'pendiriDetail')->name('pendiri.detail');
 
     Route::get('/pengurus', 'pengurus')->name('pengurus');
+    Route::get('/pengurus/{slug}', 'pengurusDetail')->name('pengurus.detail');
 
     Route::get('/kontak', 'kontak')->name('kontak');
 
