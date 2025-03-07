@@ -51,50 +51,51 @@ class MainController extends Controller
 
     public function tentang()
     {
-        $heroSection = HeroSection::first();
-
         $programs = Program::orderBy('id', 'desc') // Urutkan dari id terbaru
             ->get();
+
+        $heroSection = HeroSection::first();
 
         $callToAction = CallToAction::first();
 
         return view('main.tentang',
             compact(
-                'heroSection',
                 'programs',
-                'callToAction'
+                'heroSection',
+                'callToAction',
             )
         );
     }
 
     public function pendiri()
     {
-        $heroSection = HeroSection::first();
-
-        $founders = Founder::orderBy('id', 'asc') // Urutkan dari id terbaru
+        $founders = Founder::orderBy('order') // Urutkan dari id terbaru
             ->get();
+
+        $heroSection = HeroSection::first();
 
         $callToAction = CallToAction::first();
 
         return view('main.pendiri',
             compact(
-                'heroSection',
                 'founders',
-                'callToAction'
+                'heroSection',
+                'callToAction',
             )
         );
     }
 
     public function pendiriDetail($slug)
     {
-        $heroSection = HeroSection::first();
-        $callToAction = CallToAction::first();
-
         $founder = Founder::with(['contributions' => function($query) {
             $query->orderBy('order');
         }, 'legacies'])
             ->where('slug', $slug)
             ->firstOrFail();
+
+        $heroSection = HeroSection::first();
+
+        $callToAction = CallToAction::first();
 
         return view('main.pendiri-detail', compact(
             'founder',
@@ -105,39 +106,53 @@ class MainController extends Controller
 
     public function pengurus()
     {
+        // Fetch management members grouped by their respective boards
+        $dewanDirectureExcecutive = Management::where('dewan', 'Directure Excecutive')
+            ->orderBy('order')
+            ->get();
+        $dewanPengurus = Management::where('dewan', 'Pengurus')
+            ->orderBy('order')
+            ->get();
+        $dewanKehormatan = Management::where('dewan', 'Kehormatan')
+            ->orderBy('order')
+            ->get();
+        $dewanPembina = Management::where('dewan', 'Pembina')
+            ->orderBy('order')
+            ->get();
+        $dewanPengawas = Management::where('dewan', 'Pengawas')
+            ->orderBy('order')
+            ->get();
+        $dewanPengurusHarian = Management::where('dewan', 'Pengurus Harian')
+            ->orderBy('order')
+            ->get();
+
         $heroSection = HeroSection::first();
+
         $callToAction = CallToAction::first();
 
-        // Fetch management members grouped by their respective boards
-        $dewanDirectureExcecutive = Management::where('dewan', 'Directure Excecutive')->get();
-        $dewanPengurus = Management::where('dewan', 'Pengurus')->get();
-        $dewanKehormatan = Management::where('dewan', 'Kehormatan')->get();
-        $dewanPembina = Management::where('dewan', 'Pembina')->get();
-        $dewanPengawas = Management::where('dewan', 'Pengawas')->get();
-        $dewanPengurusHarian = Management::where('dewan', 'Pengurus Harian')->get();
-
         return view('main.pengurus', compact(
-            'heroSection',
-            'callToAction',
             'dewanDirectureExcecutive',
             'dewanPengurus',
             'dewanKehormatan',
             'dewanPembina',
             'dewanPengawas',
-            'dewanPengurusHarian'
+            'dewanPengurusHarian',
+            'heroSection',
+            'callToAction',
         ));
     }
 
     public function pengurusDetail($slug)
     {
-        $heroSection = HeroSection::first();
-        $callToAction = CallToAction::first();
-
         $management = Management::with(['contributions' => function($query) {
             $query->orderBy('order');
         }, 'legacies'])
             ->where('slug', $slug)
             ->firstOrFail();
+
+        $heroSection = HeroSection::first();
+
+        $callToAction = CallToAction::first();
 
         return view('main.pengurus-detail', compact(
             'management',
