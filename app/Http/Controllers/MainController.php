@@ -128,6 +128,24 @@ class MainController extends Controller
         ));
     }
 
+    public function pengurusDetail($slug)
+    {
+        $heroSection = HeroSection::first();
+        $callToAction = CallToAction::first();
+
+        $management = Management::with(['contributions' => function($query) {
+            $query->orderBy('order');
+        }, 'legacies'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return view('main.pengurus-detail', compact(
+            'management',
+            'heroSection',
+            'callToAction',
+        ));
+    }
+
     public function kontak()
     {
         $heroSection = HeroSection::first();
