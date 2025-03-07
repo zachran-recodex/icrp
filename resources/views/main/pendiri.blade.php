@@ -34,18 +34,20 @@
                 <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Jajaran Pendiri ICRP</h2>
             </div>
 
-            <!-- Founders Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                @foreach($founders as $founder)
-                    <a href="{{ route('pendiri.detail', $founder->slug) }}" class="flex flex-col items-center text-center p-4">
-                        <div class="w-32 h-32 mb-4">
-                            <img src="{{ Storage::url('founders/' . $founder->image) }}" alt="{{ $founder->name }}"
-                                 class="w-full h-full rounded-full object-cover border">
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900">{{ $founder->name }}</h3>
-                    </a>
-                @endforeach
-            </div>
+            @if($founder->count() > 0)
+                <!-- Grid Founders -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    @foreach($founders as $founder)
+                        <a href="{{ route('pendiri.detail', $founder->slug) }}" class="flex flex-col items-center text-center p-4">
+                            <div class="w-32 h-32 mb-4">
+                                <img src="{{ Storage::url('founders/' . $founder->image) }}" alt="{{ $founder->name }}"
+                                     class="w-full h-full rounded-full object-cover border">
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">{{ $founder->name }}</h3>
+                        </a>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </section>
 

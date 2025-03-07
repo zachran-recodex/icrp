@@ -211,14 +211,20 @@ class MainController extends Controller
 
     public function berita()
     {
+        // Check if any articles exist
         $featuredArticle = Article::with('category')
             ->latest()
             ->first();
 
-        $articles = Article::with('category')
-            ->where('id', '!=', $featuredArticle->id) // Menghindari duplikasi dengan $featuredArticle
-            ->latest()
-            ->get();
+        $articles = collect(); // Initialize as empty collection
+
+        // Only query for additional articles if a featured article exists
+        if ($featuredArticle) {
+            $articles = Article::with('category')
+                ->where('id', '!=', $featuredArticle->id)
+                ->latest()
+                ->get();
+        }
 
         $heroSection = HeroSection::first();
 

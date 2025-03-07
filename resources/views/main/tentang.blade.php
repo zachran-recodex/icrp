@@ -159,122 +159,125 @@
                 <p class="text-lg text-gray-600">Indonesian Conference on Religion and Peace (ICRP)</p>
             </div>
 
-            <!-- Programs Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                @foreach($programs as $program)
-                    <div
-                        x-data="{ openModal: false }"
-                        class="relative bg-white shadow-lg rounded-lg overflow-hidden group cursor-pointer"
-                    >
-                        <!-- Program Card -->
-                        <img
-                            src="{{ Storage::url('programs/' . $program->image) }}"
-                            alt="{{ $program->title }}"
-                            class="w-full h-[312px] object-cover"
-                            @click="openModal = true"
-                        >
+            @if($programs->count() > 0)
+                <!-- Programs Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    @foreach($programs as $program)
                         <div
-                            class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-6"
-                            @click="openModal = true"
+                            x-data="{ openModal: false }"
+                            class="relative bg-white shadow-lg rounded-lg overflow-hidden group cursor-pointer"
                         >
-                            <h3 class="text-white text-xl font-semibold">{{ $program->title }}</h3>
-                            <p class="text-white mt-2">
-                                {{ Str::limit(strip_tags($program->description), 80) }}
-                            </p>
-                        </div>
-
-                        <!-- Modal for this program -->
-                        <div
-                            x-cloak
-                            x-show="openModal"
-                            x-transition.opacity.duration.200ms
-                            x-trap.inert.noscroll="openModal"
-                            @keydown.escape.window="openModal = false"
-                            @click.self="openModal = false"
-                            class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
-                            role="dialog"
-                            aria-modal="true"
-                            :aria-labelledby="'programModalTitle-{{ $program->id }}'"
-                        >
-                            <!-- Modal Dialog -->
-                            <div
-                                x-show="openModal"
-                                x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
-                                x-transition:enter-start="opacity-0 scale-50"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                class="flex max-w-3xl flex-col gap-4 overflow-hidden rounded-sm border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300"
+                            <!-- Program Card -->
+                            <img
+                                src="{{ Storage::url('programs/' . $program->image) }}"
+                                alt="{{ $program->title }}"
+                                class="w-full h-[312px] object-cover"
+                                @click="openModal = true"
                             >
-                                <!-- Dialog Header -->
-                                <div class="flex items-center justify-between border-b border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
-                                    <h3 id="programModalTitle-{{ $program->id }}" class="font-semibold tracking-wide text-neutral-900 dark:text-white">{{ $program->title }}</h3>
-                                    <button @click="openModal = false" aria-label="close modal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1.4" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                                        </svg>
-                                    </button>
-                                </div>
+                            <div
+                                class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-6"
+                                @click="openModal = true"
+                            >
+                                <h3 class="text-white text-xl font-semibold">{{ $program->title }}</h3>
+                                <p class="text-white mt-2">
+                                    {{ Str::limit(strip_tags($program->description), 80) }}
+                                </p>
+                            </div>
 
-                                <!-- Dialog Body -->
-                                <div class="p-6 max-h-[70vh] overflow-y-auto">
-                                    <div class="flex flex-col">
-                                        <!-- Program Image -->
-                                        <div>
-                                            <img
-                                                src="{{ Storage::url('programs/' . $program->image) }}"
-                                                alt="{{ $program->title }}"
-                                                class="w-full h-auto object-cover rounded-lg"
-                                            >
-                                        </div>
+                            <!-- Modal for this program -->
+                            <div
+                                x-cloak
+                                x-show="openModal"
+                                x-transition.opacity.duration.200ms
+                                x-trap.inert.noscroll="openModal"
+                                @keydown.escape.window="openModal = false"
+                                @click.self="openModal = false"
+                                class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                                role="dialog"
+                                aria-modal="true"
+                                :aria-labelledby="'programModalTitle-{{ $program->id }}'"
+                            >
+                                <!-- Modal Dialog -->
+                                <div
+                                    x-show="openModal"
+                                    x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                                    x-transition:enter-start="opacity-0 scale-50"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    class="flex max-w-3xl flex-col gap-4 overflow-hidden rounded-sm border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300"
+                                >
+                                    <!-- Dialog Header -->
+                                    <div class="flex items-center justify-between border-b border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
+                                        <h3 id="programModalTitle-{{ $program->id }}" class="font-semibold tracking-wide text-neutral-900 dark:text-white">{{ $program->title }}</h3>
+                                        <button @click="openModal = false" aria-label="close modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1.4" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                            </svg>
+                                        </button>
+                                    </div>
 
-                                        <!-- Program Details -->
-                                        <div class="mt-4 space-y-4">
+                                    <!-- Dialog Body -->
+                                    <div class="p-6 max-h-[70vh] overflow-y-auto">
+                                        <div class="flex flex-col">
+                                            <!-- Program Image -->
                                             <div>
-                                                <div class="mt-2 prose prose-sm max-w-none">
-                                                    {!! $program->description !!}
+                                                <img
+                                                    src="{{ Storage::url('programs/' . $program->image) }}"
+                                                    alt="{{ $program->title }}"
+                                                    class="w-full h-auto object-cover rounded-lg"
+                                                >
+                                            </div>
+
+                                            <!-- Program Details -->
+                                            <div class="mt-4 space-y-4">
+                                                <div>
+                                                    <div class="mt-2 prose prose-sm max-w-none">
+                                                        {!! $program->description !!}
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            @if($program->objectives)
-                                            <div>
-                                                <h4 class="text-lg font-semibold text-primary-600">Tujuan</h4>
-                                                <div class="mt-2 prose prose-sm max-w-none">
-                                                    {!! $program->objectives !!}
+                                                @if($program->objectives)
+                                                <div>
+                                                    <h4 class="text-lg font-semibold text-primary-600">Tujuan</h4>
+                                                    <div class="mt-2 prose prose-sm max-w-none">
+                                                        {!! $program->objectives !!}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            @endif
+                                                @endif
 
-                                            @if($program->date)
-                                            <div>
-                                                <h4 class="text-lg font-semibold text-primary-600">Tanggal Pelaksanaan</h4>
-                                                <p class="mt-1">{{ $program->date }}</p>
-                                            </div>
-                                            @endif
+                                                @if($program->date)
+                                                <div>
+                                                    <h4 class="text-lg font-semibold text-primary-600">Tanggal Pelaksanaan</h4>
+                                                    <p class="mt-1">{{ $program->date }}</p>
+                                                </div>
+                                                @endif
 
-                                            @if($program->location)
-                                            <div>
-                                                <h4 class="text-lg font-semibold text-primary-600">Lokasi</h4>
-                                                <p class="mt-1">{{ $program->location }}</p>
+                                                @if($program->location)
+                                                <div>
+                                                    <h4 class="text-lg font-semibold text-primary-600">Lokasi</h4>
+                                                    <p class="mt-1">{{ $program->location }}</p>
+                                                </div>
+                                                @endif
                                             </div>
-                                            @endif
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Dialog Footer -->
-                                <div class="flex justify-end border-t border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
-                                    <button
-                                        @click="openModal = false"
-                                        type="button"
-                                        class="whitespace-nowrap rounded-sm bg-primary-600 px-4 py-2 text-center text-sm font-medium tracking-wide text-white transition hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 active:opacity-100 active:outline-offset-0"
-                                    >
-                                        Tutup
-                                    </button>
+                                    <!-- Dialog Footer -->
+                                    <div class="flex justify-end border-t border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
+                                        <button
+                                            @click="openModal = false"
+                                            type="button"
+                                            class="whitespace-nowrap rounded-sm bg-primary-600 px-4 py-2 text-center text-sm font-medium tracking-wide text-white transition hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 active:opacity-100 active:outline-offset-0"
+                                        >
+                                            Tutup
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endif
+
         </div>
     </section>
 
