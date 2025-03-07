@@ -268,7 +268,6 @@ class MainController extends Controller
     public function pustaka()
     {
         $libraries = Library::orderBy('id', 'desc')
-            ->take(6)
             ->get();
 
         $heroSection = HeroSection::first();
