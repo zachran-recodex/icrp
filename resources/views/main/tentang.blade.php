@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 items-center gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
                 <!-- Visi -->
                 <div class="text-center">
                     <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Visi</h2>
