@@ -194,7 +194,7 @@
                                     <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm">
                                         {{ $event->date->format('d F Y') }}
                                     </div>
-                                    <div class="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm">
+                                    <div class="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm">
                                         <div class="flex items-center">
                                             <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -205,7 +205,7 @@
                                             <span class="truncate">{{ $event->location }}</span>
                                         </div>
                                     </div>
-                                    <div class="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm">
+                                    <div class="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm">
                                         <div class="flex items-center">
                                             <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
