@@ -165,7 +165,7 @@
                     @foreach($programs as $program)
                         <div
                             x-data="{ openModal: false }"
-                            class="pl-16 relative bg-white shadow-lg rounded-lg overflow-hidden group cursor-pointer"
+                            class="relative bg-white shadow-lg rounded-lg overflow-hidden group cursor-pointer"
                         >
                             <!-- Program Card -->
                             <img
@@ -192,7 +192,7 @@
                                 x-trap.inert.noscroll="openModal"
                                 @keydown.escape.window="openModal = false"
                                 @click.self="openModal = false"
-                                class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                                class="pl-16 fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
                                 role="dialog"
                                 aria-modal="true"
                                 :aria-labelledby="'programModalTitle-{{ $program->id }}'"
