@@ -165,7 +165,7 @@
                     @foreach($programs as $program)
                         <div
                             x-data="{ openModal: false }"
-                            class="relative bg-white shadow-lg rounded-lg overflow-hidden group cursor-pointer"
+                            class="pl-16 relative bg-white shadow-lg rounded-lg overflow-hidden group cursor-pointer"
                         >
                             <!-- Program Card -->
                             <img
