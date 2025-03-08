@@ -30,12 +30,12 @@
         <div class="container mx-auto px-4">
 
             <!-- Section Header -->
-            <div class="max-w-3xl mx-auto text-center mb-6 md:mb-8">
+            <div class="max-w-7xl mx-auto text-center mb-6 md:mb-8">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl text-primary-500 font-bold mb-4">{{ $article->title }}</h2>
             </div>
 
             <!-- Featured Article Image Responsif -->
-            <div class="flex justify-center mb-6 md:mb-8 border">
+            <div class="flex justify-center mb-6 md:mb-8">
                 <div class="relative w-full max-w-[1000px] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[476px]">
                     <!-- Gambar Artikel -->
                     <img src="{{ Storage::url('articles/' . $article->image) }}"
