@@ -26,7 +26,7 @@
     <x-hero-section :title="$heroSection->title" :image="$heroSection->image" />
 
     <!-- Founder Section -->
-    <section class="py-16 bg-gradient-to-b from-white to-gray-100">
+    <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <!-- Tombol Back -->
             <div class="mb-8">

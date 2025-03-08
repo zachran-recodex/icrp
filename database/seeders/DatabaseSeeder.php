@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             UsersRolesAndPermissionsSeeder::class,
             HeroSectionSeeder::class,
             CallToActionSeeder::class,
+            PageSetupSeeder::class,
         ]);
     }
 }

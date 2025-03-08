@@ -287,17 +287,21 @@ class MainController extends Controller
     {
         $library = Library::where('slug', $slug)->firstOrFail();
 
+        $libraries = Library::where('id', '!=', $library->id)
+            ->orderBy('id', 'desc')
+            ->take(5)
+            ->get();
+
         $heroSection = HeroSection::first();
 
         $callToAction = CallToAction::first();
 
-        return view('main.pustaka-detail',
-            compact(
-                'library',
-                'heroSection',
-                'callToAction'
-            )
-        );
+        return view('main.pustaka-detail', compact(
+            'library',
+            'libraries',
+            'heroSection',
+            'callToAction'
+        ));
     }
 
     public function advokasi()

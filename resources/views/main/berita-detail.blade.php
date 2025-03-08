@@ -1,19 +1,19 @@
 @section('meta_tag')
-    <meta name="description" content="{!! $article->content !!}">
+    <meta name="description" content="{{ optional($pageSetups['berita'])->meta_description ?? '' }}">
     <meta name="keywords" content="{{ optional($pageSetups['berita'])->meta_keywords ?? '' }}">
     <meta name="author" content="RECODEX ID">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="index, follow">
 
     <meta property="og:title" content="{{ $article->title }} | {{ optional($pageSetups['berita'])->title ?? 'Berita & Artikel' }}">
-    <meta property="og:description" content="{!! $article->content !!}">
-    <meta property="og:image" content="{{ Storage::url('articles/' . $article->image) }}"">
+    <meta property="og:description" content="{{ optional($pageSetups['berita'])->meta_description ?? '' }}">
+    <meta property="og:image" content="{{ Storage::url('articles/' . $article->image) }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $article->title }} | {{ optional($pageSetups['berita'])->title ?? 'Berita & Artikel' }}">
-    <meta name="twitter:description" content="{!! $article->content !!}">
+    <meta name="twitter:description" content="{{ optional($pageSetups['berita'])->meta_description ?? '' }}">
     <meta name="twitter:image" content="{{ Storage::url('articles/' . $article->image) }}">
 
     <link rel="canonical" href="{{ url()->current() }}">
@@ -35,7 +35,7 @@
             </div>
 
             <!-- Featured Article Image Responsif -->
-            <div class="flex justify-center mb-6 md:mb-8">
+            <div class="flex justify-center mb-6 md:mb-8 border">
                 <div class="relative w-full max-w-[1000px] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[476px]">
                     <!-- Gambar Artikel -->
                     <img src="{{ Storage::url('articles/' . $article->image) }}"

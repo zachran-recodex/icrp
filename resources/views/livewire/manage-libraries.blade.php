@@ -132,32 +132,141 @@
 
                 <!-- Modal container -->
                 <div
-                    class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
-                    <form>
+                    class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                    <form wire:submit.prevent="store">
                         <!-- Modal content -->
-                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div class="mb-4">
-                                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">
-                                    Judul Buku
-                                </label>
-                                <input type="text" wire:model="title"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @error('title')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">
+                                    {{ $library_id ? 'Edit Buku' : 'Tambah Buku' }}
+                                </h3>
+                                <button wire:click="closeModal()" type="button" class="text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Close</span>
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
                             </div>
-                            <div class="mb-4">
-                                <label for="author" class="block text-gray-700 text-sm font-bold mb-2">
-                                    Pembuat
-                                </label>
-                                <input type="text" wire:model="author"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                            <!-- Tabs -->
+                            <div class="flex border-b">
+                                <button
+                                    type="button"
+                                    wire:click="setTab('info')"
+                                    class="py-2 px-4 {{ $activeTab === 'info' ? 'border-b-2 border-primary-500 font-medium text-primary-600' : 'text-gray-500 hover:text-gray-700' }}"
+                                >
+                                    Informasi Buku
+                                </button>
+                                <button
+                                    type="button"
+                                    wire:click="setTab('review')"
+                                    class="py-2 px-4 {{ $activeTab === 'review' ? 'border-b-2 border-primary-500 font-medium text-primary-600' : 'text-gray-500 hover:text-gray-700' }}"
+                                >
+                                    Review
+                                </button>
                             </div>
-                            <div class="mb-4">
-                                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">
-                                    Deskripsi
-                                </label>
-                                <div x-data="{
+                        </div>
+
+                        <!-- Modal content -->
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[70vh] overflow-y-auto">
+                            <!-- Basic Information Tab -->
+                            <div x-show="$wire.activeTab === 'info'">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="mb-4">
+                                        <label for="title" class="block text-gray-700 text-sm font-bold mb-2">
+                                            Judul Buku
+                                        </label>
+                                        <input type="text" wire:model="title"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('title')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="author" class="block text-gray-700 text-sm font-bold mb-2">
+                                            Pembuat
+                                        </label>
+                                        <input type="text" wire:model="author"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+                                    <div class="mb-4 col-span-2">
+                                        <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Gambar:</label>
+                                        <input type="file" wire:model="temp_image"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @if ($temp_image)
+                                            <img src="{{ $temp_image->temporaryUrl() }}" class="mt-2"
+                                                 style="max-width: 200px;">
+                                        @elseif ($image)
+                                            <img src="{{ Storage::url('libraries/' . $image) }}" class="mt-2"
+                                                 style="max-width: 200px;">
+                                        @endif
+                                    </div>
+                                    <!-- Form Fields Fix - Replace the input fields in manage-libraries.blade.php with these -->
+
+                                    <div class="mb-4">
+                                        <label for="publisher" class="block text-gray-700 text-sm font-bold mb-2">
+                                            Publisher
+                                        </label>
+                                        <input type="text" wire:model="publisher"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('publisher')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="publication_year" class="block text-gray-700 text-sm font-bold mb-2">
+                                            Publication Year
+                                        </label>
+                                        <input type="number" wire:model="publication_year"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('publication_year')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="isbn" class="block text-gray-700 text-sm font-bold mb-2">
+                                            ISBN
+                                        </label>
+                                        <input type="text" wire:model="isbn"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('isbn')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="category" class="block text-gray-700 text-sm font-bold mb-2">
+                                            Category
+                                        </label>
+                                        <input type="text" wire:model="category"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('category')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="page_count" class="block text-gray-700 text-sm font-bold mb-2">
+                                            Page Count
+                                        </label>
+                                        <input type="number" wire:model="page_count"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('page_count')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="language" class="block text-gray-700 text-sm font-bold mb-2">
+                                            Language
+                                        </label>
+                                        <input type="text" wire:model="language"
+                                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        @error('language')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="description" class="block text-gray-700 text-sm font-bold mb-2">
+                                        Deskripsi
+                                    </label>
+                                    <div x-data="{
                                     description: @entangle('description'),
                                     quill: null,
                                     init() {
@@ -195,33 +304,25 @@
                                         });
                                     }
                                 }" wire:ignore>
-                                    <div x-ref="quillEditor" style="min-height: 200px;"></div>
+                                        <div x-ref="quillEditor" style="min-height: 200px;"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mb-4">
-                                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Gambar:</label>
-                                <input type="file" wire:model="temp_image"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @if ($temp_image)
-                                    <img src="{{ $temp_image->temporaryUrl() }}" class="mt-2"
-                                        style="max-width: 200px;">
-                                @elseif ($image)
-                                    <img src="{{ Storage::url('libraries/' . $image) }}" class="mt-2"
-                                        style="max-width: 200px;">
-                                @endif
-                            </div>
-                            <div class="mb-4">
-                                <label for="reviewer" class="block text-gray-700 text-sm font-bold mb-2">
-                                    Pengulas
-                                </label>
-                                <input type="text" wire:model="reviewer"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            </div>
-                            <div class="mb-4">
-                                <label for="review" class="block text-gray-700 text-sm font-bold mb-2">
-                                    Ulasan
-                                </label>
-                                <div x-data="{
+
+                            <!-- Contributions Tab -->
+                            <div x-show="$wire.activeTab === 'review'">
+                                <div class="mb-4">
+                                    <label for="reviewer" class="block text-gray-700 text-sm font-bold mb-2">
+                                        Pengulas
+                                    </label>
+                                    <input type="text" wire:model="reviewer"
+                                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="review" class="block text-gray-700 text-sm font-bold mb-2">
+                                        Ulasan
+                                    </label>
+                                    <div x-data="{
                                     review: @entangle('review'),
                                     quill: null,
                                     init() {
@@ -259,10 +360,13 @@
                                         });
                                     }
                                 }" wire:ignore>
-                                    <div x-ref="quillEditor" style="min-height: 200px;"></div>
+                                        <div x-ref="quillEditor" style="min-height: 200px;"></div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+
                         <!-- Modal footer -->
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                             <button wire:click.prevent="store()" type="button"
