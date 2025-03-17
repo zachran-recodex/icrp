@@ -56,8 +56,8 @@ class ManageFounders extends Component
         'biography' => 'required|string',
         'temp_image' => 'nullable|image|max:2048',
         'order' => 'integer',
-        'contributions.*.title' => 'required|string|max:255',
-        'contributions.*.description' => 'required|string',
+        'contributions.*.title' => 'nullable|string|max:255',
+        'contributions.*.description' => 'nullable|string',
         'legacyContent' => 'nullable|string',
     ];
 

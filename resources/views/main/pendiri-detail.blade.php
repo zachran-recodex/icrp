@@ -18,7 +18,7 @@
 
     <link rel="canonical" href="{{ url()->current() }}">
 
-    <title>{{ $founder->title }} | {{ optional($pageSetups['pendiri'])->title ?? 'Profil Pendiri ICRP' }}</title>
+    <title>{{ $founder->name }} | {{ optional($pageSetups['pendiri'])->title ?? 'Profil Pendiri ICRP' }}</title>
 @endsection
 
 <x-main-layout>
