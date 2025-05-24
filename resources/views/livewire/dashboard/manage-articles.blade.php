@@ -73,7 +73,7 @@
                             <td class="px-6 py-4 text-sm font-medium text-zinc-900">
                                 <div class="flex items-center">
                                     @if ($article->image && Storage::disk('public')->exists($article->image))
-                                        <img src="{{ Storage::url($article->image) }}" alt="{{ $article->title }}" class="w-10 h-10 object-cover rounded-lg mr-3">
+                                        <img src="{{ Storage::url('articles/' . $article->image) }}" alt="{{ $article->title }}" class="w-10 h-10 object-cover rounded-lg mr-3">
                                     @else
                                         <div class="w-10 h-10 flex items-center justify-center bg-zinc-100 rounded-lg mr-3">
                                             <flux:icon name="photo" variant="mini" class="text-zinc-400" />
@@ -145,7 +145,7 @@
                     @if ($image && !$newImage && Storage::disk('public')->exists($image))
                         <div class="mb-4">
                             <flux:text class="text-sm mb-2">Current Image:</flux:text>
-                            <img src="{{ Storage::url($image) }}" alt="Current article image" class="max-w-xs h-auto rounded-lg shadow-md">
+                            <img src="{{ Storage::url('articles/' . $image) }}" alt="Current article image" class="max-w-xs h-auto rounded-lg shadow-md">
                         </div>
                     @endif
 
