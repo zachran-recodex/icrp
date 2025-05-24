@@ -21,8 +21,14 @@ class MainController extends Controller
     public function index(): View
     {
         $heroSection = Hero::first();
-        $articles = Article::with('category')->latest()->take(6)->get();
         $featuredArticle = Article::with('category')->latest()->first();
+        if ($featuredArticle) {
+            $articles = Article::with('category')
+                ->where('id', '!=', $featuredArticle->id)
+                ->latest()
+                ->take(9)
+                ->get();
+        }
         $libraries = Library::latest()->take(3)->get();
         $events = Event::upcoming()->take(3)->get();
         $callToAction = CallToAction::first();
