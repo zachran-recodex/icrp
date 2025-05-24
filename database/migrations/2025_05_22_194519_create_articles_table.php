@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('article_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->timestamps();
         });
 
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('article_category_id')->constrained()->cascadeOnDelete();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('slug')->unique();
-            $table->text('content');
+            $table->longText('content')->nullable();
             $table->string('image')->nullable();
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
         });
     }
