@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
@@ -21,11 +20,8 @@ class Article extends Model implements HasMedia
         'article_category_id',
         'title',
         'slug',
-        'excerpt',
         'content',
         'image_path',
-        'meta_title',
-        'meta_description',
         'is_published',
         'is_featured',
         'published_at',
@@ -143,7 +139,6 @@ class Article extends Model implements HasMedia
     {
         return $query->where(function ($q) use ($term) {
             $q->where('title', 'like', "%{$term}%")
-              ->orWhere('excerpt', 'like', "%{$term}%")
               ->orWhere('content', 'like', "%{$term}%");
         });
     }
@@ -171,23 +166,6 @@ class Article extends Model implements HasMedia
     public function getThumbnailUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('featured', 'thumb') ?: $this->image_path;
-    }
-
-    /**
-     * Get meta title with fallback.
-     */
-    public function getMetaTitleAttribute(): string
-    {
-        return $this->attributes['meta_title'] ?: $this->title;
-    }
-
-    /**
-     * Get meta description with fallback.
-     */
-    public function getMetaDescriptionAttribute(): string
-    {
-        return $this->attributes['meta_description'] ?:
-               Str::limit(strip_tags($this->excerpt ?: $this->content), 160);
     }
 
     /**

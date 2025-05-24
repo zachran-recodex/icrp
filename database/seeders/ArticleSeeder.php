@@ -27,10 +27,7 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Technology',
                 'title' => 'The Future of Artificial Intelligence in 2025',
-                'excerpt' => 'Exploring the latest developments in AI technology and their impact on various industries.',
                 'content' => $this->getTechnologyContent(),
-                'meta_title' => 'AI Technology Trends 2025 - Future Developments',
-                'meta_description' => 'Discover the latest AI technology trends and developments shaping 2025. Learn about machine learning advances and industry applications.',
                 'is_published' => true,
                 'is_featured' => true,
                 'published_at' => Carbon::now()->subDays(2),
@@ -39,7 +36,6 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Technology',
                 'title' => 'Best Practices for Laravel Development in 2025',
-                'excerpt' => 'A comprehensive guide to modern Laravel development techniques and patterns.',
                 'content' => $this->getLaravelContent(),
                 'is_published' => true,
                 'is_featured' => false,
@@ -51,7 +47,6 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Business',
                 'title' => 'Digital Transformation Strategies for SMEs',
-                'excerpt' => 'How small and medium enterprises can successfully navigate digital transformation.',
                 'content' => $this->getBusinessContent(),
                 'is_published' => true,
                 'is_featured' => true,
@@ -61,7 +56,6 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Business',
                 'title' => 'Remote Work Management Best Practices',
-                'excerpt' => 'Effective strategies for managing distributed teams and maintaining productivity.',
                 'content' => $this->getRemoteWorkContent(),
                 'is_published' => true,
                 'is_featured' => false,
@@ -73,7 +67,6 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Health & Wellness',
                 'title' => 'Mindfulness Meditation for Busy Professionals',
-                'excerpt' => 'Simple meditation techniques that fit into a hectic work schedule.',
                 'content' => $this->getHealthContent(),
                 'is_published' => true,
                 'is_featured' => false,
@@ -85,7 +78,6 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Education',
                 'title' => 'The Evolution of Online Learning Platforms',
-                'excerpt' => 'How digital education has transformed traditional learning methods.',
                 'content' => $this->getEducationContent(),
                 'is_published' => true,
                 'is_featured' => true,
@@ -97,7 +89,6 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Travel',
                 'title' => 'Hidden Gems of Southeast Asia',
-                'excerpt' => 'Discover lesser-known destinations that offer authentic cultural experiences.',
                 'content' => $this->getTravelContent(),
                 'is_published' => true,
                 'is_featured' => false,
@@ -109,7 +100,6 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Technology',
                 'title' => 'Cybersecurity Trends for 2025',
-                'excerpt' => 'Emerging cybersecurity threats and protection strategies.',
                 'content' => $this->getCybersecurityContent(),
                 'is_published' => false,
                 'is_featured' => false,
@@ -119,7 +109,6 @@ class ArticleSeeder extends Seeder
             [
                 'category' => 'Business',
                 'title' => 'Sustainable Business Practices',
-                'excerpt' => 'How companies are adopting eco-friendly operations.',
                 'content' => $this->getSustainabilityContent(),
                 'is_published' => false,
                 'is_featured' => false,

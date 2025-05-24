@@ -28,11 +28,8 @@ return new class extends Migration
             $table->foreignId('article_category_id')->constrained('article_categories')->cascadeOnDelete();
             $table->string('title', 255);
             $table->string('slug')->unique();
-            $table->text('excerpt')->nullable();
             $table->longText('content')->nullable();
             $table->string('image_path')->nullable();
-            $table->string('meta_title', 255)->nullable();
-            $table->text('meta_description')->nullable();
             $table->boolean('is_published')->default(false);
             $table->boolean('is_featured')->default(false);
             $table->timestamp('published_at')->nullable();
