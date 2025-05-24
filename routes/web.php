@@ -39,7 +39,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/hero', App\Livewire\Dashboard\ManageHero::class)->name('hero');
-        Route::get('/article-categories', App\Livewire\Dashboard\ManageArticleCategories::class)->name('article-categories');
         Route::get('/articles', App\Livewire\Dashboard\ManageArticles::class)->name('articles');
         Route::get('/events', App\Livewire\Dashboard\ManageEvents::class)->name('events');
         Route::get('/founders', App\Livewire\Dashboard\ManageFounders::class)->name('founders');

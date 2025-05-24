@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
+        @stack('head')
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
@@ -15,7 +16,6 @@
                 <flux:navlist.group heading="Platform" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
                     <flux:navlist.item icon="tv" :href="route('dashboard.hero')" :current="request()->routeIs('dashboard.hero')" wire:navigate>Hero</flux:navlist.item>
-                    <flux:navlist.item icon="tag" :href="route('dashboard.article-categories')" :current="request()->routeIs('dashboard.article-categories')" wire:navigate>Article Categories</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('dashboard.articles')" :current="request()->routeIs('dashboard.articles')" wire:navigate>Articles</flux:navlist.item>
                     <flux:navlist.item icon="calendar" :href="route('dashboard.events')" :current="request()->routeIs('dashboard.events')" wire:navigate>Events</flux:navlist.item>
                     <flux:navlist.item icon="user" :href="route('dashboard.founders')" :current="request()->routeIs('dashboard.founders')" wire:navigate>Founders</flux:navlist.item>
@@ -128,6 +128,8 @@
         <flux:main :title="$title ?? null">
             {{ $slot }}
         </flux:main>
+
+        @stack('scripts')
 
         @fluxScripts
     </body>
