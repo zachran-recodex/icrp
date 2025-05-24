@@ -31,7 +31,7 @@
                 @if ($image)
                     <div class="mb-4">
                         <flux:text class="text-sm mb-2">Current Image:</flux:text>
-                        <img src="{{ Storage::url($image) }}" alt="Current hero image" class="max-w-md h-auto rounded-lg shadow-md">
+                        <img src="{{ Storage::url('hero/' . $image) }}" alt="Current hero image" class="max-w-md h-auto rounded-lg shadow-md">
                     </div>
                 @endif
 

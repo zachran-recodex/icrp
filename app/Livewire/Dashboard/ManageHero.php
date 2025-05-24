@@ -54,7 +54,7 @@ class ManageHero extends Component
             }
 
             // Store the new image
-            $imagePath = $this->newImage->store('heroes', 'public');
+            $imagePath = $this->newImage->store('hero', 'public');
             $hero->image = $imagePath;
         }
 
