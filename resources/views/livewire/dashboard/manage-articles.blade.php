@@ -72,7 +72,7 @@
                         <tr>
                             <td class="px-6 py-4 text-sm font-medium text-zinc-900">
                                 <div class="flex items-center">
-                                    @if ($article->image && Storage::disk('public')->exists('aritcles/' . $article->image))
+                                    @if ($article->image && Storage::disk('public')->exists('articles/' . $article->image))
                                         <img src="{{ Storage::url('articles/' . $article->image) }}" alt="{{ $article->title }}" class="w-10 h-10 object-cover rounded-lg mr-3">
                                     @else
                                         <div class="w-10 h-10 flex items-center justify-center bg-zinc-100 rounded-lg mr-3">
