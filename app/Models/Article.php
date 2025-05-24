@@ -2,67 +2,96 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Article extends Model
+class Article extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, HasSlug, InteractsWithMedia;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'article_category_id',
         'title',
         'slug',
+        'excerpt',
         'content',
-        'image',
+        'image_path',
+        'meta_title',
+        'meta_description',
         'is_published',
+        'is_featured',
+        'published_at',
+        'views_count',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'is_published' => 'boolean',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'is_featured' => 'boolean',
+        'published_at' => 'datetime',
+        'views_count' => 'integer',
+    ];
+
+    protected $appends = [
+        'reading_time',
+        'featured_image_url',
     ];
 
     /**
-     * Boot the model.
+     * Get the options for generating the slug.
      */
-    protected static function boot()
+    public function getSlugOptions(): SlugOptions
     {
-        parent::boot();
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
 
-        static::creating(function ($article) {
-            if (empty($article->slug) && !empty($article->title)) {
-                $article->slug = Str::slug($article->title);
-            }
-        });
+    /**
+     * Configure media collections.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('featured')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
 
-        static::updating(function ($article) {
-            if ($article->isDirty('title') && !$article->isDirty('slug')) {
-                $article->slug = Str::slug($article->title);
-            }
-        });
+        $this->addMediaCollection('gallery')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+    }
+
+    /**
+     * Configure media conversions.
+     */
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(300)
+            ->height(200)
+            ->sharpen(10)
+            ->performOnCollections('featured', 'gallery');
+
+        $this->addMediaConversion('large')
+            ->width(1200)
+            ->height(800)
+            ->sharpen(10)
+            ->performOnCollections('featured');
     }
 
     /**
      * Get the category that owns the article.
      */
-    public function articleCategory(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(ArticleCategory::class);
+        return $this->belongsTo(ArticleCategory::class, 'article_category_id');
     }
 
     /**
@@ -70,83 +99,103 @@ class Article extends Model
      */
     public function scopePublished(Builder $query): Builder
     {
-        return $query->where('is_published', true);
+        return $query->where('is_published', true)
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 
     /**
-     * Scope to get only draft articles.
+     * Scope to get only featured articles.
      */
-    public function scopeDraft(Builder $query): Builder
+    public function scopeFeatured(Builder $query): Builder
     {
-        return $query->where('is_published', false);
-    }
-
-    /**
-     * Scope to search articles by title or content.
-     */
-    public function scopeSearch(Builder $query, string $search): Builder
-    {
-        return $query->where(function ($q) use ($search) {
-            $q->where('title', 'like', "%{$search}%")
-              ->orWhere('content', 'like', "%{$search}%");
-        });
+        return $query->where('is_featured', true);
     }
 
     /**
      * Scope to get articles by category.
      */
-    public function scopeByCategory(Builder $query, int $categoryId): Builder
+    public function scopeByCategory(Builder $query, $categoryId): Builder
     {
         return $query->where('article_category_id', $categoryId);
     }
 
     /**
-     * Get the route key for the model.
+     * Scope to get popular articles based on views.
      */
-    public function getRouteKeyName(): string
+    public function scopePopular(Builder $query, int $limit = 10): Builder
     {
-        return 'slug';
+        return $query->orderBy('views_count', 'desc')->limit($limit);
     }
 
     /**
-     * Get the article's excerpt.
+     * Scope to get recent articles.
      */
-    public function getExcerptAttribute(): string
+    public function scopeRecent(Builder $query, int $limit = 10): Builder
     {
-        return Str::limit(strip_tags($this->content), 150);
+        return $query->latest('published_at')->limit($limit);
     }
 
     /**
-     * Get the article's reading time in minutes.
+     * Scope for search functionality.
+     */
+    public function scopeSearch(Builder $query, string $term): Builder
+    {
+        return $query->where(function ($q) use ($term) {
+            $q->where('title', 'like', "%{$term}%")
+              ->orWhere('excerpt', 'like', "%{$term}%")
+              ->orWhere('content', 'like', "%{$term}%");
+        });
+    }
+
+    /**
+     * Get estimated reading time in minutes.
      */
     public function getReadingTimeAttribute(): int
     {
-        $wordCount = str_word_count(strip_tags($this->content));
-        return max(1, ceil($wordCount / 200)); // Average reading speed: 200 words per minute
+        $wordCount = str_word_count(strip_tags($this->content ?? ''));
+        return max(1, ceil($wordCount / 200)); // Assuming 200 words per minute
     }
 
     /**
-     * Get the full image URL.
+     * Get featured image URL.
      */
-    public function getImageUrlAttribute(): ?string
+    public function getFeaturedImageUrlAttribute(): ?string
     {
-        return $this->image ? asset('storage/' . $this->image) : null;
+        return $this->getFirstMediaUrl('featured') ?: $this->image_path;
     }
 
     /**
-     * Check if the article is published.
+     * Get thumbnail image URL.
      */
-    public function isPublished(): bool
+    public function getThumbnailUrlAttribute(): ?string
     {
-        return $this->is_published;
+        return $this->getFirstMediaUrl('featured', 'thumb') ?: $this->image_path;
     }
 
     /**
-     * Check if the article is draft.
+     * Get meta title with fallback.
      */
-    public function isDraft(): bool
+    public function getMetaTitleAttribute(): string
     {
-        return !$this->is_published;
+        return $this->attributes['meta_title'] ?: $this->title;
+    }
+
+    /**
+     * Get meta description with fallback.
+     */
+    public function getMetaDescriptionAttribute(): string
+    {
+        return $this->attributes['meta_description'] ?:
+               Str::limit(strip_tags($this->excerpt ?: $this->content), 160);
+    }
+
+    /**
+     * Increment views count.
+     */
+    public function incrementViews(): void
+    {
+        $this->increment('views_count');
     }
 
     /**
@@ -154,14 +203,20 @@ class Article extends Model
      */
     public function publish(): bool
     {
-        return $this->update(['is_published' => true]);
+        return $this->update([
+            'is_published' => true,
+            'published_at' => now(),
+        ]);
     }
 
     /**
-     * Unpublish the article (make it draft).
+     * Unpublish the article.
      */
     public function unpublish(): bool
     {
-        return $this->update(['is_published' => false]);
+        return $this->update([
+            'is_published' => false,
+            'published_at' => null,
+        ]);
     }
 }

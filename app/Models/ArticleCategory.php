@@ -5,32 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class ArticleCategory extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'title',
+        'slug',
+        'description',
+        'is_active',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'is_active' => 'boolean',
     ];
 
     /**
-     * Get all articles for this category.
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
+
+    /**
+     * Get articles belonging to this category.
      */
     public function articles(): HasMany
     {
@@ -38,28 +43,26 @@ class ArticleCategory extends Model
     }
 
     /**
-     * Get published articles for this category as an attribute.
+     * Get published articles belonging to this category.
      */
-    public function getPublishedArticlesAttribute()
+    public function publishedArticles(): HasMany
     {
         return $this->articles()->published();
     }
 
     /**
-     * Scope to get categories that have published articles.
+     * Scope to get only active categories.
      */
-    public function scopeWithPublishedArticles($query)
+    public function scopeActive($query)
     {
-        return $query->whereHas('articles', function ($q) {
-            $q->published();
-        });
+        return $query->where('is_active', true);
     }
 
     /**
-     * Get the count of published articles in this category.
+     * Get category with article count.
      */
-    public function getPublishedArticlesCountAttribute(): int
+    public function scopeWithArticleCount($query)
     {
-        return $this->articles()->published()->count();
+        return $query->withCount(['articles', 'publishedArticles']);
     }
 }
