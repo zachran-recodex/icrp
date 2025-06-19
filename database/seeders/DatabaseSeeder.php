@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             FounderSeeder::class,
             MemberSeeder::class,
+            LibrarySeeder::class,
         ]);
     }
 }
