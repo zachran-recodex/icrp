@@ -19,6 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
     
     Route::get('dashboard/manage-hero', \App\Livewire\Dashboard\ManageHero::class)->name('dashboard.manage-hero');
+    Route::get('dashboard/manage-articles', \App\Livewire\Dashboard\ManageArticles::class)->name('dashboard.manage-articles');
 });
 
 require __DIR__.'/auth.php';
