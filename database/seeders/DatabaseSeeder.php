@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             FounderSeeder::class,
             MemberSeeder::class,
             LibrarySeeder::class,
+            CallToActionSeeder::class,
         ]);
     }
 }
