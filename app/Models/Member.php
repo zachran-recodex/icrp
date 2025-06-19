@@ -5,11 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Carbon\Carbon;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Member extends Model
 {
+    use HasSlug;
+
     protected $fillable = [
         'name',
+        'slug',
         'nickname', 
         'birth_date',
         'death_date',
@@ -26,6 +31,18 @@ class Member extends Model
         'birth_date' => 'date',
         'death_date' => 'date',
     ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     protected function age(): Attribute
     {

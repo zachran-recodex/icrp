@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('founders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('nickname')->nullable();
             $table->date('birth_date');
             $table->date('death_date')->nullable();

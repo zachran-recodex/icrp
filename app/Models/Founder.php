@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Founder extends Model
 {
+    use HasSlug;
+
     protected $fillable = [
         'name',
+        'slug',
         'nickname',
         'birth_date',
         'death_date',
@@ -22,6 +27,18 @@ class Founder extends Model
         'birth_date' => 'date',
         'death_date' => 'date',
     ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function getAgeAttribute()
     {
