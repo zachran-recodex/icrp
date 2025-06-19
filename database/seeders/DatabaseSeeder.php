@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             MemberSeeder::class,
             LibrarySeeder::class,
             CallToActionSeeder::class,
+            AdvocacySeeder::class,
         ]);
     }
 }

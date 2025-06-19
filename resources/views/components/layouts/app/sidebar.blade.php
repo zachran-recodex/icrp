@@ -21,6 +21,7 @@
                     <flux:navlist.item icon="user-group" :href="route('dashboard.manage-members')" :current="request()->routeIs('dashboard.manage-members')" wire:navigate>{{ __('Manage Members') }}</flux:navlist.item>
                     <flux:navlist.item icon="book-open" :href="route('dashboard.manage-libraries')" :current="request()->routeIs('dashboard.manage-libraries')" wire:navigate>{{ __('Manage Libraries') }}</flux:navlist.item>
                     <flux:navlist.item icon="megaphone" :href="route('dashboard.manage-call-to-action')" :current="request()->routeIs('dashboard.manage-call-to-action')" wire:navigate>{{ __('Manage Call To Action') }}</flux:navlist.item>
+                    <flux:navlist.item icon="speaker-wave" :href="route('dashboard.manage-advocacies')" :current="request()->routeIs('dashboard.manage-advocacies')" wire:navigate>{{ __('Manage Advocacies') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
