@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             EventSeeder::class,
             FounderSeeder::class,
+            MemberSeeder::class,
         ]);
     }
 }

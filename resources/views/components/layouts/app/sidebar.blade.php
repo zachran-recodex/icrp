@@ -18,6 +18,7 @@
                     <flux:navlist.item icon="document-text" :href="route('dashboard.manage-articles')" :current="request()->routeIs('dashboard.manage-articles')" wire:navigate>{{ __('Manage Articles') }}</flux:navlist.item>
                     <flux:navlist.item icon="calendar" :href="route('dashboard.manage-events')" :current="request()->routeIs('dashboard.manage-events')" wire:navigate>{{ __('Manage Events') }}</flux:navlist.item>
                     <flux:navlist.item icon="users" :href="route('dashboard.manage-founders')" :current="request()->routeIs('dashboard.manage-founders')" wire:navigate>{{ __('Manage Founders') }}</flux:navlist.item>
+                    <flux:navlist.item icon="user-group" :href="route('dashboard.manage-members')" :current="request()->routeIs('dashboard.manage-members')" wire:navigate>{{ __('Manage Members') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
