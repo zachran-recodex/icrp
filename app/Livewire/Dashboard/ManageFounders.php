@@ -86,7 +86,7 @@ class ManageFounders extends Component
             'name' => $this->name,
             'nickname' => $this->nickname,
             'birth_date' => $this->birth_date,
-            'death_date' => $this->death_date,
+            'death_date' => $this->death_date ?: null,
             'birth_place' => $this->birth_place,
             'known_as' => $this->known_as,
             'quote' => $this->quote,
