@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             HeroSeeder::class,
             ArticleCategorySeeder::class,
             ArticleSeeder::class,
+            EventSeeder::class,
         ]);
     }
 }

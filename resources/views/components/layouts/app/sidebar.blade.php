@@ -16,6 +16,7 @@
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="sparkles" :href="route('dashboard.manage-hero')" :current="request()->routeIs('dashboard.manage-hero')" wire:navigate>{{ __('Manage Hero') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('dashboard.manage-articles')" :current="request()->routeIs('dashboard.manage-articles')" wire:navigate>{{ __('Manage Articles') }}</flux:navlist.item>
+                    <flux:navlist.item icon="calendar" :href="route('dashboard.manage-events')" :current="request()->routeIs('dashboard.manage-events')" wire:navigate>{{ __('Manage Events') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
