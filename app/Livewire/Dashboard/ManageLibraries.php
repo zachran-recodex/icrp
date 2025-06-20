@@ -3,7 +3,9 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Library;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -17,7 +19,11 @@ class ManageLibraries extends Component
     public $description = '';
     public $image;
     public $editingLibraryId = null;
-    public $showForm = false;
+    public $deletingLibraryId = null;
+
+    // Modal controls using wire:model
+    public $showLibraryModal = false;
+    public $showDeleteLibraryModal = false;
 
     // Filters
     public $search = '';
@@ -36,18 +42,19 @@ class ManageLibraries extends Component
 
     public function createLibrary()
     {
-        $this->resetForm();
-        $this->showForm = true;
+        $this->resetLibraryForm();
+        $this->showLibraryModal = true;
         $this->dispatch('library-form-shown');
     }
 
-    public function editLibrary(Library $library)
+    public function editLibrary($libraryId)
     {
+        $library = Library::find($libraryId);
         $this->editingLibraryId = $library->id;
         $this->title = $library->title;
         $this->author = $library->author;
         $this->description = $library->description;
-        $this->showForm = true;
+        $this->showLibraryModal = true;
         $this->dispatch('library-form-shown');
     }
 
@@ -71,39 +78,59 @@ class ManageLibraries extends Component
         }
 
         if ($this->editingLibraryId) {
-            Library::find($this->editingLibraryId)->update($data);
-            session()->flash('message', 'Library berhasil diupdate!');
+            $library = Library::find($this->editingLibraryId);
+            // Delete old image if new one is uploaded
+            if ($this->image && $library->image) {
+                Storage::disk('public')->delete($library->image);
+            }
+            $library->update($data);
+            session()->flash('message', 'Library updated successfully!');
         } else {
             Library::create($data);
-            session()->flash('message', 'Library berhasil dibuat!');
+            session()->flash('message', 'Library created successfully!');
         }
 
-        $this->dispatch('library-form-hidden');
-        $this->resetForm();
+        $this->showLibraryModal = false;
+        $this->resetLibraryForm();
         $this->dispatch('library-updated');
     }
 
-    public function deleteLibrary(Library $library)
+    public function deleteLibrary($libraryId)
     {
-        $library->delete();
-        session()->flash('message', 'Library berhasil dihapus!');
-        $this->dispatch('library-updated');
+        $this->deletingLibraryId = $libraryId;
+        $this->showDeleteLibraryModal = true;
     }
 
-    public function cancelEdit()
+    public function confirmDeleteLibrary()
     {
-        $this->dispatch('library-form-hidden');
-        $this->resetForm();
+        if ($this->deletingLibraryId) {
+            $library = Library::find($this->deletingLibraryId);
+            // Delete associated image file
+            if ($library->image) {
+                Storage::disk('public')->delete($library->image);
+            }
+            $library->delete();
+            session()->flash('message', 'Library deleted successfully!');
+            $this->deletingLibraryId = null;
+            $this->showDeleteLibraryModal = false;
+            $this->dispatch('library-updated');
+        }
     }
 
-    private function resetForm()
+    public function cancelLibraryEdit()
+    {
+        $this->showLibraryModal = false;
+        $this->resetLibraryForm();
+    }
+
+    private function resetLibraryForm()
     {
         $this->title = '';
         $this->author = '';
         $this->description = '';
         $this->image = null;
         $this->editingLibraryId = null;
-        $this->showForm = false;
+        $this->showLibraryModal = false;
     }
 
     public function render()
