@@ -7,6 +7,8 @@ use Livewire\Volt\Volt;
 Route::controller(MainController::class)->group(function () {
     Route::get('/', 'index')->name('beranda');
     Route::get('/tentang-kami', 'tentangKami')->name('tentang-kami');
+    Route::get('/pendiri', 'pendiri')->name('pendiri');
+    Route::get('/pendiri/{founder}', 'pendiriDetail')->name('pendiri.detail');
 });
 
 Route::view('dashboard', 'dashboard')

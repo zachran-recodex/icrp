@@ -28,7 +28,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- About Section -->
     <section class="py-20 bg-gray-50">
         <div class="container mx-auto px-4 space-y-12">
@@ -58,7 +58,7 @@
                     </p>
                 </div>
                 <div class="w-full md:w-1/2">
-                    <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                    <img src="{{ Storage::url($heroSection->image) }}"
                          alt="Dialog Antar Agama"
                          class="w-full h-auto rounded-xl shadow-lg">
                     <p class="text-center text-sm text-gray-500 mt-2">Dialog Antar Agama untuk Perdamaian</p>
