@@ -14,14 +14,14 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="sparkles" :href="route('dashboard.manage-hero')" :current="request()->routeIs('dashboard.manage-hero')" wire:navigate>{{ __('Manage Hero') }}</flux:navlist.item>
+                    <flux:navlist.item icon="photo" :href="route('dashboard.manage-hero')" :current="request()->routeIs('dashboard.manage-hero')" wire:navigate>{{ __('Manage Hero') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('dashboard.manage-articles')" :current="request()->routeIs('dashboard.manage-articles')" wire:navigate>{{ __('Manage Articles') }}</flux:navlist.item>
                     <flux:navlist.item icon="calendar" :href="route('dashboard.manage-events')" :current="request()->routeIs('dashboard.manage-events')" wire:navigate>{{ __('Manage Events') }}</flux:navlist.item>
                     <flux:navlist.item icon="users" :href="route('dashboard.manage-founders')" :current="request()->routeIs('dashboard.manage-founders')" wire:navigate>{{ __('Manage Founders') }}</flux:navlist.item>
                     <flux:navlist.item icon="user-group" :href="route('dashboard.manage-members')" :current="request()->routeIs('dashboard.manage-members')" wire:navigate>{{ __('Manage Members') }}</flux:navlist.item>
                     <flux:navlist.item icon="book-open" :href="route('dashboard.manage-libraries')" :current="request()->routeIs('dashboard.manage-libraries')" wire:navigate>{{ __('Manage Libraries') }}</flux:navlist.item>
                     <flux:navlist.item icon="megaphone" :href="route('dashboard.manage-call-to-action')" :current="request()->routeIs('dashboard.manage-call-to-action')" wire:navigate>{{ __('Manage Call To Action') }}</flux:navlist.item>
-                    <flux:navlist.item icon="speaker-wave" :href="route('dashboard.manage-advocacies')" :current="request()->routeIs('dashboard.manage-advocacies')" wire:navigate>{{ __('Manage Advocacies') }}</flux:navlist.item>
+                    <flux:navlist.item icon="scale" :href="route('dashboard.manage-advocacies')" :current="request()->routeIs('dashboard.manage-advocacies')" wire:navigate>{{ __('Manage Advocacies') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
