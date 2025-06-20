@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard/manage-libraries', \App\Livewire\Dashboard\ManageLibraries::class)->name('dashboard.manage-libraries');
     Route::get('dashboard/manage-call-to-action', \App\Livewire\Dashboard\ManageCallToAction::class)->name('dashboard.manage-call-to-action');
     Route::get('dashboard/manage-advocacies', \App\Livewire\Dashboard\ManageAdvocacies::class)->name('dashboard.manage-advocacies');
+    Route::get('dashboard/manage-programs', \App\Livewire\Dashboard\ManagePrograms::class)->name('dashboard.manage-programs');
 });
 
 require __DIR__.'/auth.php';

@@ -92,6 +92,10 @@
                         <span class="text-sm font-medium">{{ \App\Models\Founder::count() }}</span>
                     </div>
                     <div class="flex justify-between items-center">
+                        <span class="text-sm text-neutral-600 dark:text-neutral-400">Programs</span>
+                        <span class="text-sm font-medium">{{ \App\Models\Program::count() }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
                         <span class="text-sm text-neutral-600 dark:text-neutral-400">Upcoming Events</span>
                         <span class="text-sm font-medium">{{ \App\Models\Event::where('date', '>=', now())->count() }}</span>
                     </div>
@@ -102,7 +106,7 @@
         <!-- Quick Actions -->
         <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-6">
             <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
-            <div class="grid gap-3 md:grid-cols-4 lg:grid-cols-8">
+            <div class="grid gap-3 md:grid-cols-4 lg:grid-cols-9">
                 <flux:button icon="newspaper" href="{{ route('dashboard.manage-articles') }}" variant="primary" color="blue" wire:navigate>
                     Article
                 </flux:button>
@@ -126,6 +130,9 @@
                 </flux:button>
                 <flux:button icon="megaphone" href="{{ route('dashboard.manage-call-to-action') }}" variant="primary" color="teal" wire:navigate>
                     Call To Action
+                </flux:button>
+                <flux:button icon="folder" href="{{ route('dashboard.manage-programs') }}" variant="primary" color="pink" wire:navigate>
+                    Program
                 </flux:button>
             </div>
         </div>
