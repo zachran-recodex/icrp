@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Advocacy;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -17,7 +18,11 @@ class ManageAdvocacies extends Component
     public $content = '';
     public $image;
     public $editingAdvocacyId = null;
-    public $showForm = false;
+    public $deletingAdvocacyId = null;
+
+    // Modal controls using wire:model
+    public $showAdvocacyModal = false;
+    public $showDeleteAdvocacyModal = false;
 
     // Filters
     public $search = '';
@@ -36,16 +41,17 @@ class ManageAdvocacies extends Component
     public function createAdvocacy()
     {
         $this->resetAdvocacyForm();
-        $this->showForm = true;
+        $this->showAdvocacyModal = true;
         $this->dispatch('advocacy-form-shown');
     }
 
-    public function editAdvocacy(Advocacy $advocacy)
+    public function editAdvocacy($advocacyId)
     {
+        $advocacy = Advocacy::find($advocacyId);
         $this->editingAdvocacyId = $advocacy->id;
         $this->title = $advocacy->title;
         $this->content = $advocacy->content;
-        $this->showForm = true;
+        $this->showAdvocacyModal = true;
         $this->dispatch('advocacy-form-shown');
     }
 
@@ -67,28 +73,48 @@ class ManageAdvocacies extends Component
         }
 
         if ($this->editingAdvocacyId) {
-            Advocacy::find($this->editingAdvocacyId)->update($data);
-            session()->flash('message', 'Advocacy berhasil diupdate!');
+            $advocacy = Advocacy::find($this->editingAdvocacyId);
+            // Delete old image if new one is uploaded
+            if ($this->image && $advocacy->image) {
+                Storage::disk('public')->delete($advocacy->image);
+            }
+            $advocacy->update($data);
+            session()->flash('message', 'Advocacy updated successfully!');
         } else {
             Advocacy::create($data);
-            session()->flash('message', 'Advocacy berhasil dibuat!');
+            session()->flash('message', 'Advocacy created successfully!');
         }
 
-        $this->dispatch('advocacy-form-hidden');
+        $this->showAdvocacyModal = false;
         $this->resetAdvocacyForm();
         $this->dispatch('advocacy-updated');
     }
 
-    public function deleteAdvocacy(Advocacy $advocacy)
+    public function deleteAdvocacy($advocacyId)
     {
-        $advocacy->delete();
-        session()->flash('message', 'Advocacy berhasil dihapus!');
-        $this->dispatch('advocacy-updated');
+        $this->deletingAdvocacyId = $advocacyId;
+        $this->showDeleteAdvocacyModal = true;
+    }
+
+    public function confirmDeleteAdvocacy()
+    {
+        if ($this->deletingAdvocacyId) {
+            $advocacy = Advocacy::find($this->deletingAdvocacyId);
+            // Delete associated image file
+            if ($advocacy->image) {
+                Storage::disk('public')->delete($advocacy->image);
+            }
+            $advocacy->delete();
+            session()->flash('message', 'Advocacy deleted successfully!');
+            $this->deletingAdvocacyId = null;
+            $this->showDeleteAdvocacyModal = false;
+            $this->dispatch('advocacy-updated');
+        }
     }
 
     public function cancelAdvocacyEdit()
     {
-        $this->dispatch('advocacy-form-hidden');
+        $this->showAdvocacyModal = false;
         $this->resetAdvocacyForm();
     }
 
@@ -98,7 +124,7 @@ class ManageAdvocacies extends Component
         $this->content = '';
         $this->image = null;
         $this->editingAdvocacyId = null;
-        $this->showForm = false;
+        $this->showAdvocacyModal = false;
     }
 
     public function render()
