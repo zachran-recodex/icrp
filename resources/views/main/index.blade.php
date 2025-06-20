@@ -24,22 +24,27 @@
 <x-layouts.main>
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center">
-        <!-- Background Image -->
-        <div class="absolute inset-0">
-            <img src="{{ Storage::url($heroSection->image) }}" alt="{{ $heroSection->title }}"
-                class="w-full h-full object-cover">
-            <!-- Dark Overlay -->
-            <div class="absolute inset-0 bg-black/50"></div>
-        </div>
+        @if($heroSection && $heroSection->image)
+            <!-- Background Image -->
+            <div class="absolute inset-0">
+                <img src="{{ Storage::url($heroSection->image) }}" alt="{{ $heroSection->title }}"
+                    class="w-full h-full object-cover">
+                <!-- Dark Overlay -->
+                <div class="absolute inset-0 bg-black/50"></div>
+            </div>
+        @else
+            <!-- Fallback Background -->
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-600 to-primary-800"></div>
+        @endif
 
         <!-- Content Overlay -->
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                    {{ $heroSection->title }}
+                    {{ $heroSection->title ?? 'Indonesian Conference on Religion and Peace' }}
                 </h1>
                 <p class="text-lg text-white/90 mb-8">
-                    {{ $heroSection->subtitle }}
+                    {{ $heroSection->subtitle ?? 'Platform terdepan untuk dialog lintas agama dan perdamaian di Indonesia' }}
                 </p>
                 <a href="{{ route('tentang') }}"
                     class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
@@ -414,11 +419,13 @@
     </section>
 
     <!-- CTA Section -->
-    <x-call-to-action
-        :title="$callToAction->title"
-        :subtitle="$callToAction->subtitle"
-        :image="$callToAction->image"
-        :button-text="$callToAction->button_text"
-        :button-link="route('kontak')"
-    />
+    @if($callToAction)
+        <x-call-to-action
+            :title="$callToAction->title"
+            :subtitle="$callToAction->subtitle"
+            :image="$callToAction->image"
+            :button-text="$callToAction->button_text"
+            :button-link="route('kontak')"
+        />
+    @endif
 </x-layouts.main>
