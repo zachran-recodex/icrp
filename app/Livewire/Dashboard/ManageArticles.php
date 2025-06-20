@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard;
 
 use App\Models\Article;
 use App\Models\ArticleCategory;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -19,12 +20,18 @@ class ManageArticles extends Component
     public $image;
     public $article_category_id = '';
     public $editingArticleId = null;
-    public $showForm = false;
+    public $deletingArticleId = null;
 
     // Category management
     public $categoryTitle = '';
     public $editingCategoryId = null;
-    public $showCategoryForm = false;
+    public $deletingCategoryId = null;
+
+    // Modal controls using wire:model
+    public $showArticleModal = false;
+    public $showCategoryModal = false;
+    public $showDeleteArticleModal = false;
+    public $showDeleteCategoryModal = false;
 
     // Filters
     public $selectedCategory = '';
@@ -47,24 +54,25 @@ class ManageArticles extends Component
     #[Computed]
     public function categories()
     {
-        return ArticleCategory::orderBy('title')->get();
+        return ArticleCategory::withCount('articles')->orderBy('title')->get();
     }
 
     // Article CRUD
     public function createArticle()
     {
         $this->resetArticleForm();
-        $this->showForm = true;
+        $this->showArticleModal = true;
         $this->dispatch('article-form-shown');
     }
 
-    public function editArticle(Article $article)
+    public function editArticle($articleId)
     {
+        $article = Article::find($articleId);
         $this->editingArticleId = $article->id;
         $this->title = $article->title;
         $this->content = $article->content;
         $this->article_category_id = $article->article_category_id;
-        $this->showForm = true;
+        $this->showArticleModal = true;
         $this->dispatch('article-form-shown');
     }
 
@@ -88,28 +96,48 @@ class ManageArticles extends Component
         }
 
         if ($this->editingArticleId) {
-            Article::find($this->editingArticleId)->update($data);
-            session()->flash('message', 'Article berhasil diupdate!');
+            $article = Article::find($this->editingArticleId);
+            // Delete old image if new one is uploaded
+            if ($this->image && $article->image) {
+                Storage::disk('public')->delete($article->image);
+            }
+            $article->update($data);
+            session()->flash('message', 'Article updated successfully!');
         } else {
             Article::create($data);
-            session()->flash('message', 'Article berhasil dibuat!');
+            session()->flash('message', 'Article created successfully!');
         }
 
-        $this->dispatch('article-form-hidden');
+        $this->showArticleModal = false;
         $this->resetArticleForm();
         $this->dispatch('article-updated');
     }
 
-    public function deleteArticle(Article $article)
+    public function deleteArticle($articleId)
     {
-        $article->delete();
-        session()->flash('message', 'Article berhasil dihapus!');
-        $this->dispatch('article-updated');
+        $this->deletingArticleId = $articleId;
+        $this->showDeleteArticleModal = true;
+    }
+
+    public function confirmDeleteArticle()
+    {
+        if ($this->deletingArticleId) {
+            $article = Article::find($this->deletingArticleId);
+            // Delete associated image file
+            if ($article->image) {
+                Storage::disk('public')->delete($article->image);
+            }
+            $article->delete();
+            session()->flash('message', 'Article deleted successfully!');
+            $this->deletingArticleId = null;
+            $this->showDeleteArticleModal = false;
+            $this->dispatch('article-updated');
+        }
     }
 
     public function cancelArticleEdit()
     {
-        $this->dispatch('article-form-hidden');
+        $this->showArticleModal = false;
         $this->resetArticleForm();
     }
 
@@ -117,14 +145,20 @@ class ManageArticles extends Component
     public function createCategory()
     {
         $this->resetCategoryForm();
-        $this->showCategoryForm = true;
+        $this->showCategoryModal = true;
     }
 
-    public function editCategory(ArticleCategory $category)
+    public function editCategory($categoryId)
     {
+        // Clear any previous validation errors
+        $this->resetValidation();
+        
+        $category = ArticleCategory::find($categoryId);
         $this->editingCategoryId = $category->id;
         $this->categoryTitle = $category->title;
-        $this->showCategoryForm = true;
+        
+        // Ensure modal stays open
+        $this->showCategoryModal = true;
     }
 
     public function saveCategory()
@@ -135,30 +169,45 @@ class ManageArticles extends Component
 
         if ($this->editingCategoryId) {
             ArticleCategory::find($this->editingCategoryId)->update(['title' => $this->categoryTitle]);
-            session()->flash('message', 'Category berhasil diupdate!');
+            session()->flash('message', 'Category updated successfully!');
         } else {
             ArticleCategory::create(['title' => $this->categoryTitle]);
-            session()->flash('message', 'Category berhasil dibuat!');
+            session()->flash('message', 'Category created successfully!');
         }
 
+        $this->showCategoryModal = false;
         $this->resetCategoryForm();
         $this->dispatch('category-updated');
     }
 
-    public function deleteCategory(ArticleCategory $category)
+    public function deleteCategory($categoryId)
     {
-        if ($category->articles()->count() > 0) {
-            session()->flash('error', 'Category tidak dapat dihapus karena masih memiliki artikel!');
-            return;
-        }
+        $this->deletingCategoryId = $categoryId;
+        $this->showDeleteCategoryModal = true;
+    }
 
-        $category->delete();
-        session()->flash('message', 'Category berhasil dihapus!');
-        $this->dispatch('category-updated');
+    public function confirmDeleteCategory()
+    {
+        if ($this->deletingCategoryId) {
+            $category = ArticleCategory::find($this->deletingCategoryId);
+            if ($category->articles()->count() > 0) {
+                session()->flash('error', 'Category cannot be deleted because it still has articles!');
+                $this->deletingCategoryId = null;
+                $this->showDeleteCategoryModal = false;
+                return;
+            }
+
+            $category->delete();
+            session()->flash('message', 'Category deleted successfully!');
+            $this->deletingCategoryId = null;
+            $this->showDeleteCategoryModal = false;
+            $this->dispatch('category-updated');
+        }
     }
 
     public function cancelCategoryEdit()
     {
+        $this->showCategoryModal = false;
         $this->resetCategoryForm();
     }
 
@@ -170,14 +219,14 @@ class ManageArticles extends Component
         $this->image = null;
         $this->article_category_id = '';
         $this->editingArticleId = null;
-        $this->showForm = false;
+        $this->showArticleModal = false;
     }
 
     private function resetCategoryForm()
     {
         $this->categoryTitle = '';
         $this->editingCategoryId = null;
-        $this->showCategoryForm = false;
+        $this->showCategoryModal = false;
     }
 
     public function render()
