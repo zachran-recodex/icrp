@@ -1,108 +1,133 @@
 <div>
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Manage Events</h2>
-        <button wire:click="createEvent" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Tambah Event
-        </button>
+        <flux:button variant="primary" wire:click="createEvent">
+            Create Event
+        </flux:button>
     </div>
 
     @if (session()->has('message'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            {{ session('message') }}
-        </div>
+        <flux:callout class="mb-4" variant="success" icon="check-circle" heading="{{ session('message') }}" />
+    @endif
+
+    @if (session()->has('error'))
+        <flux:callout class="mb-4" variant="danger" icon="x-circle" heading="{{ session('error') }}" />
     @endif
 
     <!-- Event Form Modal -->
-    @if ($showForm)
-        <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-            <div class="relative top-10 mx-auto p-5 border w-11/12 md:w-4/5 lg:w-3/4 xl:w-2/3 shadow-lg rounded-md bg-white">
-                <div class="mt-3">
-                    <h3 class="text-lg font-semibold mb-4">
-                        {{ $editingEventId ? 'Edit Event' : 'Tambah Event Baru' }}
-                    </h3>
+    <flux:modal wire:model.self="showEventModal" class="md:w-4xl max-w-6xl">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">{{ $editingEventId ? 'Edit Event' : 'Create New Event' }}</flux:heading>
+            </div>
 
-                    <form wire:submit="saveEvent" enctype="multipart/form-data">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Title</label>
-                                <input wire:model="title" type="text" id="title"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('title') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
+            <form wire:submit="saveEvent" enctype="multipart/form-data">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <flux:field>
+                        <flux:label>Title</flux:label>
 
-                            <div>
-                                <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                                <input wire:model="location" type="text" id="location"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('location') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
+                        <flux:input wire:model="title" type="text" />
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Date</label>
-                                <input wire:model="date" type="date" id="date"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
+                        <flux:error name="title" />
+                    </flux:field>
 
-                            <div>
-                                <label for="time" class="block text-sm font-medium text-gray-700 mb-2">Time</label>
-                                <input wire:model="time" type="time" id="time"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('time') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
+                    <flux:field>
+                        <flux:label>Location</flux:label>
 
-                        <div class="mb-4">
-                            <label for="event_description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                            <textarea wire:model="description" id="event_description" rows="4"
-                                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                            @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
+                        <flux:input wire:model="location" type="text" />
 
-                        <div class="mb-4">
-                            <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Image</label>
-                            <input wire:model="image" type="file" id="image" accept="image/*"
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('image') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-
-                            @if ($image)
-                                <div class="mt-2">
-                                    <img src="{{ $image->temporaryUrl() }}" alt="Preview" class="w-32 h-32 object-cover rounded">
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="flex justify-end space-x-2">
-                            <button type="button" wire:click="cancelEdit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                                Cancel
-                            </button>
-                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                {{ $editingEventId ? 'Update' : 'Simpan' }}
-                            </button>
-                        </div>
-                    </form>
+                        <flux:error name="location" />
+                    </flux:field>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <flux:field>
+                        <flux:label>Date</flux:label>
+
+                        <flux:input wire:model="date" type="date" />
+
+                        <flux:error name="date" />
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Time</flux:label>
+
+                        <flux:input wire:model="time" type="time" />
+
+                        <flux:error name="time" />
+                    </flux:field>
+                </div>
+
+                <flux:field class="mb-4">
+                    <flux:label>Description</flux:label>
+
+                    <flux:textarea wire:model="description" rows="4" />
+
+                    <flux:error name="description" />
+                </flux:field>
+
+                <flux:field class="mb-4">
+                    <flux:label>Image</flux:label>
+
+                    <flux:input wire:model="image" type="file" accept="image/*" />
+
+                    <flux:error name="image" />
+
+                    @if ($image)
+                        <div class="mt-2">
+                            <img src="{{ $image->temporaryUrl() }}" alt="Preview" class="w-32 h-32 object-cover rounded">
+                        </div>
+                    @endif
+                </flux:field>
+
+                <div class="flex space-x-2">
+                    <flux:spacer />
+
+                    <flux:modal.close>
+                        <flux:button variant="ghost" wire:click="cancelEventEdit">Cancel</flux:button>
+                    </flux:modal.close>
+
+                    <flux:button type="submit" variant="primary">{{ $editingEventId ? 'Update' : 'Save' }}</flux:button>
+                </div>
+            </form>
+        </div>
+    </flux:modal>
+
+    <!-- Delete Event Confirmation Modal -->
+    <flux:modal wire:model.self="showDeleteEventModal" class="min-w-[22rem]">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Delete event?</flux:heading>
+
+                <flux:text class="mt-2">
+                    <p>You're about to delete this event.</p>
+                    <p>This action cannot be reversed.</p>
+                </flux:text>
+            </div>
+
+            <div class="flex gap-2">
+                <flux:spacer />
+
+                <flux:button wire:click="$set('showDeleteEventModal', false)" variant="ghost">Cancel</flux:button>
+
+                <flux:button wire:click="confirmDeleteEvent" variant="danger">Delete event</flux:button>
             </div>
         </div>
-    @endif
+    </flux:modal>
 
     <!-- Filters -->
     <div class="bg-zinc-50 border border-zinc-200 shadow-md rounded-lg p-4 mb-6">
         <div class="flex space-x-4">
             <div class="flex-1">
-                <input wire:model.live="search" type="text" placeholder="Search events by title or location..."
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <flux:input icon="magnifying-glass" type="text" wire:model.live="search" placeholder="Search events by title or location..." />
             </div>
             <div>
-                <input wire:model.live="dateFilter" type="date"
-                       class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <flux:input wire:model.live="dateFilter" type="date" />
             </div>
             @if ($dateFilter)
-                <button wire:click="$set('dateFilter', '')" class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+                <flux:button wire:click="$set('dateFilter', '')" variant="danger" size="sm">
                     Clear Date
-                </button>
+                </flux:button>
             @endif
         </div>
     </div>
@@ -143,15 +168,18 @@
                             {{ Str::limit($event->location, 30) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                            <button wire:click="editEvent({{ $event->id }})" class="text-blue-600 hover:text-blue-900">Edit</button>
-                            <button wire:click="deleteEvent({{ $event->id }})"
-                                    onclick="return confirm('Yakin ingin menghapus event ini?')"
-                                    class="text-red-600 hover:text-red-900">Delete</button>
+
+                            <!-- Edit -->
+                            <flux:button icon="pencil" wire:click="editEvent({{ $event->id }})" size="sm" variant="primary" class="bg-blue-500 hover:bg-blue-600" />
+
+                            <!-- Delete -->
+                            <flux:button icon="trash" wire:click="deleteEvent({{ $event->id }})" size="sm" variant="danger" />
+
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">Belum ada data event</td>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No events found</td>
                     </tr>
                 @endforelse
             </tbody>

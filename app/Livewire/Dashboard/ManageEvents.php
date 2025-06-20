@@ -3,7 +3,9 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Event;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -19,7 +21,11 @@ class ManageEvents extends Component
     public $description = '';
     public $image;
     public $editingEventId = null;
-    public $showForm = false;
+    public $deletingEventId = null;
+
+    // Modal controls using wire:model
+    public $showEventModal = false;
+    public $showDeleteEventModal = false;
 
     // Filters
     public $search = '';
@@ -41,20 +47,21 @@ class ManageEvents extends Component
 
     public function createEvent()
     {
-        $this->resetForm();
-        $this->showForm = true;
+        $this->resetEventForm();
+        $this->showEventModal = true;
         $this->dispatch('event-form-shown');
     }
 
-    public function editEvent(Event $event)
+    public function editEvent($eventId)
     {
+        $event = Event::find($eventId);
         $this->editingEventId = $event->id;
         $this->title = $event->title;
         $this->date = $event->date->format('Y-m-d');
         $this->time = $event->time->format('H:i');
         $this->location = $event->location;
         $this->description = $event->description;
-        $this->showForm = true;
+        $this->showEventModal = true;
         $this->dispatch('event-form-shown');
     }
 
@@ -82,32 +89,52 @@ class ManageEvents extends Component
         }
 
         if ($this->editingEventId) {
-            Event::find($this->editingEventId)->update($data);
-            session()->flash('message', 'Event berhasil diupdate!');
+            $event = Event::find($this->editingEventId);
+            // Delete old image if new one is uploaded
+            if ($this->image && $event->image) {
+                Storage::disk('public')->delete($event->image);
+            }
+            $event->update($data);
+            session()->flash('message', 'Event updated successfully!');
         } else {
             Event::create($data);
-            session()->flash('message', 'Event berhasil dibuat!');
+            session()->flash('message', 'Event created successfully!');
         }
 
-        $this->dispatch('event-form-hidden');
-        $this->resetForm();
+        $this->showEventModal = false;
+        $this->resetEventForm();
         $this->dispatch('event-updated');
     }
 
-    public function deleteEvent(Event $event)
+    public function deleteEvent($eventId)
     {
-        $event->delete();
-        session()->flash('message', 'Event berhasil dihapus!');
-        $this->dispatch('event-updated');
+        $this->deletingEventId = $eventId;
+        $this->showDeleteEventModal = true;
     }
 
-    public function cancelEdit()
+    public function confirmDeleteEvent()
     {
-        $this->dispatch('event-form-hidden');
-        $this->resetForm();
+        if ($this->deletingEventId) {
+            $event = Event::find($this->deletingEventId);
+            // Delete associated image file
+            if ($event->image) {
+                Storage::disk('public')->delete($event->image);
+            }
+            $event->delete();
+            session()->flash('message', 'Event deleted successfully!');
+            $this->deletingEventId = null;
+            $this->showDeleteEventModal = false;
+            $this->dispatch('event-updated');
+        }
     }
 
-    private function resetForm()
+    public function cancelEventEdit()
+    {
+        $this->showEventModal = false;
+        $this->resetEventForm();
+    }
+
+    private function resetEventForm()
     {
         $this->title = '';
         $this->date = '';
@@ -116,7 +143,7 @@ class ManageEvents extends Component
         $this->description = '';
         $this->image = null;
         $this->editingEventId = null;
-        $this->showForm = false;
+        $this->showEventModal = false;
     }
 
     public function render()
