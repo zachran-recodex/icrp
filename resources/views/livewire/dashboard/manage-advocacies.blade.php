@@ -130,10 +130,10 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
 
                             <!-- Edit -->
-                            <flux:button icon="pencil" wire:click="editAdvocacy({{ $advocacy->id }})" size="sm" variant="primary" class="bg-blue-500 hover:bg-blue-600" />
+                            <flux:button icon="pencil" wire:click="editAdvocacy({{ $advocacy->id }})" size="sm" variant="primary" color="blue" />
 
                             <!-- Delete -->
-                            <flux:button icon="trash" wire:click="deleteAdvocacy({{ $advocacy->id }})" size="sm" variant="danger" />
+                            <flux:button icon="trash" wire:click="deleteAdvocacy({{ $advocacy->id }})" size="sm" variant="primary" color="red" />
 
                         </td>
                     </tr>

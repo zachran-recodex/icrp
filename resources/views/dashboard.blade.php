@@ -106,7 +106,7 @@
         <!-- Quick Actions -->
         <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-6">
             <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
-            <div class="grid gap-3 md:grid-cols-4 lg:grid-cols-9">
+            <div class="grid gap-3 md:grid-cols-3">
                 <flux:button icon="newspaper" href="{{ route('dashboard.manage-articles') }}" variant="primary" color="blue" wire:navigate>
                     Article
                 </flux:button>
