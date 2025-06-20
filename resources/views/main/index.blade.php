@@ -26,7 +26,7 @@
     <section class="relative min-h-screen flex items-center justify-center">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            <img src="{{ Storage::url('hero/' . $heroSection->image) }}" alt="{{ $heroSection->title }}"
+            <img src="{{ Storage::url($heroSection->image) }}" alt="{{ $heroSection->title }}"
                 class="w-full h-full object-cover">
             <!-- Dark Overlay -->
             <div class="absolute inset-0 bg-black/50"></div>
