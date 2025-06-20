@@ -55,10 +55,10 @@ class ManageCallToAction extends Component
         $callToAction = CallToAction::first();
         if ($callToAction) {
             $callToAction->update($data);
-            session()->flash('message', 'Call to Action berhasil diupdate!');
+            session()->flash('message', 'Call to Action updated successfully!');
         } else {
             CallToAction::create($data);
-            session()->flash('message', 'Call to Action berhasil dibuat!');
+            session()->flash('message', 'Call to Action created successfully!');
         }
 
         $this->image = null;
