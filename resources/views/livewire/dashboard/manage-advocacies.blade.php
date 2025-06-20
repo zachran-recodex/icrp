@@ -125,7 +125,7 @@
                             {{ Str::limit($advocacy->title, 30) }}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500">
-                            {{ Str::limit($advocacy->content, 50) }}
+                            {{ Str::limit(strip_tags($advocacy->content), 50) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
 
@@ -185,7 +185,7 @@
 
     function initQuillAdvocacyEditor() {
         const editorElement = document.getElementById('quill-editor-advocacy');
-        
+
         // Destroy existing instance first
         if (quillAdvocacyInstance) {
             destroyQuillAdvocacyEditor();
