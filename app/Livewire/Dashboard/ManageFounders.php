@@ -3,7 +3,9 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Founder;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -22,7 +24,11 @@ class ManageFounders extends Component
     public $biography = '';
     public $photo;
     public $editingFounderId = null;
-    public $showForm = false;
+    public $deletingFounderId = null;
+
+    // Modal controls using wire:model
+    public $showFounderModal = false;
+    public $showDeleteFounderModal = false;
 
     // Filters
     public $search = '';
@@ -48,13 +54,14 @@ class ManageFounders extends Component
 
     public function createFounder()
     {
-        $this->resetForm();
-        $this->showForm = true;
+        $this->resetFounderForm();
+        $this->showFounderModal = true;
         $this->dispatch('founder-form-shown');
     }
 
-    public function editFounder(Founder $founder)
+    public function editFounder($founderId)
     {
+        $founder = Founder::find($founderId);
         $this->editingFounderId = $founder->id;
         $this->name = $founder->name;
         $this->nickname = $founder->nickname;
@@ -64,7 +71,7 @@ class ManageFounders extends Component
         $this->known_as = $founder->known_as;
         $this->quote = $founder->quote;
         $this->biography = $founder->biography;
-        $this->showForm = true;
+        $this->showFounderModal = true;
         $this->dispatch('founder-form-shown');
     }
 
@@ -98,32 +105,52 @@ class ManageFounders extends Component
         }
 
         if ($this->editingFounderId) {
-            Founder::find($this->editingFounderId)->update($data);
-            session()->flash('message', 'Founder berhasil diupdate!');
+            $founder = Founder::find($this->editingFounderId);
+            // Delete old image if new one is uploaded
+            if ($this->photo && $founder->photo) {
+                Storage::disk('public')->delete($founder->photo);
+            }
+            $founder->update($data);
+            session()->flash('message', 'Founder updated successfully!');
         } else {
             Founder::create($data);
-            session()->flash('message', 'Founder berhasil dibuat!');
+            session()->flash('message', 'Founder created successfully!');
         }
 
-        $this->dispatch('founder-form-hidden');
-        $this->resetForm();
+        $this->showFounderModal = false;
+        $this->resetFounderForm();
         $this->dispatch('founder-updated');
     }
 
-    public function deleteFounder(Founder $founder)
+    public function deleteFounder($founderId)
     {
-        $founder->delete();
-        session()->flash('message', 'Founder berhasil dihapus!');
-        $this->dispatch('founder-updated');
+        $this->deletingFounderId = $founderId;
+        $this->showDeleteFounderModal = true;
     }
 
-    public function cancelEdit()
+    public function confirmDeleteFounder()
     {
-        $this->dispatch('founder-form-hidden');
-        $this->resetForm();
+        if ($this->deletingFounderId) {
+            $founder = Founder::find($this->deletingFounderId);
+            // Delete associated image file
+            if ($founder->photo) {
+                Storage::disk('public')->delete($founder->photo);
+            }
+            $founder->delete();
+            session()->flash('message', 'Founder deleted successfully!');
+            $this->deletingFounderId = null;
+            $this->showDeleteFounderModal = false;
+            $this->dispatch('founder-updated');
+        }
     }
 
-    private function resetForm()
+    public function cancelFounderEdit()
+    {
+        $this->showFounderModal = false;
+        $this->resetFounderForm();
+    }
+
+    private function resetFounderForm()
     {
         $this->name = '';
         $this->nickname = '';
@@ -135,7 +162,7 @@ class ManageFounders extends Component
         $this->biography = '';
         $this->photo = null;
         $this->editingFounderId = null;
-        $this->showForm = false;
+        $this->showFounderModal = false;
     }
 
     public function render()

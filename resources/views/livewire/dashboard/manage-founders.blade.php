@@ -1,132 +1,158 @@
 <div>
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Manage Founders</h2>
-        <button wire:click="createFounder" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Tambah Founder
-        </button>
+        <flux:button variant="primary" wire:click="createFounder">
+            Create Founder
+        </flux:button>
     </div>
 
     @if (session()->has('message'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            {{ session('message') }}
-        </div>
+        <flux:callout class="mb-4" variant="success" icon="check-circle" heading="{{ session('message') }}" />
+    @endif
+
+    @if (session()->has('error'))
+        <flux:callout class="mb-4" variant="danger" icon="x-circle" heading="{{ session('error') }}" />
     @endif
 
     <!-- Founder Form Modal -->
-    @if ($showForm)
-        <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-            <div class="relative top-5 mx-auto p-5 border w-11/12 md:w-4/5 lg:w-3/4 xl:w-2/3 shadow-lg rounded-md bg-white max-h-screen overflow-y-auto">
-                <div class="mt-3">
-                    <h3 class="text-lg font-semibold mb-4">
-                        {{ $editingFounderId ? 'Edit Founder' : 'Tambah Founder Baru' }}
-                    </h3>
+    <flux:modal wire:model.self="showFounderModal" class="md:w-4xl max-w-6xl">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">{{ $editingFounderId ? 'Edit Founder' : 'Create New Founder' }}</flux:heading>
+            </div>
 
-                    <form wire:submit="saveFounder" enctype="multipart/form-data">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label for="founder_name" class="block text-sm font-medium text-gray-700 mb-2">Name *</label>
-                                <input wire:model="name" type="text" id="founder_name"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
+            <form wire:submit="saveFounder" enctype="multipart/form-data">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <flux:field>
+                        <flux:label>Name *</flux:label>
 
-                            <div>
-                                <label for="founder_nickname" class="block text-sm font-medium text-gray-700 mb-2">Nickname</label>
-                                <input wire:model="nickname" type="text" id="founder_nickname"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('nickname') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
+                        <flux:input wire:model="name" type="text" />
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label for="birth_date" class="block text-sm font-medium text-gray-700 mb-2">Birth Date *</label>
-                                <input wire:model="birth_date" type="date" id="birth_date"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('birth_date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
+                        <flux:error name="name" />
+                    </flux:field>
 
-                            <div>
-                                <label for="death_date" class="block text-sm font-medium text-gray-700 mb-2">Death Date</label>
-                                <input wire:model="death_date" type="date" id="death_date"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('death_date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
+                    <flux:field>
+                        <flux:label>Nickname</flux:label>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label for="birth_place" class="block text-sm font-medium text-gray-700 mb-2">Birth Place *</label>
-                                <input wire:model="birth_place" type="text" id="birth_place"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('birth_place') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
+                        <flux:input wire:model="nickname" type="text" />
 
-                            <div>
-                                <label for="known_as" class="block text-sm font-medium text-gray-700 mb-2">Known As *</label>
-                                <input wire:model="known_as" type="text" id="known_as"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('known_as') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="founder_quote" class="block text-sm font-medium text-gray-700 mb-2">Quote</label>
-                            <textarea wire:model="quote" id="founder_quote" rows="3"
-                                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                      placeholder="Famous quote from this founder..."></textarea>
-                            @error('quote') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="founder_biography" class="block text-sm font-medium text-gray-700 mb-2">Biography *</label>
-                            <textarea wire:model="biography" id="founder_biography" rows="4"
-                                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                      placeholder="Write about this founder's life and achievements..."></textarea>
-                            @error('biography') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="founder_photo" class="block text-sm font-medium text-gray-700 mb-2">Photo *</label>
-                            <input wire:model="photo" type="file" id="founder_photo" accept="image/*"
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('photo') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-
-                            @if ($photo)
-                                <div class="mt-2">
-                                    <img src="{{ $photo->temporaryUrl() }}" alt="Preview" class="w-32 h-32 object-cover rounded">
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="flex justify-end space-x-2">
-                            <button type="button" wire:click="cancelEdit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                                Cancel
-                            </button>
-                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                {{ $editingFounderId ? 'Update' : 'Simpan' }}
-                            </button>
-                        </div>
-                    </form>
+                        <flux:error name="nickname" />
+                    </flux:field>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <flux:field>
+                        <flux:label>Birth Date *</flux:label>
+
+                        <flux:input wire:model="birth_date" type="date" />
+
+                        <flux:error name="birth_date" />
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Death Date</flux:label>
+
+                        <flux:input wire:model="death_date" type="date" />
+
+                        <flux:error name="death_date" />
+                    </flux:field>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <flux:field>
+                        <flux:label>Birth Place *</flux:label>
+
+                        <flux:input wire:model="birth_place" type="text" />
+
+                        <flux:error name="birth_place" />
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Known As *</flux:label>
+
+                        <flux:input wire:model="known_as" type="text" />
+
+                        <flux:error name="known_as" />
+                    </flux:field>
+                </div>
+
+                <flux:field class="mb-4">
+                    <flux:label>Quote</flux:label>
+
+                    <flux:textarea wire:model="quote" rows="3" placeholder="Famous quote from this founder..." />
+
+                    <flux:error name="quote" />
+                </flux:field>
+
+                <flux:field class="mb-4">
+                    <flux:label>Biography *</flux:label>
+
+                    <flux:textarea wire:model="biography" rows="4" placeholder="Write about this founder's life and achievements..." />
+
+                    <flux:error name="biography" />
+                </flux:field>
+
+                <flux:field class="mb-4">
+                    <flux:label>Photo *</flux:label>
+
+                    <flux:input wire:model="photo" type="file" accept="image/*" />
+
+                    <flux:error name="photo" />
+
+                    @if ($photo)
+                        <div class="mt-2">
+                            <img src="{{ $photo->temporaryUrl() }}" alt="Preview" class="w-32 h-32 object-cover rounded">
+                        </div>
+                    @endif
+                </flux:field>
+
+                <div class="flex space-x-2">
+                    <flux:spacer />
+
+                    <flux:modal.close>
+                        <flux:button variant="ghost" wire:click="cancelFounderEdit">Cancel</flux:button>
+                    </flux:modal.close>
+
+                    <flux:button type="submit" variant="primary">{{ $editingFounderId ? 'Update' : 'Save' }}</flux:button>
+                </div>
+            </form>
+        </div>
+    </flux:modal>
+
+    <!-- Delete Founder Confirmation Modal -->
+    <flux:modal wire:model.self="showDeleteFounderModal" class="min-w-[22rem]">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Delete founder?</flux:heading>
+
+                <flux:text class="mt-2">
+                    <p>You're about to delete this founder.</p>
+                    <p>This action cannot be reversed.</p>
+                </flux:text>
+            </div>
+
+            <div class="flex gap-2">
+                <flux:spacer />
+
+                <flux:button wire:click="$set('showDeleteFounderModal', false)" variant="ghost">Cancel</flux:button>
+
+                <flux:button wire:click="confirmDeleteFounder" variant="danger">Delete founder</flux:button>
             </div>
         </div>
-    @endif
+    </flux:modal>
 
     <!-- Filters -->
     <div class="bg-zinc-50 border border-zinc-200 shadow-md rounded-lg p-4 mb-6">
         <div class="flex space-x-4">
             <div class="flex-1">
-                <input wire:model.live="search" type="text" placeholder="Search founders by name, known as, or birth place..." 
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <flux:input icon="magnifying-glass" type="text" wire:model.live="search" placeholder="Search founders by name, known as, or birth place..." />
             </div>
             <div>
-                <select wire:model.live="statusFilter" 
-                        class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Status</option>
-                    <option value="alive">Still Alive</option>
-                    <option value="deceased">Deceased</option>
-                </select>
+                <flux:select wire:model.live="statusFilter">
+                    <flux:select.option value="">All Status</flux:select.option>
+                    <flux:select.option value="alive">Still Alive</flux:select.option>
+                    <flux:select.option value="deceased">Deceased</flux:select.option>
+                </flux:select>
             </div>
         </div>
     </div>
@@ -176,15 +202,18 @@
                             {{ Str::limit($founder->known_as, 40) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                            <button wire:click="editFounder({{ $founder->id }})" class="text-blue-600 hover:text-blue-900">Edit</button>
-                            <button wire:click="deleteFounder({{ $founder->id }})" 
-                                    onclick="return confirm('Yakin ingin menghapus founder ini?')"
-                                    class="text-red-600 hover:text-red-900">Delete</button>
+
+                            <!-- Edit -->
+                            <flux:button icon="pencil" wire:click="editFounder({{ $founder->id }})" size="sm" variant="primary" class="bg-blue-500 hover:bg-blue-600" />
+
+                            <!-- Delete -->
+                            <flux:button icon="trash" wire:click="deleteFounder({{ $founder->id }})" size="sm" variant="danger" />
+
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">Belum ada data founder</td>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No founders found</td>
                     </tr>
                 @endforelse
             </tbody>
