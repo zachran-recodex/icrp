@@ -13,16 +13,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            HeroSeeder::class,
-            ArticleCategorySeeder::class,
-            ArticleSeeder::class,
-            EventSeeder::class,
-            FounderSeeder::class,
-            MemberSeeder::class,
-            LibrarySeeder::class,
-            CallToActionSeeder::class,
-            AdvocacySeeder::class,
-            ProgramSeeder::class,
+//            HeroSeeder::class,
+//            ArticleCategorySeeder::class,
+//            ArticleSeeder::class,
+//            EventSeeder::class,
+//            FounderSeeder::class,
+//            MemberSeeder::class,
+//            LibrarySeeder::class,
+//            CallToActionSeeder::class,
+//            AdvocacySeeder::class,
+//            ProgramSeeder::class,
         ]);
     }
 }
