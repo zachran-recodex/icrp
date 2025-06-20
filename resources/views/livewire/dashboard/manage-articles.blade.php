@@ -272,19 +272,15 @@
         </div>
     </div>
 
-    <!-- Quill.js CSS and JS -->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    @vite('resources/js/app.js')
 
     <script>
-    let quillInstance = null;
-
     document.addEventListener('livewire:navigated', function () {
-        setTimeout(initQuillEditor, 100);
+        setTimeout(() => initQuillEditor(), 100);
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        setTimeout(initQuillEditor, 100);
+        setTimeout(() => initQuillEditor(), 100);
     });
 
     // Listen for Livewire events to reinitialize editor
@@ -306,53 +302,28 @@
     });
 
     function initQuillEditor() {
-        const editorElement = document.getElementById('quill-editor');
-        
-        // Destroy existing instance first
-        if (quillInstance) {
-            destroyQuillEditor();
-        }
-
-        if (editorElement) {
-            quillInstance = new Quill('#quill-editor', {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{ 'header': [1, 2, 3, false] }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'align': [] }],
-                        ['link', 'image'],
-                        ['clean']
-                    ]
-                }
-            });
-
-            // Listen for content changes
-            quillInstance.on('text-change', function() {
-                const content = quillInstance.root.innerHTML;
-                @this.set('content', content);
-            });
+        if (window.QuillManager) {
+            const instance = window.QuillManager.init('quill-editor');
+            if (instance) {
+                // Listen for content changes
+                window.QuillManager.onTextChange('quill-editor', function() {
+                    const content = window.QuillManager.getContent('quill-editor');
+                    @this.set('content', content);
+                });
+            }
         }
     }
 
     function destroyQuillEditor() {
-        if (quillInstance) {
-            const toolbar = quillInstance.getModule('toolbar');
-            if (toolbar) {
-                toolbar.container.remove();
-            }
-            quillInstance.container.innerHTML = '';
-            quillInstance = null;
+        if (window.QuillManager) {
+            window.QuillManager.destroy('quill-editor');
         }
     }
 
     function loadContentToEditor(content) {
-        if (quillInstance && content) {
+        if (window.QuillManager && content) {
             console.log('Loading content to editor:', content);
-            // Use setContents method for better reliability
-            quillInstance.clipboard.dangerouslyPasteHTML(content);
+            window.QuillManager.setContent('quill-editor', content);
             // Trigger change event to sync with Livewire
             @this.set('content', content);
         }
@@ -363,7 +334,7 @@
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList') {
                 const editorElement = document.getElementById('quill-editor');
-                if (editorElement && !quillInstance) {
+                if (editorElement && window.QuillManager && !window.QuillManager.getInstance('quill-editor')) {
                     setTimeout(function() {
                         initQuillEditor();
                         // Check if we need to load existing content

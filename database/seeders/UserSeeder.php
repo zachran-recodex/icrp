@@ -16,5 +16,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'email_verified_at' => now(),
         ]);
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@icrp.id',
+            'password' => Hash::make('admin123'),
+            'email_verified_at' => now(),
+        ]);
     }
 }

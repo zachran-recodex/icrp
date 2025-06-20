@@ -72,7 +72,7 @@
                     <a href="{{ route('berita.detail', $featuredArticle->slug) }}"
                        class="relative w-full max-w-[1000px] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[476px]">
                         <!-- Gambar Artikel -->
-                        <img src="{{ Storage::url('articles/' . $featuredArticle->image) }}"
+                        <img src="{{ Storage::url($featuredArticle->image) }}"
                              alt="{{ $featuredArticle->title }}" class="w-full h-full object-cover rounded-lg">
 
                         <!-- Badge Kategori -->
@@ -119,7 +119,7 @@
                                         <div class="bg-white rounded-xl overflow-hidden shadow-lg">
                                             <div class="relative h-48 sm:h-56 md:h-64">
                                                 <!-- Gambar Artikel -->
-                                                <img src="{{ Storage::url('articles/' . $article->image) }}"
+                                                <img src="{{ Storage::url($article->image) }}"
                                                      alt="News" class="w-full h-full object-cover">
 
                                                 <!-- Badge Kategori -->
@@ -194,7 +194,7 @@
                             <!-- Event Card -->
                             <div @click="openModal = true">
                                 <div class="relative">
-                                    <img src="{{ Storage::url('events/' . $event->image) }}" alt="{{ $event->title }}"
+                                    <img src="{{ Storage::url($event->image) }}" alt="{{ $event->title }}"
                                         class="w-full h-40 sm:h-44 md:h-48 object-cover">
                                     <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm">
                                         {{ $event->date->format('d F Y') }}
@@ -264,7 +264,7 @@
                                             <!-- Event Image -->
                                             <div>
                                                 <img
-                                                    src="{{ Storage::url('events/' . $event->image) }}"
+                                                    src="{{ Storage::url($event->image) }}"
                                                     alt="{{ $event->title }}"
                                                     class="w-full h-auto rounded-lg object-cover"
                                                 >
@@ -386,7 +386,7 @@
                     @foreach($libraries as $library)
                         <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
                             <div class="relative aspect-[3/4] overflow-hidden">
-                                <img src="{{ Storage::url('libraries/' . $library->image) }}" alt="{{ $library->title }}"
+                                <img src="{{ Storage::url($library->image) }}" alt="{{ $library->title }}"
                                      class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6">

@@ -150,19 +150,15 @@
         </div>
     </div>
 
-    <!-- Quill.js CSS and JS -->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    @vite('resources/js/app.js')
 
     <script>
-    let quillAdvocacyInstance = null;
-
     document.addEventListener('livewire:navigated', function () {
-        setTimeout(initQuillAdvocacyEditor, 100);
+        setTimeout(() => initQuillAdvocacyEditor(), 100);
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        setTimeout(initQuillAdvocacyEditor, 100);
+        setTimeout(() => initQuillAdvocacyEditor(), 100);
     });
 
     // Listen for Livewire events to reinitialize editor
@@ -184,53 +180,28 @@
     });
 
     function initQuillAdvocacyEditor() {
-        const editorElement = document.getElementById('quill-editor-advocacy');
-
-        // Destroy existing instance first
-        if (quillAdvocacyInstance) {
-            destroyQuillAdvocacyEditor();
-        }
-
-        if (editorElement) {
-            quillAdvocacyInstance = new Quill('#quill-editor-advocacy', {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{ 'header': [1, 2, 3, false] }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'align': [] }],
-                        ['link', 'image'],
-                        ['clean']
-                    ]
-                }
-            });
-
-            // Listen for content changes
-            quillAdvocacyInstance.on('text-change', function() {
-                const content = quillAdvocacyInstance.root.innerHTML;
-                @this.set('content', content);
-            });
+        if (window.QuillManager) {
+            const instance = window.QuillManager.init('quill-editor-advocacy');
+            if (instance) {
+                // Listen for content changes
+                window.QuillManager.onTextChange('quill-editor-advocacy', function() {
+                    const content = window.QuillManager.getContent('quill-editor-advocacy');
+                    @this.set('content', content);
+                });
+            }
         }
     }
 
     function destroyQuillAdvocacyEditor() {
-        if (quillAdvocacyInstance) {
-            const toolbar = quillAdvocacyInstance.getModule('toolbar');
-            if (toolbar) {
-                toolbar.container.remove();
-            }
-            quillAdvocacyInstance.container.innerHTML = '';
-            quillAdvocacyInstance = null;
+        if (window.QuillManager) {
+            window.QuillManager.destroy('quill-editor-advocacy');
         }
     }
 
     function loadContentToAdvocacyEditor(content) {
-        if (quillAdvocacyInstance && content) {
+        if (window.QuillManager && content) {
             console.log('Loading content to advocacy editor:', content);
-            // Use setContents method for better reliability
-            quillAdvocacyInstance.clipboard.dangerouslyPasteHTML(content);
+            window.QuillManager.setContent('quill-editor-advocacy', content);
             // Trigger change event to sync with Livewire
             @this.set('content', content);
         }
@@ -241,7 +212,7 @@
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList') {
                 const editorElement = document.getElementById('quill-editor-advocacy');
-                if (editorElement && !quillAdvocacyInstance) {
+                if (editorElement && window.QuillManager && !window.QuillManager.getInstance('quill-editor-advocacy')) {
                     setTimeout(function() {
                         initQuillAdvocacyEditor();
                         // Check if we need to load existing content
