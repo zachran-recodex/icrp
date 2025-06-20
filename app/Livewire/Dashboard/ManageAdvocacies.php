@@ -9,10 +9,11 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
 
 class ManageAdvocacies extends Component
 {
-    use WithFileUploads, WithPagination;
+    use WithFileUploads, WithPagination, HasQuillEditor;
 
     public $title = '';
     public $content = '';
@@ -43,6 +44,8 @@ class ManageAdvocacies extends Component
         $this->resetAdvocacyForm();
         $this->showAdvocacyModal = true;
         $this->dispatch('advocacy-form-shown');
+        // Reset Quill editor content
+        $this->dispatch('quill-clear-content', editorId: 'advocacy-editor');
     }
 
     public function editAdvocacy($advocacyId)
@@ -53,6 +56,8 @@ class ManageAdvocacies extends Component
         $this->content = $advocacy->content;
         $this->showAdvocacyModal = true;
         $this->dispatch('advocacy-form-shown');
+        // Update Quill editor with existing content
+        $this->dispatch('quill-set-content', editorId: 'advocacy-editor', content: $this->content);
     }
 
     public function saveAdvocacy()
@@ -87,6 +92,8 @@ class ManageAdvocacies extends Component
 
         $this->showAdvocacyModal = false;
         $this->resetAdvocacyForm();
+        // Reset Quill editor content after saving
+        $this->dispatch('quill-clear-content', editorId: 'advocacy-editor');
         $this->dispatch('advocacy-updated');
     }
 
@@ -116,6 +123,8 @@ class ManageAdvocacies extends Component
     {
         $this->showAdvocacyModal = false;
         $this->resetAdvocacyForm();
+        // Reset Quill editor content
+        $this->dispatch('quill-clear-content', editorId: 'advocacy-editor');
     }
 
     private function resetAdvocacyForm()
@@ -125,6 +134,11 @@ class ManageAdvocacies extends Component
         $this->image = null;
         $this->editingAdvocacyId = null;
         $this->showAdvocacyModal = false;
+    }
+
+    public function contentChanged($editorId, $content): void
+    {
+        $this->content = $content;
     }
 
     public function render()

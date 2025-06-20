@@ -19,4 +19,18 @@ class Event extends Model
         'date' => 'date',
         'time' => 'datetime:H:i',
     ];
+
+    public function scopeUpcoming($query)
+    {
+        return $query->where('date', '>=', today())
+                    ->orderBy('date')
+                    ->orderBy('time');
+    }
+
+    public static function getUpcoming($limit = 3)
+    {
+        return static::upcoming()
+                     ->take($limit)
+                     ->get();
+    }
 }

@@ -10,10 +10,11 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
 
 class ManageArticles extends Component
 {
-    use WithFileUploads, WithPagination;
+    use WithFileUploads, WithPagination, HasQuillEditor;
 
     public $title = '';
     public $content = '';
@@ -63,6 +64,8 @@ class ManageArticles extends Component
         $this->resetArticleForm();
         $this->showArticleModal = true;
         $this->dispatch('article-form-shown');
+        // Reset Quill editor content
+        $this->dispatch('quill-clear-content', editorId: 'article-editor');
     }
 
     public function editArticle($articleId)
@@ -74,6 +77,8 @@ class ManageArticles extends Component
         $this->article_category_id = $article->article_category_id;
         $this->showArticleModal = true;
         $this->dispatch('article-form-shown');
+        // Update Quill editor with existing content
+        $this->dispatch('quill-set-content', editorId: 'article-editor', content: $this->content);
     }
 
     public function saveArticle()
@@ -110,6 +115,8 @@ class ManageArticles extends Component
 
         $this->showArticleModal = false;
         $this->resetArticleForm();
+        // Reset Quill editor content only after saving
+        $this->dispatch('quill-clear-content', editorId: 'article-editor');
         $this->dispatch('article-updated');
     }
 
@@ -139,6 +146,8 @@ class ManageArticles extends Component
     {
         $this->showArticleModal = false;
         $this->resetArticleForm();
+        // Reset Quill editor content
+        $this->dispatch('quill-clear-content', editorId: 'article-editor');
     }
 
     // Category CRUD
@@ -227,6 +236,11 @@ class ManageArticles extends Component
         $this->categoryTitle = '';
         $this->editingCategoryId = null;
         $this->showCategoryModal = false;
+    }
+
+    public function contentChanged($editorId, $content): void
+    {
+        $this->content = $content;
     }
 
     public function render()

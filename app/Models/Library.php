@@ -29,4 +29,18 @@ class Library extends Model
     {
         return 'slug';
     }
+
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('title')
+                    ->whereNotNull('author');
+    }
+
+    public static function getFeatured($limit = 3)
+    {
+        return static::published()
+                     ->latest()
+                     ->take($limit)
+                     ->get();
+    }
 }

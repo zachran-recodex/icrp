@@ -34,4 +34,28 @@ class Article extends Model
     {
         return $this->belongsTo(ArticleCategory::class);
     }
+
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('title')
+                    ->whereNotNull('content');
+    }
+
+    public static function getFeaturedWithCategories()
+    {
+        return static::published()
+                     ->with('articleCategory')
+                     ->latest()
+                     ->take(1)
+                     ->get();
+    }
+
+    public static function getLatestWithCategories($limit = 9)
+    {
+        return static::published()
+                     ->with('articleCategory')
+                     ->latest()
+                     ->take($limit)
+                     ->get();
+    }
 }

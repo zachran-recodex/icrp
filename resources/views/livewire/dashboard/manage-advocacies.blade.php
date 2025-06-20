@@ -30,12 +30,15 @@
                     <flux:error name="title" />
                 </flux:field>
 
-                <flux:field class="mb-4">
+                <flux:field class="mb-16">
                     <flux:label>Content</flux:label>
 
-                    <div wire:ignore>
-                        <div id="quill-editor-advocacy" style="height: 300px;"></div>
-                    </div>
+                    @livewire('livewire-quill', [
+                        'quillId' => 'advocacy-editor',
+                        'data' => $content,
+                        'placeholder' => 'Type advocacy content...',
+                        'classes' => 'bg-white min-h-[300px]'
+                    ])
 
                     <flux:error name="content" />
                 </flux:field>
@@ -150,88 +153,52 @@
         </div>
     </div>
 
-    @vite('resources/js/app.js')
-
     <script>
-    document.addEventListener('livewire:navigated', function () {
-        setTimeout(() => initQuillAdvocacyEditor(), 100);
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-        setTimeout(() => initQuillAdvocacyEditor(), 100);
-    });
-
-    // Listen for Livewire events to reinitialize editor
+    // Listen for Livewire events to reinitialize Quill editor
     document.addEventListener('livewire:init', function() {
         Livewire.on('advocacy-form-shown', function(event) {
             setTimeout(function() {
-                initQuillAdvocacyEditor();
-                // Load content if editing
-                const content = @this.get('content');
-                if (content) {
-                    loadContentToAdvocacyEditor(content);
-                }
+                // Trigger Livewire Quill initialization
+                window.dispatchEvent(new CustomEvent('livewire-quill:init'));
             }, 300);
         });
 
-        Livewire.on('advocacy-form-hidden', function() {
-            destroyQuillAdvocacyEditor();
-        });
-    });
-
-    function initQuillAdvocacyEditor() {
-        if (window.QuillManager) {
-            const instance = window.QuillManager.init('quill-editor-advocacy');
-            if (instance) {
-                // Listen for content changes
-                window.QuillManager.onTextChange('quill-editor-advocacy', function() {
-                    const content = window.QuillManager.getContent('quill-editor-advocacy');
-                    @this.set('content', content);
-                });
-            }
-        }
-    }
-
-    function destroyQuillAdvocacyEditor() {
-        if (window.QuillManager) {
-            window.QuillManager.destroy('quill-editor-advocacy');
-        }
-    }
-
-    function loadContentToAdvocacyEditor(content) {
-        if (window.QuillManager && content) {
-            console.log('Loading content to advocacy editor:', content);
-            window.QuillManager.setContent('quill-editor-advocacy', content);
-            // Trigger change event to sync with Livewire
-            @this.set('content', content);
-        }
-    }
-
-    // Watch for form visibility changes
-    const advocacyObserver = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.type === 'childList') {
-                const editorElement = document.getElementById('quill-editor-advocacy');
-                if (editorElement && window.QuillManager && !window.QuillManager.getInstance('quill-editor-advocacy')) {
-                    setTimeout(function() {
-                        initQuillAdvocacyEditor();
-                        // Check if we need to load existing content
-                        const content = @this.get('content');
-                        if (content && content.trim() !== '') {
-                            setTimeout(function() {
-                                loadContentToAdvocacyEditor(content);
-                            }, 100);
-                        }
-                    }, 100);
+        // Listen for Quill clear content event
+        Livewire.on('quill-clear-content', function(data) {
+            setTimeout(function() {
+                // Find the Quill editor instance by its container ID
+                const editorContainer = document.querySelector('#' + data.editorId);
+                if (editorContainer && editorContainer.__quill) {
+                    // Clear the Quill editor content
+                    editorContainer.__quill.setContents([]);
+                    editorContainer.__quill.setText('');
+                } else {
+                    // If Quill instance not found, try alternative approach
+                    const quillEditor = document.querySelector('#' + data.editorId + ' .ql-editor');
+                    if (quillEditor) {
+                        quillEditor.innerHTML = '<p><br></p>';
+                    }
                 }
-            }
+            }, 100);
         });
-    });
 
-    // Start observing
-    advocacyObserver.observe(document.body, {
-        childList: true,
-        subtree: true
+        // Listen for Quill set content event (for editing)
+        Livewire.on('quill-set-content', function(data) {
+            setTimeout(function() {
+                // Find the Quill editor instance by its container ID
+                const editorContainer = document.querySelector('#' + data.editorId);
+                if (editorContainer && editorContainer.__quill) {
+                    // Set the Quill editor content
+                    editorContainer.__quill.root.innerHTML = data.content;
+                } else {
+                    // If Quill instance not found, try alternative approach
+                    const quillEditor = document.querySelector('#' + data.editorId + ' .ql-editor');
+                    if (quillEditor) {
+                        quillEditor.innerHTML = data.content || '<p><br></p>';
+                    }
+                }
+            }, 100);
+        });
     });
     </script>
 </div>

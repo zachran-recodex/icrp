@@ -6,20 +6,6 @@ use Livewire\Volt\Volt;
 
 Route::controller(MainController::class)->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('beranda');
-    Route::get('/tentang', [MainController::class, 'tentang'])->name('tentang');
-    Route::get('/berita', [MainController::class, 'berita'])->name('berita');
-    Route::get('/berita/{slug}', [MainController::class, 'beritaDetail'])->name('berita.detail');
-    Route::get('/pustaka', [MainController::class, 'pustaka'])->name('pustaka');
-    Route::get('/pustaka/{slug}', [MainController::class, 'pustakaDetail'])->name('pustaka.detail');
-    Route::get('/advokasi', [MainController::class, 'advokasi'])->name('advokasi');
-    Route::get('/advokasi/{slug}', [MainController::class, 'advokasiDetail'])->name('advokasi.detail');
-    Route::get('/pendiri', [MainController::class, 'pendiri'])->name('pendiri');
-    Route::get('/pendiri/{slug}', [MainController::class, 'pendiriDetail'])->name('pendiri.detail');
-    Route::get('/pengurus', [MainController::class, 'pengurus'])->name('pengurus');
-    Route::get('/pengurus/{slug}', [MainController::class, 'pengurusDetail'])->name('pengurus.detail');
-    Route::get('/jaringan', [MainController::class, 'jaringan'])->name('jaringan');
-    Route::get('/sahabat', [MainController::class, 'sahabat'])->name('sahabat');
-    Route::get('/kontak', [MainController::class, 'kontak'])->name('kontak');
 });
 
 Route::view('dashboard', 'dashboard')
