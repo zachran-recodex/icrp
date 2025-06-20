@@ -147,15 +147,17 @@
                                         Login
                                     </div>
                                 </div>
-                                <div class="relative">
-                                    <a href="{{ route('register') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
-                                        <i class="fa-solid fa-user-plus w-6 h-6"></i>
-                                        <span x-show="isExpanded" class="text-sm">Register</span>
-                                    </a>
-                                    <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
-                                        Register
+                                @if (Route::has('register'))
+                                    <div class="relative">
+                                        <a href="{{ route('register') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                                            <i class="fa-solid fa-user-plus w-6 h-6"></i>
+                                            <span x-show="isExpanded" class="text-sm">Register</span>
+                                        </a>
+                                        <div x-show="!isExpanded" class="absolute top-1/2 left-full -translate-y-1/2 ml-4 z-10 whitespace-nowrap rounded-lg bg-background-primary px-2 py-1 text-center text-sm text-white opacity-0 transition-all ease-out peer-hover:opacity-100 peer-focus:opacity-100" role="tooltip">
+                                            Register
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         @else
                             <!-- Jika pengguna sudah login -->

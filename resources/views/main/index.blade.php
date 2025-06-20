@@ -41,10 +41,10 @@
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                    {{ $heroSection->title ?? 'Indonesian Conference on Religion and Peace' }}
+                    {{ $heroSection->title ?? 'House of Peace' }}
                 </h1>
                 <p class="text-lg text-white/90 mb-8">
-                    {{ $heroSection->subtitle ?? 'Platform terdepan untuk dialog lintas agama dan perdamaian di Indonesia' }}
+                    {{ $heroSection->subtitle ?? 'Dialog Antar Agama, Kemanusiaan dan Persaudaraan Lintas Iman, Rumah Perdamaian, Agama untuk Perdamaian, Demokrasi' }}
                 </p>
                 <a href="{{ route('tentang') }}"
                     class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
