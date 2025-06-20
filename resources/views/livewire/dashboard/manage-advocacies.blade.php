@@ -33,7 +33,9 @@
                 <flux:field class="mb-4">
                     <flux:label>Content</flux:label>
 
-                    <flux:textarea wire:model="content" rows="6" />
+                    <div wire:ignore>
+                        <div id="quill-editor-advocacy" style="height: 300px;"></div>
+                    </div>
 
                     <flux:error name="content" />
                 </flux:field>
@@ -147,4 +149,118 @@
             {{ $this->advocacies->links() }}
         </div>
     </div>
+
+    <!-- Quill.js CSS and JS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <script>
+    let quillAdvocacyInstance = null;
+
+    document.addEventListener('livewire:navigated', function () {
+        setTimeout(initQuillAdvocacyEditor, 100);
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(initQuillAdvocacyEditor, 100);
+    });
+
+    // Listen for Livewire events to reinitialize editor
+    document.addEventListener('livewire:init', function() {
+        Livewire.on('advocacy-form-shown', function(event) {
+            setTimeout(function() {
+                initQuillAdvocacyEditor();
+                // Load content if editing
+                const content = @this.get('content');
+                if (content) {
+                    loadContentToAdvocacyEditor(content);
+                }
+            }, 300);
+        });
+
+        Livewire.on('advocacy-form-hidden', function() {
+            destroyQuillAdvocacyEditor();
+        });
+    });
+
+    function initQuillAdvocacyEditor() {
+        const editorElement = document.getElementById('quill-editor-advocacy');
+        
+        // Destroy existing instance first
+        if (quillAdvocacyInstance) {
+            destroyQuillAdvocacyEditor();
+        }
+
+        if (editorElement) {
+            quillAdvocacyInstance = new Quill('#quill-editor-advocacy', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['link', 'image'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // Listen for content changes
+            quillAdvocacyInstance.on('text-change', function() {
+                const content = quillAdvocacyInstance.root.innerHTML;
+                @this.set('content', content);
+            });
+        }
+    }
+
+    function destroyQuillAdvocacyEditor() {
+        if (quillAdvocacyInstance) {
+            const toolbar = quillAdvocacyInstance.getModule('toolbar');
+            if (toolbar) {
+                toolbar.container.remove();
+            }
+            quillAdvocacyInstance.container.innerHTML = '';
+            quillAdvocacyInstance = null;
+        }
+    }
+
+    function loadContentToAdvocacyEditor(content) {
+        if (quillAdvocacyInstance && content) {
+            console.log('Loading content to advocacy editor:', content);
+            // Use setContents method for better reliability
+            quillAdvocacyInstance.clipboard.dangerouslyPasteHTML(content);
+            // Trigger change event to sync with Livewire
+            @this.set('content', content);
+        }
+    }
+
+    // Watch for form visibility changes
+    const advocacyObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                const editorElement = document.getElementById('quill-editor-advocacy');
+                if (editorElement && !quillAdvocacyInstance) {
+                    setTimeout(function() {
+                        initQuillAdvocacyEditor();
+                        // Check if we need to load existing content
+                        const content = @this.get('content');
+                        if (content && content.trim() !== '') {
+                            setTimeout(function() {
+                                loadContentToAdvocacyEditor(content);
+                            }, 100);
+                        }
+                    }, 100);
+                }
+            }
+        });
+    });
+
+    // Start observing
+    advocacyObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+    </script>
 </div>
