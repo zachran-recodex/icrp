@@ -5,7 +5,8 @@ use App\Http\Controllers\MainController;
 use Livewire\Volt\Volt;
 
 Route::controller(MainController::class)->group(function () {
-    Route::get('/', [MainController::class, 'index'])->name('beranda');
+    Route::get('/', 'index')->name('beranda');
+    Route::get('/tentang-kami', 'tentangKami')->name('tentang-kami');
 });
 
 Route::view('dashboard', 'dashboard')

@@ -20,20 +20,21 @@ class MainController extends Controller
 
     public function index()
     {
-        $heroSection = $this->hero->first();
-        $featuredArticles = Article::getFeaturedWithCategories();
-        $latestArticles = Article::getLatestWithCategories();
-        $upcomingEvents = Event::getUpcoming();
-        $featuredLibraries = Library::getFeatured();
-        $callToAction = $this->callToAction->first();
+        return view('main.index', [
+            'heroSection' => $this->hero->first(),
+            'featuredArticles' => $this->article->getFeaturedWithCategories(),
+            'latestArticles' => $this->article->getLatestWithCategories(),
+            'upcomingEvents' => $this->event->getUpcoming(),
+            'featuredLibraries' => $this->library->getFeatured(),
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
 
-        return view('main.index', compact(
-            'heroSection',
-            'featuredArticles', 
-            'latestArticles',
-            'upcomingEvents',
-            'featuredLibraries',
-            'callToAction'
-        ));
+    public function tentangKami()
+    {
+        return view('main.tentang-kami', [
+            'heroSection' => $this->hero->first(),
+            'callToAction' => $this->callToAction->first()
+        ]);
     }
 }

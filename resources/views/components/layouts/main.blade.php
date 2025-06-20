@@ -69,10 +69,10 @@
                         </div>
 
                         <div x-show="isExpanded && tentangOpen" class="pl-11 space-y-1">
-                            <a href="#" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Tentang Kami</a>
+                            <a href="{{ route('tentang-kami') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Tentang Kami</a>
                             <a href="#" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Profil Pendiri ICRP</a>
                             <a href="#" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Pengurus ICRP</a>
-                            <a href="#}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Kontak Kami</a>
+                            <a href="#" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Kontak Kami</a>
                         </div>
                     </div>
 
