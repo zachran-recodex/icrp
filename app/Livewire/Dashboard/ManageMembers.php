@@ -3,7 +3,9 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Member;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -24,7 +26,11 @@ class ManageMembers extends Component
     public $biography = '';
     public $photo;
     public $editingMemberId = null;
-    public $showForm = false;
+    public $deletingMemberId = null;
+
+    // Modal controls using wire:model
+    public $showMemberModal = false;
+    public $showDeleteMemberModal = false;
 
     // Filters
     public $search = '';
@@ -55,13 +61,14 @@ class ManageMembers extends Component
 
     public function createMember()
     {
-        $this->resetForm();
-        $this->showForm = true;
+        $this->resetMemberForm();
+        $this->showMemberModal = true;
         $this->dispatch('member-form-shown');
     }
 
-    public function editMember(Member $member)
+    public function editMember($memberId)
     {
+        $member = Member::find($memberId);
         $this->editingMemberId = $member->id;
         $this->name = $member->name;
         $this->nickname = $member->nickname;
@@ -73,7 +80,7 @@ class ManageMembers extends Component
         $this->dewan_category = $member->dewan_category;
         $this->quote = $member->quote;
         $this->biography = $member->biography;
-        $this->showForm = true;
+        $this->showMemberModal = true;
         $this->dispatch('member-form-shown');
     }
 
@@ -111,32 +118,52 @@ class ManageMembers extends Component
         }
 
         if ($this->editingMemberId) {
-            Member::find($this->editingMemberId)->update($data);
-            session()->flash('message', 'Member berhasil diupdate!');
+            $member = Member::find($this->editingMemberId);
+            // Delete old image if new one is uploaded
+            if ($this->photo && $member->photo) {
+                Storage::disk('public')->delete($member->photo);
+            }
+            $member->update($data);
+            session()->flash('message', 'Member updated successfully!');
         } else {
             Member::create($data);
-            session()->flash('message', 'Member berhasil dibuat!');
+            session()->flash('message', 'Member created successfully!');
         }
 
-        $this->dispatch('member-form-hidden');
-        $this->resetForm();
+        $this->showMemberModal = false;
+        $this->resetMemberForm();
         $this->dispatch('member-updated');
     }
 
-    public function deleteMember(Member $member)
+    public function deleteMember($memberId)
     {
-        $member->delete();
-        session()->flash('message', 'Member berhasil dihapus!');
-        $this->dispatch('member-updated');
+        $this->deletingMemberId = $memberId;
+        $this->showDeleteMemberModal = true;
     }
 
-    public function cancelEdit()
+    public function confirmDeleteMember()
     {
-        $this->dispatch('member-form-hidden');
-        $this->resetForm();
+        if ($this->deletingMemberId) {
+            $member = Member::find($this->deletingMemberId);
+            // Delete associated image file
+            if ($member->photo) {
+                Storage::disk('public')->delete($member->photo);
+            }
+            $member->delete();
+            session()->flash('message', 'Member deleted successfully!');
+            $this->deletingMemberId = null;
+            $this->showDeleteMemberModal = false;
+            $this->dispatch('member-updated');
+        }
     }
 
-    private function resetForm()
+    public function cancelMemberEdit()
+    {
+        $this->showMemberModal = false;
+        $this->resetMemberForm();
+    }
+
+    private function resetMemberForm()
     {
         $this->name = '';
         $this->nickname = '';
@@ -150,7 +177,7 @@ class ManageMembers extends Component
         $this->biography = '';
         $this->photo = null;
         $this->editingMemberId = null;
-        $this->showForm = false;
+        $this->showMemberModal = false;
     }
 
     public function render()
