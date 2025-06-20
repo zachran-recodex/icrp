@@ -1,5 +1,8 @@
-Modal
+# Flux Modal Component
+
 Display content in a layer above the main page. Ideal for confirmations, alerts, and forms.
+
+## Basic Usage
 
 ```php
 <flux:modal.trigger name="edit-profile">
@@ -14,62 +17,68 @@ Display content in a layer above the main page. Ideal for confirmations, alerts,
         </div>
 
         <flux:input label="Name" placeholder="Your name" />
-
         <flux:input label="Date of birth" type="date" />
 
         <div class="flex">
             <flux:spacer />
-
             <flux:button type="submit" variant="primary">Save changes</flux:button>
         </div>
     </div>
 </flux:modal>
 ```
 
-Unique modal names
-If you are placing modals inside a loop, ensure that you are dynamically generating unique modal names. Otherwise, one modal trigger, will trigger all modals of that name on the page causing unexpected behavior.
+## Unique Modal Names
+
+If you are placing modals inside a loop, ensure that you are dynamically generating unique modal names. Otherwise, one modal trigger will trigger all modals of that name on the page causing unexpected behavior.
 
 ```php
 @foreach ($users as $user)
     <flux:modal :name="'edit-profile-'.$user->id">
-        ...
+        <!-- Modal content -->
     </flux:modal>
 @endforeach
 ```
 
-Livewire methods
+## Control Methods
+
+### Livewire Methods
+
 In addition to triggering modals in your Blade templates, you can also control them directly from Livewire.
 
-Consider a "confirm" modal in your Blade template like so:
+Consider a "confirm" modal in your Blade template:
+
 ```php
 <flux:modal name="confirm">
-    <!-- ... -->
+    <!-- Modal content -->
 </flux:modal>
 ```
 
-You can now open and close this modal from your Livewire component using the following methods:
+You can now open and close this modal from your Livewire component:
 
 ```php
 <?php
 
-class ShowPost extends \Livewire\Component {
-    public function delete() {
-        // Control "confirm" modals anywhere on the page...
+class ShowPost extends \Livewire\Component 
+{
+    public function delete() 
+    {
+        // Control "confirm" modals anywhere on the page
         Flux::modal('confirm')->show();
         Flux::modal('confirm')->close();
 
-        // Control "confirm" modals within this Livewire component...
+        // Control "confirm" modals within this Livewire component
         $this->modal('confirm')->show();
         $this->modal('confirm')->close();
 
-        // Closes all modals on the page...
+        // Closes all modals on the page
         Flux::modals()->close();
     }
 }
 ```
 
-JavaScript methods
-You can also control modals from Alpine directly using Flux's magic methods:
+### JavaScript Methods
+
+You can control modals from Alpine directly using Flux's magic methods:
 
 ```php
 <button x-on:click="$flux.modal('confirm').show()">
@@ -85,83 +94,94 @@ You can also control modals from Alpine directly using Flux's magic methods:
 </button>
 ```
 
-Or you can use the window.Flux global object to control modals from any JavaScript in your application:
+Or use the `window.Flux` global object to control modals from any JavaScript:
 
-```php
-// Control "confirm" modals anywhere on the page...
+```javascript
+// Control "confirm" modals anywhere on the page
 Flux.modal('confirm').show()
 Flux.modal('confirm').close()
 
-// Closes all modals on the page...
+// Closes all modals on the page
 Flux.modals().close()
 ```
 
-Data binding
-If you prefer, you can bind a Livewire property directly to a modal to control its states from your Livewire component.
+## Data Binding
 
-Consider a confirmation modal in your Blade template like so:
+You can bind a Livewire property directly to a modal to control its state from your Livewire component.
 
 ```php
 <flux:modal wire:model.self="showConfirmModal">
-    <!-- ... -->
+    <!-- Modal content -->
 </flux:modal>
 ```
 
-It's important to add the .self modifier to the wire:model attribute to prevent nested elements from dispatching input events that would interfere with the state of the modal.
+**Important:** Add the `.self` modifier to the `wire:model` attribute to prevent nested elements from dispatching input events that would interfere with the modal state.
 
-You can now open and close this modal from your Livewire component by toggling the wire:model property.
+Control the modal from your Livewire component:
 
 ```php
-__OPENPHP__
+<?php
 
-class ShowPost extends \Livewire\Component {
+class ShowPost extends \Livewire\Component 
+{
     public $showConfirmModal = false;
 
-    public function delete() {
+    public function delete() 
+    {
         $this->showConfirmModal = true;
     }
 }
 ```
 
-One advantage of this approach is being able to control the state of the modal directly from the browser without making a server roundtrip:
+You can also control the state directly from the browser without a server roundtrip:
 
 ```php
 <flux:button x-on:click="$wire.showConfirmModal = true">Delete post</flux:button>
 ```
 
-Close events
-If you need to perform some logic after a modal closes, you can register a close listener like so:
+## Event Listeners
+
+### Close Events
+
+Perform logic after a modal closes:
 
 ```php
 <flux:modal @close="someLivewireAction">
-    <!-- ... -->
+    <!-- Modal content -->
 </flux:modal>
 ```
 
-You can also use wire:close or x-on:close if you prefer those syntaxes.
+Alternative syntaxes: `wire:close` or `x-on:close`
 
-Cancel events
-If you need to perform some logic after a modal is cancelled, you can register a cancel listener like so:
+### Cancel Events
+
+Perform logic after a modal is cancelled:
 
 ```php
 <flux:modal @cancel="someLivewireAction">
-    <!-- ... -->
+    <!-- Modal content -->
 </flux:modal>
 ```
 
-You can also use wire:cancel or x-on:cancel if you prefer those syntaxes.
+Alternative syntaxes: `wire:cancel` or `x-on:cancel`
 
-Disable click outside
-By default, clicking outside the modal will close it. If you want to disable this behavior, you can use the :dismissible="false" prop.
+## Configuration
+
+### Disable Click Outside
+
+By default, clicking outside the modal will close it. To disable this behavior:
 
 ```php
 <flux:modal :dismissible="false">
-    <!-- ... -->
+    <!-- Modal content -->
 </flux:modal>
 ```
 
-Confirmation
-Prompt a user for confirmation before performing a dangerous action.
+## Examples
+
+### Confirmation Modal
+
+Prompt a user for confirmation before performing a dangerous action:
 
 ```php
 <flux:modal.trigger name="delete-profile">
@@ -172,7 +192,6 @@ Prompt a user for confirmation before performing a dangerous action.
     <div class="space-y-6">
         <div>
             <flux:heading size="lg">Delete project?</flux:heading>
-
             <flux:text class="mt-2">
                 <p>You're about to delete this project.</p>
                 <p>This action cannot be reversed.</p>
@@ -181,7 +200,7 @@ Prompt a user for confirmation before performing a dangerous action.
 
         <div class="flex gap-2">
             <flux:spacer />
-
+            
             <flux:modal.close>
                 <flux:button variant="ghost">Cancel</flux:button>
             </flux:modal.close>
@@ -192,8 +211,9 @@ Prompt a user for confirmation before performing a dangerous action.
 </flux:modal>
 ```
 
-Flyout
-Use the "flyout" variant for a more anchored and long-form dialog.
+### Flyout Modal
+
+Use the "flyout" variant for a more anchored and long-form dialog:
 
 ```php
 <flux:modal.trigger name="edit-profile">
@@ -208,30 +228,32 @@ Use the "flyout" variant for a more anchored and long-form dialog.
         </div>
 
         <flux:input label="Name" placeholder="Your name" />
-
         <flux:input label="Date of birth" type="date" />
 
         <div class="flex">
             <flux:spacer />
-
             <flux:button type="submit" variant="primary">Save changes</flux:button>
         </div>
     </div>
 </flux:modal>
 ```
 
-Flyout positioning
-By default, flyouts will open from the right. You can change this behavior by passing "left", or "bottom" into the position prop.
+### Flyout Positioning
+
+By default, flyouts open from the right. Change this with the `position` prop:
 
 ```php
 <flux:modal variant="flyout" position="left">
-    <!-- ... -->
+    <!-- Modal content -->
 </flux:modal>
 ```
 
-## flux:modal
+## API Reference
 
-### Props
+### flux:modal
+
+#### Props
+
 | Prop | Description |
 |------|-------------|
 | `name` | Unique identifier for the modal. Required when using triggers. |
@@ -240,38 +262,44 @@ By default, flyouts will open from the right. You can change this behavior by pa
 | `dismissible` | If `false`, prevents closing the modal by clicking outside. Default: `true`. |
 | `wire:model` | Optional Livewire property to bind the modal's open state to. |
 
-### Events
+#### Events
+
 | Event | Description |
 |-------|-------------|
 | `close` | Triggered when the modal is closed by any means. |
 | `cancel` | Triggered when the modal is closed by clicking outside or pressing escape. |
 
-### Slots
+#### Slots
+
 | Slot | Description |
 |------|-------------|
 | `default` | The modal content. |
 
-### Classes
+#### Common Classes
+
 | Class | Description |
 |-------|-------------|
 | `w-*` | Common use: `md:w-96` for width. |
 
-## flux:modal.trigger
+### flux:modal.trigger
 
-### Props
+#### Props
+
 | Prop | Description |
 |------|-------------|
 | `name` | Name of the modal to trigger. Must match the modal's name. |
 | `shortcut` | Keyboard shortcut to open the modal (e.g., `cmd.k`). |
 
-### Slots
+#### Slots
+
 | Slot | Description |
 |------|-------------|
 | `default` | The trigger element (e.g., button). |
 
-## flux:modal.close
+### flux:modal.close
 
-### Slots
+#### Slots
+
 | Slot | Description |
 |------|-------------|
 | `default` | The close trigger element (e.g., button). |
@@ -279,15 +307,18 @@ By default, flyouts will open from the right. You can change this behavior by pa
 ## PHP Methods
 
 ### Flux::modal()
+
 | Parameter | Description |
 |-----------|-------------|
-| `default\|name` | Name of the modal to control. |
+| `name` | Name of the modal to control. |
 
 | Method | Description |
 |--------|-------------|
+| `show()` | Shows the modal. |
 | `close()` | Closes the modal. |
 
 ### Flux::modals()
+
 | Method | Description |
 |--------|-------------|
 | `close()` | Closes all modals on the page. |
@@ -295,11 +326,18 @@ By default, flyouts will open from the right. You can change this behavior by pa
 ## Alpine.js Methods
 
 ### $flux.modal()
+
 | Parameter | Description |
 |-----------|-------------|
-| `default\|name` | Name of the modal to control. |
+| `name` | Name of the modal to control. |
 
 | Method | Description |
 |--------|-------------|
 | `show()` | Shows the modal. |
 | `close()` | Closes the modal. |
+
+### $flux.modals()
+
+| Method | Description |
+|--------|-------------|
+| `close()` | Closes all modals on the page. |
