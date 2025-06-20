@@ -23,7 +23,10 @@
 
 <x-layouts.main>
     <!-- Hero Section -->
-    <x-hero-section :title="$heroSection->title" :image="$heroSection->image" />
+    <x-hero-section
+        :title="$heroSection->title ?? 'House of Peace'"
+        :image="$heroSection->image ?? null"
+    />
 
     <!-- Founder Section -->
     <section class="py-20 bg-white">
@@ -110,45 +113,6 @@
                         <div class="prose max-w-none text-gray-700">
                             {!! $founder->biography !!}
                         </div>
-
-                        @if($founder->contributions->count() > 0)
-                            <div class="mt-8">
-                                <div class="flex items-center mb-6">
-                                    <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                    </div>
-                                    <h3 class="ml-4 text-2xl font-bold text-gray-800">Kontribusi</h3>
-                                </div>
-
-                                <div class="grid md:grid-cols-2 gap-4">
-                                    @foreach($founder->contributions as $contribution)
-                                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-primary-600">
-                                            <h4 class="font-semibold text-gray-800">{{ $contribution->title }}</h4>
-                                            <p class="text-gray-700 text-sm">{{ $contribution->description }}</p>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-
-                        @if($founder->legacies->count() > 0)
-                            <div class="mt-8">
-                                <div class="flex items-center mb-6">
-                                    <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                                        </svg>
-                                    </div>
-                                    <h3 class="ml-4 text-2xl font-bold text-gray-800">Warisan Pemikiran</h3>
-                                </div>
-
-                                <div class="prose max-w-none text-gray-700">
-                                    {!! $founder->legacies->first()->content !!}
-                                </div>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -156,11 +120,13 @@
     </section>
 
     <!-- CTA Section -->
-    <x-call-to-action
-        :title="$callToAction->title"
-        :subtitle="$callToAction->subtitle"
-        :image="$callToAction->image"
-        :button-text="$callToAction->button_text"
-        :button-link="route('kontak')"
-    />
+    @if($callToAction)
+        <x-call-to-action
+            :title="$callToAction->title"
+            :subtitle="$callToAction->subtitle"
+            :image="$callToAction->image"
+            :button-text="$callToAction->button_text"
+            :button-link="route('kontak')"
+        />
+    @endif
 </x-layouts.main>

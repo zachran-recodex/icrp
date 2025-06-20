@@ -23,9 +23,9 @@
 
 <x-layouts.main>
     <!-- Hero Section -->
-    <x-hero-section 
-        :title="$heroSection->title ?? 'Tentang Kami'" 
-        :image="$heroSection->image ?? null" 
+    <x-hero-section
+        :title="$heroSection->title ?? 'House of Peace'"
+        :image="$heroSection->image ?? null"
     />
 
     <!-- About Section -->

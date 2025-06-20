@@ -23,7 +23,10 @@
 
 <x-layouts.main>
     <!-- Hero Section -->
-    <x-hero-section :title="$heroSection->title" :image="$heroSection->image" />
+    <x-hero-section
+        :title="$heroSection->title ?? 'House of Peace'"
+        :image="$heroSection->image ?? null"
+    />
 
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
@@ -75,11 +78,6 @@
                     <p class="text-gray-600">
                         Djohan Effendi adalah salah satu sosok penting dalam upaya pengembangan kehidupan keagamaan yang lebih dialogis, harmonis, dan toleran dalam era Indonesia modern. Kehidupan keagamaan-baik intra maupun antaragama- seperti itu tentu saja merupakan kebutuhan yang senantiasa harus diperjuangkan, bukan hanya untuk umat beragama itu sendiri, tapi juga untuk kepentingan keberlanjutan negara-bangsa Indonesia Kesediaan pak Djohan ikut berjuang menegakkan hak-hak kebebasan beragama di Indonesia tidaklah setengah-setengah melainkan all-out. Ini dilakukan beliau sejak jaman Orde Baru, hingga sekarang.
                     </p>
-
-                    <!-- Komentar Buku -->
-                    <div class="mt-8">
-                        <livewire:library-comments :library_id="$library->id" />
-                    </div>
                 </div>
 
                 <!-- Kolom Pustaka Lainnya (1/4 Lebar) -->
@@ -116,11 +114,13 @@
     </section>
 
     <!-- CTA Section -->
-    <x-call-to-action
-        :title="$callToAction->title"
-        :subtitle="$callToAction->subtitle"
-        :image="$callToAction->image"
-        :button-text="$callToAction->button_text"
-        :button-link="route('kontak')"
-    />
+    @if($callToAction)
+        <x-call-to-action
+            :title="$callToAction->title"
+            :subtitle="$callToAction->subtitle"
+            :image="$callToAction->image"
+            :button-text="$callToAction->button_text"
+            :button-link="route('kontak')"
+        />
+    @endif
 </x-layouts.main>

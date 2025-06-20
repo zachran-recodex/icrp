@@ -25,7 +25,7 @@ class MainController extends Controller
 
         return view('main.index', compact(
             'heroSection',
-            'featuredArticle', 
+            'featuredArticle',
             'articles',
             'events',
             'libraries',
@@ -38,7 +38,7 @@ class MainController extends Controller
         $heroSection = Hero::first();
         $programs = collect([]); // Empty collection for now since we don't have programs model yet
         $callToAction = CallToAction::first();
-        
+
         return view('main.tentang', compact('heroSection', 'programs', 'callToAction'));
     }
 
@@ -74,9 +74,11 @@ class MainController extends Controller
     public function pustakaDetail($slug)
     {
         $heroSection = Hero::first();
+        $libraries = Library::latest()->take(3)->get();
         $library = Library::where('slug', $slug)->firstOrFail();
+        $callToAction = CallToAction::first();
 
-        return view('main.pustaka-detail', compact('heroSection', 'library'));
+        return view('main.pustaka-detail', compact('heroSection', 'libraries', 'library', 'callToAction'));
     }
 
     public function advokasi()
@@ -93,8 +95,10 @@ class MainController extends Controller
     {
         $heroSection = Hero::first();
         $advocacy = Advocacy::where('slug', $slug)->firstOrFail();
+        $advocacies = Advocacy::latest()->skip(1)->paginate(12);
+        $callToAction = CallToAction::first();
 
-        return view('main.advokasi-detail', compact('heroSection', 'advocacy'));
+        return view('main.advokasi-detail', compact('heroSection', 'advocacy', 'advocacies', 'callToAction'));
     }
 
     public function pendiri()
@@ -110,8 +114,9 @@ class MainController extends Controller
     {
         $heroSection = Hero::first();
         $founder = Founder::where('slug', $slug)->firstOrFail();
+        $callToAction = CallToAction::first();
 
-        return view('main.pendiri-detail', compact('heroSection', 'founder'));
+        return view('main.pendiri-detail', compact('heroSection', 'founder', 'callToAction'));
     }
 
     public function pengurus()
@@ -126,10 +131,10 @@ class MainController extends Controller
         $callToAction = CallToAction::first();
 
         return view('main.pengurus', compact(
-            'heroSection', 
+            'heroSection',
             'dewanDirectureExcecutive',
             'dewanPengurus',
-            'dewanKehormatan', 
+            'dewanKehormatan',
             'dewanPembina',
             'dewanPengawas',
             'dewanPengurusHarian',
@@ -141,21 +146,23 @@ class MainController extends Controller
     {
         $heroSection = Hero::first();
         $member = Member::where('slug', $slug)->firstOrFail();
+        $callToAction = CallToAction::first();
 
-        return view('main.pengurus-detail', compact('heroSection', 'member'));
+        return view('main.pengurus-detail', compact('heroSection', 'member', 'callToAction'));
     }
 
     public function jaringan()
     {
         $heroSection = Hero::first();
-        
-        return view('main.jaringan', compact('heroSection'));
+        $callToAction = CallToAction::first();
+
+        return view('main.jaringan', compact('heroSection', 'callToAction'));
     }
 
     public function sahabat()
     {
         $heroSection = Hero::first();
-        
+
         return view('main.sahabat', compact('heroSection'));
     }
 
@@ -163,7 +170,7 @@ class MainController extends Controller
     {
         $heroSection = Hero::first();
         $callToAction = CallToAction::first();
-        
+
         return view('main.kontak', compact('heroSection', 'callToAction'));
     }
 }

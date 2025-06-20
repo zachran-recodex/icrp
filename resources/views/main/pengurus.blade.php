@@ -23,7 +23,10 @@
 
 <x-layouts.main>
     <!-- Hero Section -->
-    <x-hero-section :title="$heroSection->title" :image="$heroSection->image" />
+    <x-hero-section
+        :title="$heroSection->title ?? 'House of Peace'"
+        :image="$heroSection->image ?? null"
+    />
 
     <!-- Management Section -->
     <section class="py-20 bg-white">
@@ -197,17 +200,19 @@
                             <p class="text-sm text-gray-600 max-w-sm">{{ Str::limit(strip_tags($member->biography), 100) }}</p>
                         </a>
                     @endforeach
-                </d>
+                </div>
             @endif
         </div>
     </section>
 
     <!-- CTA Section -->
-    <x-call-to-action
-        :title="$callToAction->title"
-        :subtitle="$callToAction->subtitle"
-        :image="$callToAction->image"
-        :button-text="$callToAction->button_text"
-        :button-link="route('kontak')"
-    />
+    @if($callToAction)
+        <x-call-to-action
+            :title="$callToAction->title"
+            :subtitle="$callToAction->subtitle"
+            :image="$callToAction->image"
+            :button-text="$callToAction->button_text"
+            :button-link="route('kontak')"
+        />
+    @endif
 </x-layouts.main>
