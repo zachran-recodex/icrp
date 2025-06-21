@@ -11,6 +11,9 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/pendiri/{founder}', 'pendiriDetail')->name('pendiri.detail');
     Route::get('/pengurus', 'pengurus')->name('pengurus');
     Route::get('/pengurus/{member}', 'pengurusDetail')->name('pengurus.detail');
+    Route::get('/artikel', 'artikel')->name('artikel');
+    Route::get('/artikel/{article}', 'artikelDetail')->name('artikel.detail');
+    Route::get('/kontak-kami', 'kontakKami')->name('kontak-kami');
 });
 
 Route::view('dashboard', 'dashboard')

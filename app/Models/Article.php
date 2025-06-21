@@ -58,4 +58,24 @@ class Article extends Model
                      ->take($limit)
                      ->get();
     }
+
+    public function getProcessedContentAttribute()
+    {
+        return $this->processYouTubeUrls($this->content);
+    }
+
+    private function processYouTubeUrls($content)
+    {
+        // Convert YouTube URLs ke iframe
+        $content = preg_replace_callback(
+            '/https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/',
+            function ($matches) {
+                $videoId = $matches[1];
+                return '<div class="youtube-wrapper"><iframe src="https://www.youtube.com/embed/' . $videoId . '" title="YouTube video player" frameborder="0" allowfullscreen></iframe></div>';
+            },
+            $content
+        );
+
+        return $content;
+    }
 }

@@ -42,5 +42,6 @@ return [
         ],
         ['link'],
         ['image'],
+        ['video'], // Add video support
     ]),
 ];

@@ -72,7 +72,7 @@
                             <a href="{{ route('tentang-kami') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Tentang Kami</a>
                             <a href="{{ route('pendiri') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Profil Pendiri ICRP</a>
                             <a href="{{ route('pengurus') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Pengurus ICRP</a>
-                            <a href="#" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Kontak Kami</a>
+                            <a href="{{ route('kontak-kami') }}" class="block py-2 text-sm text-white/60 hover:text-white transition-colors duration-200">Kontak Kami</a>
                         </div>
                     </div>
 
@@ -100,7 +100,7 @@
 
                     <!-- Berita & Artikel with tooltip -->
                     <div class="relative">
-                        <a href="#" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                        <a href="{{ route('artikel') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
                             <i class="fa-solid fa-newspaper w-6 h-6"></i>
                             <span x-show="isExpanded" class="text-sm">Berita & Artikel</span>
                         </a>

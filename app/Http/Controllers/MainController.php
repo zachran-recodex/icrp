@@ -77,4 +77,39 @@ class MainController extends Controller
             'callToAction' => $this->callToAction->first()
         ]);
     }
+
+    public function kontakKami()
+    {
+        return view('main.kontak', [
+            'heroSection' => $this->hero->first(),
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
+
+    public function artikel()
+    {
+        return view('main.artikel', [
+            'heroSection' => $this->hero->first(),
+            'articles' => $this->article->published()->with('articleCategory')->latest()->get(),
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
+
+    public function artikelDetail(Article $article)
+    {
+        $relatedArticles = $this->article->published()
+            ->with('articleCategory')
+            ->where('id', '!=', $article->id)
+            ->where('article_category_id', $article->article_category_id)
+            ->latest()
+            ->take(6)
+            ->get();
+
+        return view('main.artikel-detail', [
+            'heroSection' => $this->hero->first(),
+            'article' => $article,
+            'relatedArticles' => $relatedArticles,
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
 }
