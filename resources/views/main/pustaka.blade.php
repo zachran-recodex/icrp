@@ -18,7 +18,7 @@
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                    {{ $heroSection?->title ?? 'Berita & Artikel ICRP' }}
+                    {{ $heroSection?->title ?? 'Pustaka ICRP' }}
                 </h1>
                 @if($heroSection?->subtitle)
                     <p class="text-lg text-white/90 mb-8">
@@ -29,59 +29,56 @@
         </div>
     </section>
 
-    <!-- Articles Section -->
+    <!-- Libraries Section -->
     <section class="py-20 bg-gray-50">
         <div class="container mx-auto px-4">
             <!-- Section Header -->
             <div class="max-w-3xl mx-auto text-center mb-12">
-                <h2 class="text-4xl font-extrabold text-primary-600 mb-4">Berita & Artikel</h2>
+                <h2 class="text-4xl font-extrabold text-primary-600 mb-4">Pustaka ICRP</h2>
                 <p class="text-lg text-gray-600">
-                    Jelajahi berita dan artikel yang membahas dialog lintas agama, perdamaian, serta inisiatif kolaboratif dalam membangun harmoni di Indonesia.
+                    Jelajahi koleksi pustaka kami yang mencakup berbagai topik seperti dialog lintas agama, perdamaian, dan inisiatif kolaboratif untuk membangun harmoni di Indonesia.
                 </p>
             </div>
 
-            @if($articles->isNotEmpty())
-                <!-- Articles Grid -->
+            @if($libraries->isNotEmpty())
+                <!-- Libraries Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach($articles as $article)
+                    @foreach($libraries as $library)
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-                            <!-- Article Image -->
-                            <div class="aspect-[4/3] overflow-hidden relative">
-                                @if($article->image)
-                                    <img src="{{ Storage::url($article->image) }}"
-                                         alt="{{ $article->title }}"
+                            <!-- Library Image -->
+                            <div class="aspect-[3/4] overflow-hidden">
+                                @if($library->image)
+                                    <img src="{{ Storage::url('libraries/' . $library->image) }}" 
+                                         alt="{{ $library->title }}"
                                          class="w-full h-full object-cover">
                                 @else
                                     <div class="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                                        <i class="fa-solid fa-newspaper text-6xl text-primary-300"></i>
-                                    </div>
-                                @endif
-
-                                <!-- Category Badge -->
-                                @if($article->articleCategory)
-                                    <div class="absolute top-4 left-4 bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                                        {{ $article->articleCategory->title }}
+                                        <i class="fa-solid fa-book text-6xl text-primary-300"></i>
                                     </div>
                                 @endif
                             </div>
 
-                            <!-- Article Info -->
+                            <!-- Library Info -->
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-gray-900 mb-3">{{ $article->title }}</h3>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $library->title }}</h3>
+                                
+                                @if($library->author)
+                                    <p class="text-sm text-primary-600 font-medium mb-3">{{ $library->author }}</p>
+                                @endif
 
-                                @if($article->content)
+                                @if($library->description)
                                     <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                                        {{ Str::limit(strip_tags($article->content), 120) }}
+                                        {{ Str::limit(strip_tags($library->description), 120) }}
                                     </p>
                                 @endif
 
                                 <div class="text-sm text-gray-500 mb-4">
-                                    <p>{{ $article->created_at->format('d M Y') }}</p>
+                                    <p>{{ $library->created_at->format('d M Y') }}</p>
                                 </div>
 
-                                <a href="{{ route('artikel.detail', $article->slug) }}"
+                                <a href="{{ route('pustaka.detail', $library->slug) }}" 
                                    class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors">
-                                    Baca Selengkapnya
+                                    Baca Selengkapnya 
                                     <i class="fa-solid fa-arrow-right ml-2"></i>
                                 </a>
                             </div>
@@ -92,9 +89,9 @@
                 <!-- Empty State -->
                 <div class="text-center py-16">
                     <div class="max-w-md mx-auto">
-                        <i class="fa-solid fa-newspaper text-6xl text-gray-300 mb-4"></i>
-                        <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Artikel</h3>
-                        <p class="text-gray-500">Artikel dan berita akan segera tersedia.</p>
+                        <i class="fa-solid fa-book text-6xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Pustaka</h3>
+                        <p class="text-gray-500">Koleksi pustaka akan segera tersedia.</p>
                     </div>
                 </div>
             @endif

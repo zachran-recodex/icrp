@@ -112,4 +112,29 @@ class MainController extends Controller
             'callToAction' => $this->callToAction->first()
         ]);
     }
+
+    public function pustaka()
+    {
+        return view('main.pustaka', [
+            'heroSection' => $this->hero->first(),
+            'libraries' => $this->library->published()->latest()->get(),
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
+
+    public function pustakaDetail(Library $library)
+    {
+        $relatedLibraries = $this->library->published()
+            ->where('id', '!=', $library->id)
+            ->latest()
+            ->take(6)
+            ->get();
+
+        return view('main.pustaka-detail', [
+            'heroSection' => $this->hero->first(),
+            'library' => $library,
+            'relatedLibraries' => $relatedLibraries,
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
 }

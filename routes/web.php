@@ -13,6 +13,8 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/pengurus/{member}', 'pengurusDetail')->name('pengurus.detail');
     Route::get('/artikel', 'artikel')->name('artikel');
     Route::get('/artikel/{article}', 'artikelDetail')->name('artikel.detail');
+    Route::get('/pustaka', 'pustaka')->name('pustaka');
+    Route::get('/pustaka/{library}', 'pustakaDetail')->name('pustaka.detail');
     Route::get('/kontak-kami', 'kontakKami')->name('kontak-kami');
 });
 
