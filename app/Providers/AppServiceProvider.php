@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Manually register livewire-quill component for cPanel deployment
+        \Livewire\Livewire::component('livewire-quill', \Joelwmale\LivewireQuill\Http\Livewire\LivewireQuill::class);
     }
 }
