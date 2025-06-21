@@ -9,11 +9,9 @@ Panduan deployment terstruktur untuk aplikasi ICRP Laravel di shared hosting cPa
 #### 1.1 Pre-deployment Checklist
 ```bash
 # Jalankan di local sebelum deploy
-npm run build                    # Build assets untuk production
+npm run build                   # Build assets untuk production
 ./vendor/bin/pest               # Pastikan semua test pass
-php artisan config:clear        # Clear cache
-php artisan route:clear         # Clear route cache
-php artisan view:clear          # Clear view cache
+php artisan optimize:clear      # Clear all
 ```
 
 #### 1.2 Buat Branch Deployment
