@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\Founder;
 use App\Models\Hero;
 use App\Models\Library;
+use App\Models\Member;
 
 class MainController extends Controller
 {
@@ -17,6 +18,7 @@ class MainController extends Controller
         protected Event $event,
         protected Founder $founder,
         protected Library $library,
+        protected Member $member,
         protected CallToAction $callToAction
     ) {}
 
@@ -54,6 +56,24 @@ class MainController extends Controller
         return view('main.pendiri-detail', [
             'heroSection' => $this->hero->first(),
             'founder' => $founder,
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
+
+    public function pengurus()
+    {
+        return view('main.pengurus', [
+            'heroSection' => $this->hero->first(),
+            'members' => $this->member->latest()->get(),
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
+
+    public function pengurusDetail(Member $member)
+    {
+        return view('main.pengurus-detail', [
+            'heroSection' => $this->hero->first(),
+            'member' => $member,
             'callToAction' => $this->callToAction->first()
         ]);
     }

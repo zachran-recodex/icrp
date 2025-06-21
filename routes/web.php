@@ -9,6 +9,8 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/tentang-kami', 'tentangKami')->name('tentang-kami');
     Route::get('/pendiri', 'pendiri')->name('pendiri');
     Route::get('/pendiri/{founder}', 'pendiriDetail')->name('pendiri.detail');
+    Route::get('/pengurus', 'pengurus')->name('pengurus');
+    Route::get('/pengurus/{member}', 'pengurusDetail')->name('pengurus.detail');
 });
 
 Route::view('dashboard', 'dashboard')
