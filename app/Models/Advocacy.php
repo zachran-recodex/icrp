@@ -28,4 +28,10 @@ class Advocacy extends Model
     {
         return 'slug';
     }
+
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('title')
+                    ->whereNotNull('content');
+    }
 }

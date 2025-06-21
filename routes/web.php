@@ -15,6 +15,8 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/artikel/{article}', 'artikelDetail')->name('artikel.detail');
     Route::get('/pustaka', 'pustaka')->name('pustaka');
     Route::get('/pustaka/{library}', 'pustakaDetail')->name('pustaka.detail');
+    Route::get('/advokasi', 'advokasi')->name('advokasi');
+    Route::get('/advokasi/{advocacy}', 'advokasiDetail')->name('advokasi.detail');
     Route::get('/kontak-kami', 'kontakKami')->name('kontak-kami');
 });
 

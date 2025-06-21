@@ -122,7 +122,7 @@
 
                     <!-- Advokasi with tooltip -->
                     <div class="relative">
-                        <a href="#" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
+                        <a href="{{ route('advokasi') }}" class="flex items-center space-x-3 px-3 py-2 text-white/60 hover:text-white rounded-lg transition-colors duration-200 peer">
                             <i class="fa-solid fa-comment w-6 h-6"></i>
                             <span x-show="isExpanded" class="text-sm">Advokasi KBB</span>
                         </a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advocacy;
 use App\Models\Article;
 use App\Models\CallToAction;
 use App\Models\Event;
@@ -19,6 +20,7 @@ class MainController extends Controller
         protected Founder $founder,
         protected Library $library,
         protected Member $member,
+        protected Advocacy $advocacy,
         protected CallToAction $callToAction
     ) {}
 
@@ -134,6 +136,31 @@ class MainController extends Controller
             'heroSection' => $this->hero->first(),
             'library' => $library,
             'relatedLibraries' => $relatedLibraries,
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
+
+    public function advokasi()
+    {
+        return view('main.advokasi', [
+            'heroSection' => $this->hero->first(),
+            'advocacies' => $this->advocacy->published()->latest()->get(),
+            'callToAction' => $this->callToAction->first()
+        ]);
+    }
+
+    public function advokasiDetail(Advocacy $advocacy)
+    {
+        $relatedAdvocacies = $this->advocacy->published()
+            ->where('id', '!=', $advocacy->id)
+            ->latest()
+            ->take(6)
+            ->get();
+
+        return view('main.advokasi-detail', [
+            'heroSection' => $this->hero->first(),
+            'advocacy' => $advocacy,
+            'relatedAdvocacies' => $relatedAdvocacies,
             'callToAction' => $this->callToAction->first()
         ]);
     }
