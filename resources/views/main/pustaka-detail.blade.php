@@ -34,7 +34,7 @@
         <div class="container mx-auto px-4">
             <!-- Back Button -->
             <div class="mb-8">
-                <a href="{{ route('pustaka') }}" 
+                <a href="{{ route('pustaka') }}"
                    class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-800 transition duration-300">
                     <i class="fa-solid fa-arrow-left mr-2"></i>
                     Kembali ke Pustaka
@@ -49,7 +49,7 @@
                         <!-- Library Image -->
                         <div class="aspect-[3/4] overflow-hidden">
                             @if($library->image)
-                                <img src="{{ Storage::url('libraries/' . $library->image) }}" 
+                                <img src="{{ Storage::url($library->image) }}"
                                      alt="{{ $library->title }}"
                                      class="w-full h-full object-cover">
                             @else
@@ -62,7 +62,7 @@
                         <!-- Library Basic Info -->
                         <div class="p-6">
                             <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ $library->title }}</h2>
-                            
+
                             <div class="space-y-3 text-sm">
                                 @if($library->author)
                                     <div class="flex items-center">
@@ -131,7 +131,7 @@
                             <!-- Library Image -->
                             <div class="aspect-[3/4] overflow-hidden">
                                 @if($relatedLibrary->image)
-                                    <img src="{{ Storage::url('libraries/' . $relatedLibrary->image) }}" 
+                                    <img src="{{ Storage::url('libraries/' . $relatedLibrary->image) }}"
                                          alt="{{ $relatedLibrary->title }}"
                                          class="w-full h-full object-cover">
                                 @else
@@ -144,7 +144,7 @@
                             <!-- Library Info -->
                             <div class="p-6">
                                 <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $relatedLibrary->title }}</h3>
-                                
+
                                 @if($relatedLibrary->author)
                                     <p class="text-sm text-primary-600 font-medium mb-3">{{ $relatedLibrary->author }}</p>
                                 @endif
@@ -159,9 +159,9 @@
                                     <p>{{ $relatedLibrary->created_at->format('d M Y') }}</p>
                                 </div>
 
-                                <a href="{{ route('pustaka.detail', $relatedLibrary->slug) }}" 
+                                <a href="{{ route('pustaka.detail', $relatedLibrary->slug) }}"
                                    class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors">
-                                    Baca Selengkapnya 
+                                    Baca Selengkapnya
                                     <i class="fa-solid fa-arrow-right ml-2"></i>
                                 </a>
                             </div>

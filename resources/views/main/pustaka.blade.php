@@ -48,7 +48,7 @@
                             <!-- Library Image -->
                             <div class="aspect-[3/4] overflow-hidden">
                                 @if($library->image)
-                                    <img src="{{ Storage::url('libraries/' . $library->image) }}" 
+                                    <img src="{{ Storage::url($library->image) }}"
                                          alt="{{ $library->title }}"
                                          class="w-full h-full object-cover">
                                 @else
@@ -61,7 +61,7 @@
                             <!-- Library Info -->
                             <div class="p-6">
                                 <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $library->title }}</h3>
-                                
+
                                 @if($library->author)
                                     <p class="text-sm text-primary-600 font-medium mb-3">{{ $library->author }}</p>
                                 @endif
@@ -76,9 +76,9 @@
                                     <p>{{ $library->created_at->format('d M Y') }}</p>
                                 </div>
 
-                                <a href="{{ route('pustaka.detail', $library->slug) }}" 
+                                <a href="{{ route('pustaka.detail', $library->slug) }}"
                                    class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors">
-                                    Baca Selengkapnya 
+                                    Baca Selengkapnya
                                     <i class="fa-solid fa-arrow-right ml-2"></i>
                                 </a>
                             </div>
