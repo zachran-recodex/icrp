@@ -43,7 +43,7 @@
             @if($featuredArticles->isNotEmpty())
                 @php $featured = $featuredArticles->first() @endphp
                 <div class="flex justify-center mb-8">
-                    <a href="{{ route('article.show', $featured->slug) }}"
+                    <a href="{{ route('artikel.detail', $featured->slug) }}"
                        class="relative w-full max-w-[1000px] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[476px]">
                         <!-- Gambar Artikel -->
                         <img src="{{ $featured->image ? Storage::url($featured->image) : 'https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80' }}"
@@ -125,7 +125,7 @@
                                                 <p class="text-gray-600 text-sm md:text-base mb-3">
                                                     {{ Str::limit(strip_tags($article->content), 120) }}
                                                 </p>
-                                                <a href="{{ route('article.show', $article->slug) }}" class="text-primary-500 hover:text-primary-600 font-medium text-sm">
+                                                <a href="{{ route('artikel.detail', $article->slug) }}" class="text-primary-500 hover:text-primary-600 font-medium text-sm">
                                                     Baca Selengkapnya →
                                                 </a>
                                             </div>
@@ -420,7 +420,7 @@
                             <p class="text-gray-600 text-sm md:text-base mb-4">Penulis: {{ $library->author }}</p>
                             <div class="flex justify-between items-center">
                                 <span class="text-xs md:text-sm text-gray-500">{{ $library->created_at->format('Y') }}</span>
-                                <a href="{{ route('library.show', $library->slug) }}" class="text-primary-500 hover:text-primary-600 font-medium text-sm">
+                                <a href="{{ route('pustaka.detail', $library->slug) }}" class="text-primary-500 hover:text-primary-600 font-medium text-sm">
                                     Baca Selengkapnya →
                                 </a>
                             </div>
@@ -436,7 +436,7 @@
 
             <!-- View All Button -->
             <div class="text-center">
-                <a href="{{ route('library.index') }}"
+                <a href="{{ route('pustaka') }}"
                    class="inline-block px-8 py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 transition transform hover:scale-105">
                     Lihat Semua Buku
                 </a>
