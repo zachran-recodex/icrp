@@ -164,7 +164,7 @@
                             <!-- Article Image -->
                             <div class="aspect-[4/3] overflow-hidden relative">
                                 @if($relatedArticle->image)
-                                    <img src="{{ Storage::url('articles/' . $relatedArticle->image) }}"
+                                    <img src="{{ Storage::url($relatedArticle->image) }}"
                                          alt="{{ $relatedArticle->title }}"
                                          class="w-full h-full object-cover">
                                 @else
