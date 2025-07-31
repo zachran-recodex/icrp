@@ -50,11 +50,11 @@
         <!-- Content Overlay -->
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">
                     {{ $article->title }}
                 </h1>
                 @if($article->articleCategory)
-                    <p class="text-lg text-white/90 mb-8">
+                    <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                         {{ $article->articleCategory->title }}
                     </p>
                 @endif

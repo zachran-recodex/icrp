@@ -13,10 +13,10 @@
         <!-- Content Overlay -->
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">
                     {{ $heroSection?->title ?? 'House of Peace' }}
                 </h1>
-                <p class="text-lg text-white/90 mb-8">
+                <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                     {{ $heroSection?->subtitle ?? 'Dialog Antar Agama, Kemanusiaan dan Persaudaraan Lintas Iman, Rumah Perdamaian, Agama untuk Perdamaian, Demokrasi' }}
                 </p>
                 <a href="#tentang"
@@ -33,7 +33,7 @@
 
             <!-- Section Header -->
             <div class="max-w-3xl mx-auto text-center mb-8">
-                <h2 class="text-3xl md:text-4xl text-primary-500 font-bold mb-4">Berita & Artikel</h2>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl text-primary-500 font-bold mb-4">Berita & Artikel</h2>
                 <p class="text-gray-600">
                     Jelajahi berita dan artikel yang membahas dialog lintas agama, perdamaian, serta inisiatif kolaboratif dalam membangun harmoni di Indonesia.
                 </p>

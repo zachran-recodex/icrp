@@ -17,10 +17,10 @@
         <!-- Content Overlay -->
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-4 md:mb-6">
                     {{ $advocacy->title }}
                 </h1>
-                <p class="text-lg text-white/90 mb-8">
+                <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                     Advokasi Kebebasan Beragama dan Berkeyakinan
                 </p>
             </div>
@@ -114,8 +114,8 @@
             <div class="container mx-auto px-4">
                 <!-- Section Header -->
                 <div class="max-w-3xl mx-auto text-center mb-12">
-                    <h2 class="text-4xl font-extrabold text-primary-600 mb-4">Advokasi Terkait</h2>
-                    <p class="text-lg text-gray-600">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-600 mb-4">Advokasi Terkait</h2>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-600">
                         Program advokasi lainnya yang mungkin menarik untuk Anda
                     </p>
                 </div>
@@ -178,10 +178,10 @@
         <!-- Content -->
         <div class="relative container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight mb-4 md:mb-6">
                     {{ $callToAction?->title ?? 'Bergabunglah dengan Misi Perdamaian' }}
                 </h2>
-                <p class="text-lg text-white/90 mb-8">
+                <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                     {{ $callToAction?->subtitle ?? 'Mari bersama-sama membangun dialog yang bermakna dan memperkuat persaudaraan lintas iman demi Indonesia yang damai dan harmonis' }}
                 </p>
                 <a href="#"

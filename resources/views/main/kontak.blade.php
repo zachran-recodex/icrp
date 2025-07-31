@@ -17,11 +17,11 @@
         <!-- Content Overlay -->
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-4 md:mb-6">
                     {{ $heroSection?->title ?? 'Profil Pendiri ICRP' }}
                 </h1>
                 @if($heroSection?->subtitle)
-                    <p class="text-lg text-white/90 mb-8">
+                    <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                         {{ $heroSection->subtitle }}
                     </p>
                 @endif
@@ -35,7 +35,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <!-- Alamat & Kontak -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-2">Alamat :</h3>
+                    <h3 class="text-sm sm:text-base md:text-lg font-semibold mb-2">Alamat :</h3>
                     <p class="font-bold text-primary">Rumah Perdamaian</p>
                     <p>Jl. Cempaka Putih Barat XXI No. 34<br>Jakarta Pusat 10520</p>
 
@@ -80,10 +80,10 @@
         <!-- Content -->
         <div class="relative container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight mb-4 md:mb-6">
                     {{ $callToAction?->title ?? 'Bergabunglah dengan Misi Perdamaian' }}
                 </h2>
-                <p class="text-lg text-white/90 mb-8">
+                <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                     {{ $callToAction?->subtitle ?? 'Mari bersama-sama membangun dialog yang bermakna dan memperkuat persaudaraan lintas iman demi Indonesia yang damai dan harmonis' }}
                 </p>
                 <a href="#"

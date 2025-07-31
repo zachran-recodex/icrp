@@ -17,11 +17,11 @@
         <!-- Content Overlay -->
         <div class="container mx-auto px-4 relative z-20 text-center">
             <div class="max-w-3xl mx-auto">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-4 md:mb-6">
                     {{ $heroSection?->title ?? 'Tentang Kami' }}
                 </h1>
                 @if($heroSection?->subtitle)
-                    <p class="text-lg text-white/90 mb-8">
+                    <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                         {{ $heroSection->subtitle }}
                     </p>
                 @endif
@@ -35,8 +35,8 @@
 
             <!-- Section Header -->
             <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-4xl font-extrabold text-primary-600 mb-4">Tentang Kami</h2>
-                <p class="text-lg text-gray-600">Indonesian Conference on Religion and Peace (ICRP)</p>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-600 mb-4">Tentang Kami</h2>
+                <p class="text-sm sm:text-base md:text-lg text-gray-600">Indonesian Conference on Religion and Peace (ICRP)</p>
             </div>
 
             <!-- Sejarah & Gambar -->
@@ -68,16 +68,16 @@
             <div class="grid grid-cols-1 md:grid-cols-2 items-start gap-12">
                 <!-- Visi -->
                 <div class="text-center">
-                    <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Visi</h2>
-                    <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-600 mb-6">Visi</h2>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
                         Masyarakat yang damai dan sejahtera dalam konteks kemajemukan agama dan kepercayaan di Indonesia.
                     </p>
                 </div>
 
                 <!-- Misi -->
                 <div class="text-center">
-                    <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Misi</h2>
-                    <ul class="text-lg text-gray-700 max-w-3xl mx-auto space-y-4 text-left list-disc list-inside">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-600 mb-6">Misi</h2>
+                    <ul class="text-sm sm:text-base md:text-lg text-gray-700 max-w-3xl mx-auto space-y-4 text-left list-disc list-inside">
                         <li>Menumbuhkembangkan multikulturalisme dan pluralisme dalam kehidupan Masyarakat.</li>
                         <li>
                             Membangun kesadaran dan mengembangkan budaya religiusitas yang sehat, saling menghormati dan
@@ -98,14 +98,14 @@
             <!-- Prinsip-Prinsip -->
             <div class="space-y-10">
                 <div class="text-center">
-                    <h2 class="text-3xl font-extrabold text-primary-600 mb-6">Prinsip-Prinsip</h2>
-                    <p class="text-lg text-gray-700 font-semibold mx-auto leading-relaxed mb-8">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-600 mb-6">Prinsip-Prinsip</h2>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-700 font-semibold mx-auto leading-relaxed mb-8">
                         Bumi ini disediakan oleh Sang Maha Pencipta untuk semua manusia, sehingga semua
                         manusia memiliki hak yang sama pula. Karena itu:
                     </p>
                 </div>
                 <div class="max-w-4xl mx-auto">
-                    <ul class="text-lg text-gray-700 space-y-4 list-decimal list-inside">
+                    <ul class="text-sm sm:text-base md:text-lg text-gray-700 space-y-4 list-decimal list-inside">
                         <li>
                             ICRP percaya bahwa keragaman suku, agama, budaya, adat Indonesia adalah kekayaan yang diberikan
                             Tuhan untuk mendorong integrasi sosial, bukan untuk alasan memecah belah.
@@ -169,10 +169,10 @@
         <!-- Content -->
         <div class="relative container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight mb-4 md:mb-6">
                     {{ $callToAction?->title ?? 'Bergabunglah dengan Misi Perdamaian' }}
                 </h2>
-                <p class="text-lg text-white/90 mb-8">
+                <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                     {{ $callToAction?->subtitle ?? 'Mari bersama-sama membangun dialog yang bermakna dan memperkuat persaudaraan lintas iman demi Indonesia yang damai dan harmonis' }}
                 </p>
                 <a href="#"
