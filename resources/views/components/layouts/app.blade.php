@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     @include('partials.head')
 </head>
+
 <body class="min-h-screen bg-white dark:bg-zinc-800">
     <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
@@ -13,16 +15,38 @@
 
         <flux:navlist variant="outline">
             <flux:navlist.group :heading="__('Platform')" class="grid">
-                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                <flux:navlist.item icon="photo" :href="route('dashboard.manage-hero')" :current="request()->routeIs('dashboard.manage-hero')" wire:navigate>{{ __('Manage Hero') }}</flux:navlist.item>
-                <flux:navlist.item icon="document-text" :href="route('dashboard.manage-articles')" :current="request()->routeIs('dashboard.manage-articles')" wire:navigate>{{ __('Manage Articles') }}</flux:navlist.item>
-                <flux:navlist.item icon="calendar" :href="route('dashboard.manage-events')" :current="request()->routeIs('dashboard.manage-events')" wire:navigate>{{ __('Manage Events') }}</flux:navlist.item>
-                <flux:navlist.item icon="users" :href="route('dashboard.manage-founders')" :current="request()->routeIs('dashboard.manage-founders')" wire:navigate>{{ __('Manage Founders') }}</flux:navlist.item>
-                <flux:navlist.item icon="user-group" :href="route('dashboard.manage-members')" :current="request()->routeIs('dashboard.manage-members')" wire:navigate>{{ __('Manage Members') }}</flux:navlist.item>
-                <flux:navlist.item icon="book-open" :href="route('dashboard.manage-libraries')" :current="request()->routeIs('dashboard.manage-libraries')" wire:navigate>{{ __('Manage Libraries') }}</flux:navlist.item>
-                <flux:navlist.item icon="megaphone" :href="route('dashboard.manage-call-to-action')" :current="request()->routeIs('dashboard.manage-call-to-action')" wire:navigate>{{ __('Manage Call To Action') }}</flux:navlist.item>
-                <flux:navlist.item icon="scale" :href="route('dashboard.manage-advocacies')" :current="request()->routeIs('dashboard.manage-advocacies')" wire:navigate>{{ __('Manage Advocacies') }}</flux:navlist.item>
-                <flux:navlist.item icon="folder" :href="route('dashboard.manage-programs')" :current="request()->routeIs('dashboard.manage-programs')" wire:navigate>{{ __('Manage Programs') }}</flux:navlist.item>
+                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
+                    wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                <flux:navlist.item icon="photo" :href="route('dashboard.manage-hero')"
+                    :current="request()->routeIs('dashboard.manage-hero')" wire:navigate>{{ __('Manage Hero') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="document-text" :href="route('dashboard.manage-articles')"
+                    :current="request()->routeIs('dashboard.manage-articles')" wire:navigate>{{ __('Manage Articles') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="calendar" :href="route('dashboard.manage-events')"
+                    :current="request()->routeIs('dashboard.manage-events')" wire:navigate>{{ __('Manage Events') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="users" :href="route('dashboard.manage-founders')"
+                    :current="request()->routeIs('dashboard.manage-founders')" wire:navigate>{{ __('Manage Founders') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="user-group" :href="route('dashboard.manage-members')"
+                    :current="request()->routeIs('dashboard.manage-members')" wire:navigate>{{ __('Manage Members') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="book-open" :href="route('dashboard.manage-libraries')"
+                    :current="request()->routeIs('dashboard.manage-libraries')" wire:navigate>
+                    {{ __('Manage Libraries') }}</flux:navlist.item>
+                <flux:navlist.item icon="megaphone" :href="route('dashboard.manage-call-to-action')"
+                    :current="request()->routeIs('dashboard.manage-call-to-action')" wire:navigate>
+                    {{ __('Manage Call To Action') }}</flux:navlist.item>
+                <flux:navlist.item icon="scale" :href="route('dashboard.manage-advocacies')"
+                    :current="request()->routeIs('dashboard.manage-advocacies')" wire:navigate>
+                    {{ __('Manage Advocacies') }}</flux:navlist.item>
+                <flux:navlist.item icon="folder" :href="route('dashboard.manage-programs')"
+                    :current="request()->routeIs('dashboard.manage-programs')" wire:navigate>{{ __('Manage Programs') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="speakerphone" :href="route('dashboard.manage-advertisements')"
+                    :current="request()->routeIs('dashboard.manage-advertisements')" wire:navigate>
+                    {{ __('Manage Advertisement') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 
@@ -30,23 +54,19 @@
 
         <!-- Desktop User Menu -->
         <flux:dropdown class="hidden lg:block" position="bottom" align="start">
-            <flux:profile
-                :name="auth()->user()->name"
-                :initials="auth()->user()->initials()"
-                icon:trailing="chevrons-up-down"
-            />
+            <flux:profile :name="auth()->user()->name" :initials="auth()->user()->initials()"
+                icon:trailing="chevrons-up-down" />
 
             <flux:menu class="w-[220px]">
                 <flux:menu.radio.group>
                     <div class="p-0 text-sm font-normal">
                         <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                    <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                        <span
-                                            class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                        >
-                                            {{ auth()->user()->initials() }}
-                                        </span>
-                                    </span>
+                            <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
+                                <span
+                                    class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                    {{ auth()->user()->initials() }}
+                                </span>
+                            </span>
 
                             <div class="grid flex-1 text-start text-sm leading-tight">
                                 <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
@@ -59,7 +79,8 @@
                 <flux:menu.separator />
 
                 <flux:menu.radio.group>
-                    <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                    <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}
+                    </flux:menu.item>
                 </flux:menu.radio.group>
 
                 <flux:menu.separator />
@@ -81,22 +102,18 @@
         <flux:spacer />
 
         <flux:dropdown position="top" align="end">
-            <flux:profile
-                :initials="auth()->user()->initials()"
-                icon-trailing="chevron-down"
-            />
+            <flux:profile :initials="auth()->user()->initials()" icon-trailing="chevron-down" />
 
             <flux:menu>
                 <flux:menu.radio.group>
                     <div class="p-0 text-sm font-normal">
                         <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                    <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                        <span
-                                            class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                        >
-                                            {{ auth()->user()->initials() }}
-                                        </span>
-                                    </span>
+                            <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
+                                <span
+                                    class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                    {{ auth()->user()->initials() }}
+                                </span>
+                            </span>
 
                             <div class="grid flex-1 text-start text-sm leading-tight">
                                 <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
@@ -109,7 +126,8 @@
                 <flux:menu.separator />
 
                 <flux:menu.radio.group>
-                    <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                    <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}
+                    </flux:menu.item>
                 </flux:menu.radio.group>
 
                 <flux:menu.separator />
@@ -130,4 +148,5 @@
 
     @fluxScripts
 </body>
+
 </html>
