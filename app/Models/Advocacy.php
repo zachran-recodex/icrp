@@ -32,6 +32,6 @@ class Advocacy extends Model
     public function scopePublished($query)
     {
         return $query->whereNotNull('title')
-                    ->whereNotNull('content');
+            ->whereNotNull('content');
     }
 }

@@ -5,7 +5,6 @@ namespace App\Livewire\Dashboard;
 use App\Models\Library;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -15,14 +14,20 @@ class ManageLibraries extends Component
     use WithFileUploads, WithPagination;
 
     public $title = '';
+
     public $author = '';
+
     public $description = '';
+
     public $image;
+
     public $editingLibraryId = null;
+
     public $deletingLibraryId = null;
 
     // Modal controls using wire:model
     public $showLibraryModal = false;
+
     public $showDeleteLibraryModal = false;
 
     // Filters
@@ -32,10 +37,10 @@ class ManageLibraries extends Component
     public function libraries()
     {
         return Library::when($this->search, function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                      ->orWhere('author', 'like', '%' . $this->search . '%')
-                      ->orWhere('description', 'like', '%' . $this->search . '%');
-            })
+            $query->where('title', 'like', '%'.$this->search.'%')
+                ->orWhere('author', 'like', '%'.$this->search.'%')
+                ->orWhere('description', 'like', '%'.$this->search.'%');
+        })
             ->latest()
             ->paginate(10);
     }

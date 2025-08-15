@@ -43,6 +43,7 @@ class Founder extends Model
     public function getAgeAttribute()
     {
         $deathDate = $this->death_date ?? now();
+
         return $this->birth_date->diffInYears($deathDate);
     }
 

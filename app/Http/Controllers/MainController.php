@@ -32,7 +32,7 @@ class MainController extends Controller
             'latestArticles' => $this->article->getLatestWithCategories(),
             'upcomingEvents' => $this->event->getUpcoming(),
             'featuredLibraries' => $this->library->getFeatured(),
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -40,7 +40,7 @@ class MainController extends Controller
     {
         return view('main.tentang-kami', [
             'heroSection' => $this->hero->first(),
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -49,7 +49,7 @@ class MainController extends Controller
         return view('main.pendiri', [
             'heroSection' => $this->hero->first(),
             'founders' => $this->founder->latest()->get(),
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -58,7 +58,7 @@ class MainController extends Controller
         return view('main.pendiri-detail', [
             'heroSection' => $this->hero->first(),
             'founder' => $founder,
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -67,7 +67,7 @@ class MainController extends Controller
         return view('main.pengurus', [
             'heroSection' => $this->hero->first(),
             'members' => $this->member->latest()->get(),
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -76,7 +76,7 @@ class MainController extends Controller
         return view('main.pengurus-detail', [
             'heroSection' => $this->hero->first(),
             'member' => $member,
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -84,7 +84,7 @@ class MainController extends Controller
     {
         return view('main.kontak', [
             'heroSection' => $this->hero->first(),
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -93,7 +93,7 @@ class MainController extends Controller
         return view('main.artikel', [
             'heroSection' => $this->hero->first(),
             'articles' => $this->article->published()->with('articleCategory')->latest()->get(),
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -111,7 +111,7 @@ class MainController extends Controller
             'heroSection' => $this->hero->first(),
             'article' => $article,
             'relatedArticles' => $relatedArticles,
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -120,7 +120,7 @@ class MainController extends Controller
         return view('main.pustaka', [
             'heroSection' => $this->hero->first(),
             'libraries' => $this->library->published()->latest()->get(),
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -136,7 +136,7 @@ class MainController extends Controller
             'heroSection' => $this->hero->first(),
             'library' => $library,
             'relatedLibraries' => $relatedLibraries,
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -145,7 +145,7 @@ class MainController extends Controller
         return view('main.advokasi', [
             'heroSection' => $this->hero->first(),
             'advocacies' => $this->advocacy->published()->latest()->get(),
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 
@@ -161,7 +161,7 @@ class MainController extends Controller
             'heroSection' => $this->hero->first(),
             'advocacy' => $advocacy,
             'relatedAdvocacies' => $relatedAdvocacies,
-            'callToAction' => $this->callToAction->first()
+            'callToAction' => $this->callToAction->first(),
         ]);
     }
 }

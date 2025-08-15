@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -15,7 +14,7 @@ class Member extends Model
     protected $fillable = [
         'name',
         'slug',
-        'nickname', 
+        'nickname',
         'birth_date',
         'death_date',
         'birth_place',
@@ -24,7 +23,7 @@ class Member extends Model
         'dewan_category',
         'quote',
         'biography',
-        'photo'
+        'photo',
     ];
 
     protected $casts = [
@@ -49,6 +48,7 @@ class Member extends Model
         return Attribute::make(
             get: function () {
                 $endDate = $this->death_date ?? now();
+
                 return $this->birth_date->diffInYears($endDate);
             }
         );
@@ -65,11 +65,11 @@ class Member extends Model
     {
         return [
             'direktur eksekutif' => 'Direktur Eksekutif',
-            'pengurus' => 'Pengurus', 
+            'pengurus' => 'Pengurus',
             'kehormatan' => 'Kehormatan',
             'pembina' => 'Pembina',
             'pengawas' => 'Pengawas',
-            'pengurus harian' => 'Pengurus Harian'
+            'pengurus harian' => 'Pengurus Harian',
         ];
     }
 }

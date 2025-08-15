@@ -6,7 +6,7 @@ use Livewire\Livewire;
 
 it('can display manage advertisements page', function () {
     $user = User::factory()->create();
-    
+
     $this->actingAs($user)
         ->get('/dashboard/manage-advertisements')
         ->assertSuccessful()
@@ -15,47 +15,47 @@ it('can display manage advertisements page', function () {
 
 it('can create new advertisement when none exists', function () {
     $user = User::factory()->create();
-    
+
     Livewire::actingAs($user)
         ->test('dashboard.manage-advertisements')
         ->set('is_active', true)
         ->call('save')
         ->assertHasNoErrors();
-    
+
     expect(Advertisement::where('is_active', true)->exists())->toBeTrue();
 });
 
 it('can update existing advertisement', function () {
     $user = User::factory()->create();
-    
+
     // Clear existing data and create new
     Advertisement::truncate();
     Advertisement::create([
         'image' => null,
-        'is_active' => false
+        'is_active' => false,
     ]);
-    
+
     Livewire::actingAs($user)
         ->test('dashboard.manage-advertisements')
         ->assertSet('is_active', false)
         ->set('is_active', true)
         ->call('save')
         ->assertHasNoErrors();
-    
+
     $advertisement = Advertisement::first();
     expect($advertisement->is_active)->toBeTrue();
 });
 
 it('loads existing advertisement data on mount', function () {
     $user = User::factory()->create();
-    
+
     // Clear existing data and create new
     Advertisement::truncate();
     Advertisement::create([
         'image' => null,
-        'is_active' => false
+        'is_active' => false,
     ]);
-    
+
     Livewire::actingAs($user)
         ->test('dashboard.manage-advertisements')
         ->assertSet('is_active', false);
@@ -70,9 +70,9 @@ it('can render popup component', function () {
 it('does not show popup when no active advertisement exists', function () {
     Advertisement::create([
         'image' => null,
-        'is_active' => false
+        'is_active' => false,
     ]);
-    
+
     Livewire::test('popup-iklan')
         ->assertSet('showPopup', false);
 });

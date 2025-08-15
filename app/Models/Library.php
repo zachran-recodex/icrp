@@ -15,7 +15,7 @@ class Library extends Model
         'slug',
         'author',
         'description',
-        'image'
+        'image',
     ];
 
     public function getSlugOptions(): SlugOptions
@@ -33,14 +33,14 @@ class Library extends Model
     public function scopePublished($query)
     {
         return $query->whereNotNull('title')
-                    ->whereNotNull('author');
+            ->whereNotNull('author');
     }
 
     public static function getFeatured($limit = 3)
     {
         return static::published()
-                     ->latest()
-                     ->take($limit)
-                     ->get();
+            ->latest()
+            ->take($limit)
+            ->get();
     }
 }

@@ -49,7 +49,7 @@
             </div>
 
             <form wire:submit="saveArticle" enctype="multipart/form-data">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <flux:field>
                         <flux:label>Title</flux:label>
 
@@ -69,6 +69,14 @@
                         </flux:select>
 
                         <flux:error name="article_category_id" />
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Publication Date</flux:label>
+
+                        <flux:input wire:model="published_at" type="date" />
+
+                        <flux:error name="published_at" />
                     </flux:field>
                 </div>
 
@@ -158,8 +166,8 @@
 
     <!-- Filters -->
     <div class="bg-zinc-50 border border-zinc-200 shadow-md rounded-lg p-4 mb-6">
-        <div class="flex space-x-4">
-            <div class="flex-1">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div>
                 <flux:input icon="magnifying-glass" type="text" wire:model.live="search" placeholder="Search articles..." />
             </div>
             <div>
@@ -170,7 +178,20 @@
                     @endforeach
                 </flux:select>
             </div>
+            <div>
+                <flux:input type="date" wire:model.live="dateFrom" placeholder="From date" />
+            </div>
+            <div>
+                <flux:input type="date" wire:model.live="dateTo" placeholder="To date" />
+            </div>
         </div>
+        @if($search || $selectedCategory || $dateFrom || $dateTo)
+            <div class="mt-3 pt-3 border-t border-zinc-200">
+                <flux:button wire:click="clearFilters" variant="ghost" size="sm">
+                    Clear all filters
+                </flux:button>
+            </div>
+        @endif
     </div>
 
     <!-- Articles Table -->
@@ -181,6 +202,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Published Date</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Content</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -203,6 +225,13 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {{ $article->articleCategory->title }}
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            @if($article->published_at)
+                                {{ $article->published_at->format('M d, Y') }}
+                            @else
+                                <span class="text-gray-400">Not set</span>
+                            @endif
+                        </td>
                         <td class="px-6 py-4 text-sm text-gray-500">
                             {{ Str::limit(strip_tags($article->content), 50) }}
                         </td>
@@ -218,7 +247,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No articles found</td>
+                        <td colspan="6" class="px-6 py-4 text-center text-gray-500">No articles found</td>
                     </tr>
                 @endforelse
             </tbody>

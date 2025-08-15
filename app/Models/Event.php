@@ -23,14 +23,14 @@ class Event extends Model
     public function scopeUpcoming($query)
     {
         return $query->where('date', '>=', today())
-                    ->orderBy('date')
-                    ->orderBy('time');
+            ->orderBy('date')
+            ->orderBy('time');
     }
 
     public static function getUpcoming($limit = 3)
     {
         return static::upcoming()
-                     ->take($limit)
-                     ->get();
+            ->take($limit)
+            ->get();
     }
 }

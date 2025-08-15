@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Member;
+use Illuminate\Database\Seeder;
 
 class MemberSeeder extends Seeder
 {
@@ -25,7 +24,7 @@ class MemberSeeder extends Seeder
                 'dewan_category' => 'pembina',
                 'quote' => 'Mulailah dengan kebenaran, gunakan cara yang benar, dan hasil yang didapat akan benar.',
                 'biography' => 'Bacharuddin Jusuf Habibie adalah Presiden Republik Indonesia yang ketiga. Ia dikenal sebagai Bapak Teknologi Indonesia karena kontribusinya yang besar dalam bidang teknologi pesawat terbang.',
-                'photo' => 'images/members/habibie.jpg'
+                'photo' => 'images/members/habibie.jpg',
             ],
             [
                 'name' => 'Prof. Dr. Emil Salim',
@@ -38,7 +37,7 @@ class MemberSeeder extends Seeder
                 'dewan_category' => 'kehormatan',
                 'quote' => 'Pembangunan berkelanjutan adalah pembangunan yang memenuhi kebutuhan generasi sekarang tanpa mengorbankan kemampuan generasi mendatang.',
                 'biography' => 'Emil Salim adalah ekonom dan politikus Indonesia yang menjadi Menteri Lingkungan Hidup pertama Indonesia. Ia dikenal sebagai pelopor gerakan lingkungan hidup di Indonesia.',
-                'photo' => 'images/members/emil-salim.jpg'
+                'photo' => 'images/members/emil-salim.jpg',
             ],
             [
                 'name' => 'Dr. Sri Mulyani Indrawati',
@@ -51,7 +50,7 @@ class MemberSeeder extends Seeder
                 'dewan_category' => 'direktur eksekutif',
                 'quote' => 'Reformasi struktural memerlukan konsistensi dan komitmen jangka panjang.',
                 'biography' => 'Sri Mulyani Indrawati adalah ekonom dan politikus Indonesia yang menjabat sebagai Menteri Keuangan. Ia dikenal karena reformasi ekonomi dan fiskal yang dilakukannya.',
-                'photo' => 'images/members/sri-mulyani.jpg'
+                'photo' => 'images/members/sri-mulyani.jpg',
             ],
             [
                 'name' => 'Prof. Dr. Ir. Andi Hakim Nasoetion',
@@ -64,7 +63,7 @@ class MemberSeeder extends Seeder
                 'dewan_category' => 'pengawas',
                 'quote' => 'Pendidikan tinggi harus mampu menghasilkan pemimpin yang berintegritas.',
                 'biography' => 'Andi Hakim Nasoetion adalah akademisi dan ahli pertanian Indonesia. Ia pernah menjabat sebagai Rektor Institut Pertanian Bogor dan berkontribusi besar dalam pengembangan pendidikan tinggi Indonesia.',
-                'photo' => 'images/members/andi-hakim.jpg'
+                'photo' => 'images/members/andi-hakim.jpg',
             ],
             [
                 'name' => 'Dr. Taufiq Kiemas',
@@ -77,7 +76,7 @@ class MemberSeeder extends Seeder
                 'dewan_category' => 'pengurus',
                 'quote' => 'Demokrasi adalah sistem yang memerlukan partisipasi aktif seluruh rakyat.',
                 'biography' => 'Taufiq Kiemas adalah politikus Indonesia yang pernah menjabat sebagai Ketua MPR RI. Ia dikenal sebagai tokoh reformasi dan demokratisasi di Indonesia.',
-                'photo' => 'images/members/taufiq-kiemas.jpg'
+                'photo' => 'images/members/taufiq-kiemas.jpg',
             ],
             [
                 'name' => 'Prof. Dr. Ir. Khoirul Anwar',
@@ -90,8 +89,8 @@ class MemberSeeder extends Seeder
                 'dewan_category' => 'pengurus harian',
                 'quote' => 'Inovasi adalah kunci untuk memajukan bangsa di era digital.',
                 'biography' => 'Khoirul Anwar adalah peneliti dan penemu Indonesia yang menciptakan teknologi OFDM untuk 4G. Ia dikenal sebagai salah satu ilmuwan muda terbaik Indonesia.',
-                'photo' => 'images/members/khoirul-anwar.jpg'
-            ]
+                'photo' => 'images/members/khoirul-anwar.jpg',
+            ],
         ];
 
         foreach ($members as $member) {

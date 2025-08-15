@@ -5,7 +5,6 @@ namespace App\Livewire\Dashboard;
 use App\Models\Event;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -15,29 +14,38 @@ class ManageEvents extends Component
     use WithFileUploads, WithPagination;
 
     public $title = '';
+
     public $date = '';
+
     public $time = '';
+
     public $location = '';
+
     public $description = '';
+
     public $image;
+
     public $editingEventId = null;
+
     public $deletingEventId = null;
 
     // Modal controls using wire:model
     public $showEventModal = false;
+
     public $showDeleteEventModal = false;
 
     // Filters
     public $search = '';
+
     public $dateFilter = '';
 
     #[Computed]
     public function events()
     {
         return Event::when($this->search, function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                      ->orWhere('location', 'like', '%' . $this->search . '%');
-            })
+            $query->where('title', 'like', '%'.$this->search.'%')
+                ->orWhere('location', 'like', '%'.$this->search.'%');
+        })
             ->when($this->dateFilter, function ($query) {
                 $query->whereDate('date', $this->dateFilter);
             })

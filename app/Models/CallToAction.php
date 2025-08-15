@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class CallToAction extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'title',
         'subtitle',
         'button_text',
-        'image'
+        'image',
     ];
 }

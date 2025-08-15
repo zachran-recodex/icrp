@@ -44,7 +44,7 @@
                 <flux:navlist.item icon="folder" :href="route('dashboard.manage-programs')"
                     :current="request()->routeIs('dashboard.manage-programs')" wire:navigate>{{ __('Manage Programs') }}
                 </flux:navlist.item>
-                <flux:navlist.item icon="speakerphone" :href="route('dashboard.manage-advertisements')"
+                <flux:navlist.item icon="megaphone" :href="route('dashboard.manage-advertisements')"
                     :current="request()->routeIs('dashboard.manage-advertisements')" wire:navigate>
                     {{ __('Manage Advertisement') }}</flux:navlist.item>
             </flux:navlist.group>

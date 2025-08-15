@@ -4,25 +4,29 @@ namespace App\Livewire\Dashboard;
 
 use App\Models\Advocacy;
 use Illuminate\Support\Facades\Storage;
+use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
 
 class ManageAdvocacies extends Component
 {
-    use WithFileUploads, WithPagination, HasQuillEditor;
+    use HasQuillEditor, WithFileUploads, WithPagination;
 
     public $title = '';
+
     public $content = '';
+
     public $image;
+
     public $editingAdvocacyId = null;
+
     public $deletingAdvocacyId = null;
 
     // Modal controls using wire:model
     public $showAdvocacyModal = false;
+
     public $showDeleteAdvocacyModal = false;
 
     // Filters
@@ -32,8 +36,8 @@ class ManageAdvocacies extends Component
     public function advocacies()
     {
         return Advocacy::when($this->search, function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%');
-            })
+            $query->where('title', 'like', '%'.$this->search.'%');
+        })
             ->latest()
             ->paginate(10);
     }

@@ -4,7 +4,6 @@ namespace App\Livewire\Dashboard;
 
 use App\Models\Hero;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -13,7 +12,9 @@ class ManageHero extends Component
     use WithFileUploads;
 
     public $title = '';
+
     public $subtitle = '';
+
     public $image;
 
     #[Computed]
@@ -60,7 +61,6 @@ class ManageHero extends Component
         $this->image = null;
         $this->dispatch('hero-updated');
     }
-
 
     public function render()
     {

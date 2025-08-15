@@ -5,7 +5,6 @@ namespace App\Livewire\Dashboard;
 use App\Models\Program;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -15,13 +14,18 @@ class ManagePrograms extends Component
     use WithFileUploads, WithPagination;
 
     public $title = '';
+
     public $description = '';
+
     public $image;
+
     public $editingProgramId = null;
+
     public $deletingProgramId = null;
 
     // Modal controls using wire:model
     public $showProgramModal = false;
+
     public $showDeleteProgramModal = false;
 
     // Filters
@@ -31,9 +35,9 @@ class ManagePrograms extends Component
     public function programs()
     {
         return Program::when($this->search, function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                      ->orWhere('description', 'like', '%' . $this->search . '%');
-            })
+            $query->where('title', 'like', '%'.$this->search.'%')
+                ->orWhere('description', 'like', '%'.$this->search.'%');
+        })
             ->latest()
             ->paginate(10);
     }

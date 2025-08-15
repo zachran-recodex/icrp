@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::controller(MainController::class)->group(function () {

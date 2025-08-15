@@ -5,7 +5,6 @@ namespace App\Livewire\Dashboard;
 use App\Models\Member;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -15,37 +14,52 @@ class ManageMembers extends Component
     use WithFileUploads, WithPagination;
 
     public $name = '';
+
     public $nickname = '';
+
     public $birth_date = '';
+
     public $death_date = '';
+
     public $birth_place = '';
+
     public $known_as = '';
+
     public $position = '';
+
     public $dewan_category = '';
+
     public $quote = '';
+
     public $biography = '';
+
     public $photo;
+
     public $editingMemberId = null;
+
     public $deletingMemberId = null;
 
     // Modal controls using wire:model
     public $showMemberModal = false;
+
     public $showDeleteMemberModal = false;
 
     // Filters
     public $search = '';
+
     public $statusFilter = ''; // all, alive, deceased
+
     public $categoryFilter = '';
 
     #[Computed]
     public function members()
     {
         return Member::when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                      ->orWhere('known_as', 'like', '%' . $this->search . '%')
-                      ->orWhere('birth_place', 'like', '%' . $this->search . '%')
-                      ->orWhere('position', 'like', '%' . $this->search . '%');
-            })
+            $query->where('name', 'like', '%'.$this->search.'%')
+                ->orWhere('known_as', 'like', '%'.$this->search.'%')
+                ->orWhere('birth_place', 'like', '%'.$this->search.'%')
+                ->orWhere('position', 'like', '%'.$this->search.'%');
+        })
             ->when($this->statusFilter === 'alive', function ($query) {
                 $query->whereNull('death_date');
             })

@@ -5,7 +5,6 @@ namespace App\Livewire\Dashboard;
 use App\Models\Founder;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -15,33 +14,45 @@ class ManageFounders extends Component
     use WithFileUploads, WithPagination;
 
     public $name = '';
+
     public $nickname = '';
+
     public $birth_date = '';
+
     public $death_date = '';
+
     public $birth_place = '';
+
     public $known_as = '';
+
     public $quote = '';
+
     public $biography = '';
+
     public $photo;
+
     public $editingFounderId = null;
+
     public $deletingFounderId = null;
 
     // Modal controls using wire:model
     public $showFounderModal = false;
+
     public $showDeleteFounderModal = false;
 
     // Filters
     public $search = '';
+
     public $statusFilter = ''; // all, alive, deceased
 
     #[Computed]
     public function founders()
     {
         return Founder::when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                      ->orWhere('known_as', 'like', '%' . $this->search . '%')
-                      ->orWhere('birth_place', 'like', '%' . $this->search . '%');
-            })
+            $query->where('name', 'like', '%'.$this->search.'%')
+                ->orWhere('known_as', 'like', '%'.$this->search.'%')
+                ->orWhere('birth_place', 'like', '%'.$this->search.'%');
+        })
             ->when($this->statusFilter === 'alive', function ($query) {
                 $query->whereNull('death_date');
             })

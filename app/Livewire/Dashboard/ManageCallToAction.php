@@ -4,7 +4,6 @@ namespace App\Livewire\Dashboard;
 
 use App\Models\CallToAction;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -13,8 +12,11 @@ class ManageCallToAction extends Component
     use WithFileUploads;
 
     public $title = '';
+
     public $subtitle = '';
+
     public $button_text = '';
+
     public $image;
 
     #[Computed]

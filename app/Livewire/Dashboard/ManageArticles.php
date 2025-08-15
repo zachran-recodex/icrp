@@ -5,38 +5,54 @@ namespace App\Livewire\Dashboard;
 use App\Models\Article;
 use App\Models\ArticleCategory;
 use Illuminate\Support\Facades\Storage;
+use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
 
 class ManageArticles extends Component
 {
-    use WithFileUploads, WithPagination, HasQuillEditor;
+    use HasQuillEditor, WithFileUploads, WithPagination;
 
     public $title = '';
+
     public $content = '';
+
     public $image;
+
     public $article_category_id = '';
+
+    public $published_at = '';
+
     public $editingArticleId = null;
+
     public $deletingArticleId = null;
 
     // Category management
     public $categoryTitle = '';
+
     public $editingCategoryId = null;
+
     public $deletingCategoryId = null;
 
     // Modal controls using wire:model
     public $showArticleModal = false;
+
     public $showCategoryModal = false;
+
     public $showDeleteArticleModal = false;
+
     public $showDeleteCategoryModal = false;
 
     // Filters
     public $selectedCategory = '';
+
     public $search = '';
+
+    public $dateFrom = '';
+
+    public $dateTo = '';
 
     #[Computed]
     public function articles()
@@ -46,7 +62,13 @@ class ManageArticles extends Component
                 $query->where('article_category_id', $this->selectedCategory);
             })
             ->when($this->search, function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%');
+                $query->where('title', 'like', '%'.$this->search.'%');
+            })
+            ->when($this->dateFrom, function ($query) {
+                $query->whereDate('published_at', '>=', $this->dateFrom);
+            })
+            ->when($this->dateTo, function ($query) {
+                $query->whereDate('published_at', '<=', $this->dateTo);
             })
             ->latest()
             ->paginate(10);
@@ -75,6 +97,7 @@ class ManageArticles extends Component
         $this->title = $article->title;
         $this->content = $article->content;
         $this->article_category_id = $article->article_category_id;
+        $this->published_at = $article->published_at ? $article->published_at->format('Y-m-d') : '';
         $this->showArticleModal = true;
         $this->dispatch('article-form-shown');
         // Update Quill editor with existing content
@@ -87,6 +110,7 @@ class ManageArticles extends Component
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'article_category_id' => 'required|exists:article_categories,id',
+            'published_at' => 'nullable|date',
             'image' => $this->editingArticleId ? 'nullable|image|max:2048' : 'required|image|max:2048',
         ]);
 
@@ -94,6 +118,7 @@ class ManageArticles extends Component
             'title' => $this->title,
             'content' => $this->content,
             'article_category_id' => $this->article_category_id,
+            'published_at' => ! empty($this->published_at) ? $this->published_at : null,
         ];
 
         if ($this->image) {
@@ -161,11 +186,11 @@ class ManageArticles extends Component
     {
         // Clear any previous validation errors
         $this->resetValidation();
-        
+
         $category = ArticleCategory::find($categoryId);
         $this->editingCategoryId = $category->id;
         $this->categoryTitle = $category->title;
-        
+
         // Ensure modal stays open
         $this->showCategoryModal = true;
     }
@@ -173,7 +198,7 @@ class ManageArticles extends Component
     public function saveCategory()
     {
         $this->validate([
-            'categoryTitle' => 'required|string|max:255|unique:article_categories,title,' . $this->editingCategoryId,
+            'categoryTitle' => 'required|string|max:255|unique:article_categories,title,'.$this->editingCategoryId,
         ]);
 
         if ($this->editingCategoryId) {
@@ -203,6 +228,7 @@ class ManageArticles extends Component
                 session()->flash('error', 'Category cannot be deleted because it still has articles!');
                 $this->deletingCategoryId = null;
                 $this->showDeleteCategoryModal = false;
+
                 return;
             }
 
@@ -220,6 +246,14 @@ class ManageArticles extends Component
         $this->resetCategoryForm();
     }
 
+    public function clearFilters()
+    {
+        $this->search = '';
+        $this->selectedCategory = '';
+        $this->dateFrom = '';
+        $this->dateTo = '';
+        $this->resetPage();
+    }
 
     private function resetArticleForm()
     {
@@ -227,6 +261,7 @@ class ManageArticles extends Component
         $this->content = '';
         $this->image = null;
         $this->article_category_id = '';
+        $this->published_at = '';
         $this->editingArticleId = null;
         $this->showArticleModal = false;
     }

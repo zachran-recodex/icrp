@@ -12,6 +12,7 @@ class ManageAdvertisements extends Component
     use WithFileUploads;
 
     public $image;
+
     public $is_active = true;
 
     #[Computed]
