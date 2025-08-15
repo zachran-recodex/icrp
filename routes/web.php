@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('manage-call-to-action', \App\Livewire\Dashboard\ManageCallToAction::class)->name('manage-call-to-action');
         Route::get('manage-advocacies', \App\Livewire\Dashboard\ManageAdvocacies::class)->name('manage-advocacies');
         Route::get('manage-programs', \App\Livewire\Dashboard\ManagePrograms::class)->name('manage-programs');
+        Route::get('manage-advertisements', \App\Livewire\Dashboard\ManageAdvertisements::class)->name('manage-advertisements');
     });
 
     Route::redirect('settings', 'settings/profile');

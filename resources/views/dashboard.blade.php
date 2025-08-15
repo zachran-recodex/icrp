@@ -1,7 +1,7 @@
 <x-layouts.app :title="__('Dashboard')">
     <div class="flex h-full w-full flex-1 flex-col gap-6 rounded-xl">
         <!-- Statistics Cards -->
-        <div class="grid auto-rows-min gap-4 md:grid-cols-4">
+        <div class="grid auto-rows-min gap-4 md:grid-cols-5">
             <!-- Articles Count -->
             <div class="flex flex-col items-center justify-center aspect-video rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-6">
                 <div class="text-center">
@@ -46,6 +46,18 @@
                     </div>
                     <div class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
                         Total Events
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advertisements Count -->
+            <div class="flex flex-col items-center justify-center aspect-video rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-cyan-600 dark:text-cyan-400">
+                        {{ \App\Models\Advertisement::count() }}
+                    </div>
+                    <div class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+                        Total Ads
                     </div>
                 </div>
             </div>
@@ -99,6 +111,10 @@
                         <span class="text-sm text-neutral-600 dark:text-neutral-400">Upcoming Events</span>
                         <span class="text-sm font-medium">{{ \App\Models\Event::where('date', '>=', now())->count() }}</span>
                     </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-neutral-600 dark:text-neutral-400">Active Ads</span>
+                        <span class="text-sm font-medium">{{ \App\Models\Advertisement::active()->count() }}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -133,6 +149,9 @@
                 </flux:button>
                 <flux:button icon="folder" href="{{ route('dashboard.manage-programs') }}" variant="primary" color="pink" wire:navigate>
                     Program
+                </flux:button>
+                <flux:button icon="megaphone" href="{{ route('dashboard.manage-advertisements') }}" variant="primary" color="cyan" wire:navigate>
+                    Iklan Popup
                 </flux:button>
             </div>
         </div>

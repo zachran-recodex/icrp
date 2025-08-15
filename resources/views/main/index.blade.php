@@ -1,4 +1,7 @@
 <x-layouts.main>
+    <!-- Popup Iklan -->
+    @livewire('popup-iklan')
+    
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center">
         <!-- Background Image -->

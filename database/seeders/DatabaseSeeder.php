@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             CallToActionSeeder::class,
             AdvocacySeeder::class,
             ProgramSeeder::class,
+            AdvertisementSeeder::class,
         ]);
     }
 }
