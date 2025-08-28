@@ -36,7 +36,7 @@ $closePopup = function () {
             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95" @click.away="show = false"
-            class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 overflow-hidden">
+            class="relative bg-white rounded-2xl shadow-2xl max-w-lg w-auto mx-4 overflow-hidden">
             <!-- Close Button -->
             <button wire:click="closePopup"
                 class="absolute top-4 right-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all duration-200 shadow-lg">
@@ -49,7 +49,7 @@ $closePopup = function () {
                 <!-- Advertisement Image -->
                 <div class="relative">
                     <img src="{{ Storage::url($advertisement['image']) }}" alt="Advertisement"
-                        class="w-full h-auto max-h-[80vh] object-contain rounded-2xl">
+                        class="max-w-full max-h-[70vh] h-auto object-contain rounded-2xl">
                 </div>
             @endif
 
