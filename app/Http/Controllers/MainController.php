@@ -32,8 +32,8 @@ class MainController extends Controller
         
         return view('main.index', [
             'heroSection' => $this->hero->first(),
-            'featuredArticles' => $this->article->getFeaturedWithCategories(),
-            'latestArticles' => $this->article->getLatestWithCategories(),
+            'featuredArticles' => $this->getFeaturedArticlesExcludingPhotoNews($photoNewsCategory),
+            'latestArticles' => $this->getLatestArticlesExcludingPhotoNews($photoNewsCategory),
             'photoNews' => $photoNewsCategory 
                 ? $this->article->published()
                     ->with('articleCategory')
@@ -46,6 +46,28 @@ class MainController extends Controller
             'featuredLibraries' => $this->library->getFeatured(),
             'callToAction' => $this->callToAction->first(),
         ]);
+    }
+
+    private function getFeaturedArticlesExcludingPhotoNews($photoNewsCategory)
+    {
+        $query = $this->article->published()->with('articleCategory');
+        
+        if ($photoNewsCategory) {
+            $query->where('article_category_id', '!=', $photoNewsCategory->id);
+        }
+        
+        return $query->latest()->take(1)->get();
+    }
+
+    private function getLatestArticlesExcludingPhotoNews($photoNewsCategory, $limit = 9)
+    {
+        $query = $this->article->published()->with('articleCategory');
+        
+        if ($photoNewsCategory) {
+            $query->where('article_category_id', '!=', $photoNewsCategory->id);
+        }
+        
+        return $query->latest()->take($limit)->get();
     }
 
     public function tentangKami()

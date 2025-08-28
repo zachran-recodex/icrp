@@ -232,100 +232,47 @@
                 </p>
             </div>
 
-            <!-- Featured Photo News -->
-            @if($photoNews->isNotEmpty())
-                @php $featuredPhoto = $photoNews->first() @endphp
-                <div class="flex justify-center mb-8">
-                    <a href="{{ route('artikel.detail', $featuredPhoto->slug) }}"
-                       class="relative w-full max-w-[1000px] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[476px]">
-                        <!-- Gambar Artikel -->
-                        <img src="{{ $featuredPhoto->image ? Storage::url($featuredPhoto->image) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80' }}"
-                             alt="{{ $featuredPhoto->title }}" class="w-full h-full object-cover rounded-lg">
-
-                        <!-- Badge Kategori -->
-                        <div class="absolute top-4 left-4 bg-primary-500 z-10 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            {{ $featuredPhoto->articleCategory->title ?? 'Berita Foto' }}
+            <!-- Photo News Grid (3 items only) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                @forelse($photoNews->take(3) as $photo)
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
+                        <div class="relative h-48 sm:h-56 md:h-64">
+                            <img src="{{ $photo->image ? Storage::url($photo->image) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}"
+                                 alt="{{ $photo->title }}" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                {{ $photo->articleCategory->title ?? 'Berita Foto' }}
+                            </div>
+                            <!-- Overlay on hover -->
+                            <div class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <a href="{{ route('artikel.detail', $photo->slug) }}" class="bg-white text-primary-500 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                                    Lihat Detail
+                                </a>
+                            </div>
                         </div>
-
-                        <!-- Overlay & Konten -->
-                        <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-6 lg:p-8 rounded-lg">
-                            <h2 class="text-white text-lg sm:text-xl font-bold mb-2 md:mb-3">
-                                {{ $featuredPhoto->title }}
-                            </h2>
-                            <p class="text-gray-300 text-sm md:text-base">
-                                {{ Str::limit(strip_tags($featuredPhoto->content), 150) }}
+                        <div class="p-4 md:p-6">
+                            <h4 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">{{ Str::limit($photo->title, 60) }}</h4>
+                            <p class="text-gray-600 text-sm md:text-base mb-3">
+                                {{ Str::limit(strip_tags($photo->content), 120) }}
                             </p>
-                        </div>
-                    </a>
-                </div>
-            @else
-                <div class="flex justify-center mb-8">
-                    <div class="relative w-full max-w-[1000px] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[476px]">
-                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-                             alt="Berita Foto" class="w-full h-full object-cover rounded-lg">
-                        <div class="absolute top-4 left-4 bg-primary-500 z-10 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            Berita Foto
-                        </div>
-                        <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-6 lg:p-8 rounded-lg">
-                            <h2 class="text-white text-lg sm:text-xl font-bold mb-2 md:mb-3">
-                                Dokumentasi Kegiatan Dialog Lintas Agama
-                            </h2>
-                            <p class="text-gray-300 text-sm md:text-base">
-                                Lihat momen-momen berharga dalam kegiatan dialog lintas agama dan upaya perdamaian yang telah kami lakukan...
-                            </p>
+                            <div class="flex justify-between items-center text-sm text-gray-500">
+                                <span>{{ $photo->created_at->format('d M Y') }}</span>
+                                <a href="{{ route('artikel.detail', $photo->slug) }}" class="text-primary-500 hover:text-primary-600 font-medium">
+                                    Selengkapnya →
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endif
-
-            <!-- Grid Photo News -->
-            @if($photoNews->count() > 1)
-                @php $remainingPhotos = $photoNews->skip(1) @endphp
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                    @foreach($remainingPhotos as $photo)
-                        <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
-                            <div class="relative h-48 sm:h-56 md:h-64">
-                                <img src="{{ $photo->image ? Storage::url($photo->image) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}"
-                                     alt="{{ $photo->title }}" class="w-full h-full object-cover">
-                                <div class="absolute top-4 left-4 bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                                    {{ $photo->articleCategory->title ?? 'Berita Foto' }}
-                                </div>
-                                <!-- Overlay on hover -->
-                                <div class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <a href="{{ route('artikel.detail', $photo->slug) }}" class="bg-white text-primary-500 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
-                                        Lihat Detail
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="p-4 md:p-6">
-                                <h4 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">{{ Str::limit($photo->title, 60) }}</h4>
-                                <p class="text-gray-600 text-sm md:text-base mb-3">
-                                    {{ Str::limit(strip_tags($photo->content), 120) }}
-                                </p>
-                                <div class="flex justify-between items-center text-sm text-gray-500">
-                                    <span>{{ $photo->created_at->format('d M Y') }}</span>
-                                    <a href="{{ route('artikel.detail', $photo->slug) }}" class="text-primary-500 hover:text-primary-600 font-medium">
-                                        Selengkapnya →
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @elseif($photoNews->isEmpty())
-                <!-- Fallback when no photo news -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                @empty
+                    <!-- Fallback when no photo news -->
                     <div class="col-span-full text-center py-8">
                         <div class="bg-white rounded-xl p-8 shadow-lg">
                             <i class="fas fa-image w-16 h-16 mx-auto text-gray-300 mb-4 block"></i>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
                             <p class="text-gray-500 text-lg">Berita foto akan segera tersedia.</p>
                             <p class="text-gray-400 text-sm mt-2">Silakan cek kembali nanti untuk melihat dokumentasi kegiatan terbaru.</p>
                         </div>
                     </div>
-                </div>
-            @endif
+                @endforelse
+            </div>
         </div>
     </section>
 
