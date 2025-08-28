@@ -1,7 +1,7 @@
 <x-layouts.main>
     <!-- Popup Iklan -->
     @livewire('popup-iklan')
-    
+
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center">
         <!-- Background Image -->
@@ -22,7 +22,7 @@
                 <p class="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8">
                     {{ $heroSection?->subtitle ?? 'Dialog Antar Agama, Kemanusiaan dan Persaudaraan Lintas Iman, Rumah Perdamaian, Agama untuk Perdamaian, Demokrasi' }}
                 </p>
-                <a href="#tentang"
+                <a href="{{ route('tentang-kami') }}"
                    class="inline-block bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
                     Selengkapnya
                 </a>
@@ -141,14 +141,10 @@
 
                     <!-- Navigation Buttons -->
                     <button @click="prev" class="absolute top-1/2 left-0 -translate-y-1/2 -ml-4 md:ml-0 bg-white/80 hover:bg-white text-primary-500 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
+                        <i class="fas fa-chevron-left text-sm"></i>
                     </button>
                     <button @click="next" class="absolute top-1/2 right-0 -translate-y-1/2 -mr-4 md:mr-0 bg-white/80 hover:bg-white text-primary-500 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
+                        <i class="fas fa-chevron-right text-sm"></i>
                     </button>
 
                     <!-- Indicator Dots -->
@@ -202,14 +198,10 @@
                     </div>
                     <!-- Navigation Buttons -->
                     <button @click="prev" class="absolute top-1/2 left-0 -translate-y-1/2 -ml-4 md:ml-0 bg-white/80 hover:bg-white text-primary-500 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
+                        <i class="fas fa-chevron-left text-sm"></i>
                     </button>
                     <button @click="next" class="absolute top-1/2 right-0 -translate-y-1/2 -mr-4 md:mr-0 bg-white/80 hover:bg-white text-primary-500 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
+                        <i class="fas fa-chevron-right text-sm"></i>
                     </button>
 
                     <!-- Indicator Dots -->
@@ -227,6 +219,116 @@
             @endif
         </div>
     </section>
+
+    <!-- Photo News Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+
+            <!-- Section Header -->
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl text-primary-500 font-bold mb-4">Berita Foto</h2>
+                <p class="text-gray-600">
+                    Dokumentasi visual dari berbagai kegiatan dialog lintas agama dan inisiatif perdamaian yang telah kami laksanakan.
+                </p>
+            </div>
+
+            <!-- Featured Photo News -->
+            @if($photoNews->isNotEmpty())
+                @php $featuredPhoto = $photoNews->first() @endphp
+                <div class="flex justify-center mb-8">
+                    <a href="{{ route('artikel.detail', $featuredPhoto->slug) }}"
+                       class="relative w-full max-w-[1000px] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[476px]">
+                        <!-- Gambar Artikel -->
+                        <img src="{{ $featuredPhoto->image ? Storage::url($featuredPhoto->image) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80' }}"
+                             alt="{{ $featuredPhoto->title }}" class="w-full h-full object-cover rounded-lg">
+
+                        <!-- Badge Kategori -->
+                        <div class="absolute top-4 left-4 bg-primary-500 z-10 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                            {{ $featuredPhoto->articleCategory->title ?? 'Berita Foto' }}
+                        </div>
+
+                        <!-- Overlay & Konten -->
+                        <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-6 lg:p-8 rounded-lg">
+                            <h2 class="text-white text-lg sm:text-xl font-bold mb-2 md:mb-3">
+                                {{ $featuredPhoto->title }}
+                            </h2>
+                            <p class="text-gray-300 text-sm md:text-base">
+                                {{ Str::limit(strip_tags($featuredPhoto->content), 150) }}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            @else
+                <div class="flex justify-center mb-8">
+                    <div class="relative w-full max-w-[1000px] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[476px]">
+                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                             alt="Berita Foto" class="w-full h-full object-cover rounded-lg">
+                        <div class="absolute top-4 left-4 bg-primary-500 z-10 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                            Berita Foto
+                        </div>
+                        <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-6 lg:p-8 rounded-lg">
+                            <h2 class="text-white text-lg sm:text-xl font-bold mb-2 md:mb-3">
+                                Dokumentasi Kegiatan Dialog Lintas Agama
+                            </h2>
+                            <p class="text-gray-300 text-sm md:text-base">
+                                Lihat momen-momen berharga dalam kegiatan dialog lintas agama dan upaya perdamaian yang telah kami lakukan...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <!-- Grid Photo News -->
+            @if($photoNews->count() > 1)
+                @php $remainingPhotos = $photoNews->skip(1) @endphp
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                    @foreach($remainingPhotos as $photo)
+                        <div class="bg-white rounded-xl overflow-hidden shadow-lg transition hover:shadow-xl">
+                            <div class="relative h-48 sm:h-56 md:h-64">
+                                <img src="{{ $photo->image ? Storage::url($photo->image) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}"
+                                     alt="{{ $photo->title }}" class="w-full h-full object-cover">
+                                <div class="absolute top-4 left-4 bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                    {{ $photo->articleCategory->title ?? 'Berita Foto' }}
+                                </div>
+                                <!-- Overlay on hover -->
+                                <div class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <a href="{{ route('artikel.detail', $photo->slug) }}" class="bg-white text-primary-500 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                                        Lihat Detail
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-4 md:p-6">
+                                <h4 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">{{ Str::limit($photo->title, 60) }}</h4>
+                                <p class="text-gray-600 text-sm md:text-base mb-3">
+                                    {{ Str::limit(strip_tags($photo->content), 120) }}
+                                </p>
+                                <div class="flex justify-between items-center text-sm text-gray-500">
+                                    <span>{{ $photo->created_at->format('d M Y') }}</span>
+                                    <a href="{{ route('artikel.detail', $photo->slug) }}" class="text-primary-500 hover:text-primary-600 font-medium">
+                                        Selengkapnya →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @elseif($photoNews->isEmpty())
+                <!-- Fallback when no photo news -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                    <div class="col-span-full text-center py-8">
+                        <div class="bg-white rounded-xl p-8 shadow-lg">
+                            <i class="fas fa-image w-16 h-16 mx-auto text-gray-300 mb-4 block"></i>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <p class="text-gray-500 text-lg">Berita foto akan segera tersedia.</p>
+                            <p class="text-gray-400 text-sm mt-2">Silakan cek kembali nanti untuk melihat dokumentasi kegiatan terbaru.</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </section>
+
 
     <!-- Events Section -->
     <section class="py-20 bg-primary-50">
@@ -258,10 +360,7 @@
                                 </div>
                                 <div class="absolute top-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-xs md:text-sm">
                                     <div class="flex items-center">
-                                        <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
+                                        <i class="fas fa-clock w-4 h-4 mr-2 flex-shrink-0"></i>
                                         <span>{{ $event->time->format('H:i') }} WIB</span>
                                     </div>
                                 </div>
@@ -272,12 +371,7 @@
                                     {{ Str::limit($event->description, 100) }}
                                 </p>
                                 <div class="flex items-center">
-                                    <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
+                                    <i class="fas fa-map-marker-alt w-4 h-4 mr-2 flex-shrink-0"></i>
                                     <span class="truncate">{{ $event->location }}</span>
                                 </div>
                             </div>
@@ -334,10 +428,7 @@
 
                                                 <div class="bg-neutral-50 p-3 rounded-lg border border-neutral-200">
                                                     <div class="flex items-center text-primary-500 mb-1">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg>
+                                                        <i class="fas fa-clock w-4 h-4 mr-2"></i>
                                                         <span class="text-sm font-medium">Waktu</span>
                                                     </div>
                                                     <p class="text-sm">{{ $event->time->format('H:i') }} WIB</p>
@@ -345,12 +436,7 @@
 
                                                 <div class="bg-neutral-50 p-3 rounded-lg border border-neutral-200 col-span-2">
                                                     <div class="flex items-center text-primary-500 mb-1">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                        </svg>
+                                                        <i class="fas fa-map-marker-alt w-4 h-4 mr-2"></i>
                                                         <span class="text-sm font-medium">Lokasi</span>
                                                     </div>
                                                     <p class="text-sm">{{ $event->location }}</p>

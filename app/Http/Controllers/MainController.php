@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Advocacy;
 use App\Models\Article;
+use App\Models\ArticleCategory;
 use App\Models\CallToAction;
 use App\Models\Event;
 use App\Models\Founder;
@@ -26,10 +27,21 @@ class MainController extends Controller
 
     public function index()
     {
+        // Get "Berita Foto" category
+        $photoNewsCategory = ArticleCategory::where('title', 'Berita Foto')->first();
+        
         return view('main.index', [
             'heroSection' => $this->hero->first(),
             'featuredArticles' => $this->article->getFeaturedWithCategories(),
             'latestArticles' => $this->article->getLatestWithCategories(),
+            'photoNews' => $photoNewsCategory 
+                ? $this->article->published()
+                    ->with('articleCategory')
+                    ->where('article_category_id', $photoNewsCategory->id)
+                    ->latest()
+                    ->take(6)
+                    ->get()
+                : collect([]),
             'upcomingEvents' => $this->event->getUpcoming(),
             'featuredLibraries' => $this->library->getFeatured(),
             'callToAction' => $this->callToAction->first(),
